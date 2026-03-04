@@ -1,0 +1,221 @@
+\chapter{Introduction}
+\label{intro.ch}
+
+Digital electronics increasingly occupy safety- and mission-critical roles in radiation
+environments. Nuclear energy systems rely on embedded computation for sensing, data
+acquisition, actuator control, and condition monitoring. Space and high-altitude platforms
+similarly depend on autonomous processing to maintain communications, navigation, and
+health management under particle radiation. In these settings, radiation-induced faults are
+not merely a reliability nuisance; they can compromise observability of the physical
+process, corrupt stored state, or drive a controller into an unsafe or unknown operating
+condition. As modern systems move toward higher integration and tighter coupling between
+software-defined functionality and hardware, the ability to characterize and mitigate
+radiation effects at the \emph{system} level becomes increasingly
+important~\cite{baumann2005radiation, schwank2013radiation}.
+
+Field-programmable gate arrays (FPGAs) are a compelling technology for harsh-environment
+instrumentation and control because they combine high-throughput digital processing with
+reconfigurability. A single FPGA can integrate sensor interfaces, deterministic timing,
+data reduction, fault detection, and control logic that would otherwise require multiple
+discrete components. However, many widely used FPGA families are susceptible to
+radiation-induced single-event effects (SEEs), including transient upsets in sequential
+logic and persistent upsets in configuration
+memory~\cite{kastensmidt2014survey, ostler2009sram}. These effects can manifest as
+straightforward bit flips in data paths, but they can also appear as subtle and difficult-to-
+diagnose failures such as stalled state machines, corrupted mode registers, or sporadic
+timing violations triggered by transients. Consequently, evaluating FPGA-based systems
+using only simplistic benchmarks or post-run inspection can miss the failure mechanisms
+that matter most in real deployments~\cite{artola2021benchmarks}.
+
+This dissertation is motivated by a practical question: \emph{how can FPGA-based digital
+systems be evaluated under irradiation in a way that preserves in-situ operation, provides
+high observability of faults and performance degradation, and yields data products that
+support quantitative analysis?} Addressing this question requires more than a single
+measurement technique. It demands an experimental workflow that spans on-chip
+instrumentation, robust telemetry, test automation, and analysis methods that connect
+radiation events to system-level outcomes. The remainder of this chapter provides the
+system context for the problem, describes the radiation environments of interest, motivates
+the use of FPGAs while acknowledging their vulnerabilities, and outlines the in-situ test
+and monitoring philosophy that underpins the work.
+
+\section{Radiation-tolerant instrumentation and control}
+Digital instrumentation and control (I\&C) systems form the nervous system of complex
+engineering facilities~\cite{nrc1997digital, iaea2016design}. In nuclear applications, I\&C platforms acquire measurements from
+distributed sensors, estimate plant state, and command actuators that regulate power,
+temperature, and flow. Even when safety systems are implemented with conservative
+redundancy and independent protection channels, auxiliary digital subsystems are often
+responsible for data logging, operator interfaces, and supervisory
+control~\cite{korsah1999environmental}. In research and
+test facilities, digital platforms also play a central role in experiment automation, beamline
+instrumentation, and synchronized acquisition of diagnostic signals.
+
+Radiation environments challenge I\&C systems in two distinct ways. The first is direct
+exposure to particles and secondary radiation that can produce faults in electronics. The
+second is the operational constraint that systems must often remain functional while data
+are collected. In many experiments, the most valuable information occurs \emph{during}
+exposure: transient anomalies, intermittent recoveries, and performance drift with
+accumulated fluence. These behaviors are easy to lose when experiments rely on coarse
+snapshots, infrequent configuration readback, or manual intervention.
+
+For embedded digital systems, the most consequential failures are frequently those that
+degrade correctness without producing an obvious halt. A sensor interface that silently
+drops samples, a communications link that intermittently corrupts frames, or a controller
+that remains stable but exhibits increased steady-state error can each undermine mission
+objectives while evading simple ``pass/fail'' criteria. Therefore, a central requirement for
+harsh-environment evaluation is \emph{observability}: the ability to measure internal state,
+detect anomalies, and attribute system-level behaviors to underlying fault mechanisms.
+
+In-situ observability must also be engineered within practical constraints. Telemetry
+bandwidth is finite, particularly when long cables, optical links, or radiation-hardened
+interfaces are required. Logging must tolerate resets and interruptions, and it must preserve
+sufficient timing context to correlate faults with external conditions such as beam
+transitions, actuator commands, or power supply events. These realities motivate a design
+philosophy in which monitoring and control are co-designed with the experiment itself.
+
+\section{Radiation environments and single-event effects in electronics}
+Radiation fields relevant to terrestrial nuclear facilities, beamline experiments, and
+aerospace missions vary widely in particle species and energy spectra. Fast neutrons are of
+particular interest for terrestrial testing because they can produce displacement damage and
+ionization through secondary charged particles generated in nuclear interactions with
+silicon and package materials~\cite{normand1996single, ziegler1996terrestrial}. High-energy protons and heavy ions are often emphasized
+in space applications because they can directly deposit charge along a track in sensitive
+volumes, leading to transient and sometimes destructive events. Gamma radiation primarily
+contributes to total ionizing dose (TID), which can shift device parameters and increase
+leakage currents over time. In practical environments, mixed fields can be present, and
+secondary particles produced in surrounding structures can dominate the effective spectrum
+seen by the electronics.
+
+Single-event effects are a family of phenomena in which a single particle interaction
+perturbs device behavior~\cite{dodd2003basic, messenger1992effects}. In digital logic, the most commonly discussed SEE is the
+single-event upset (SEU), in which a storage element such as a flip-flop or memory bit
+changes state. When an upset occurs in a data register, it may appear as an incorrect numeric
+value that propagates through computation. When it occurs in a state register, it can change
+the sequencing of a controller, alter a mode selection, or prevent a process from advancing.
+Single-event transients (SETs) occur when a particle strike produces a short-duration pulse
+in combinational logic. These pulses may be filtered by logic depth and timing, or they may
+be captured by sequential elements depending on clock phase and pulse
+width~\cite{dodd2004production}. More severe
+events such as single-event latchup (SEL) can induce a high-current state that persists until
+power is cycled or protective circuitry intervenes, potentially damaging the device.
+
+A defining challenge of SEE characterization is that observed behavior depends strongly on
+system context. A single bit flip in a redundant arithmetic datapath may have little impact,
+while an identical flip in a control enable or address pointer can halt a test or invalidate
+measurements. Additionally, some failures are \emph{silent}: a system may continue to run
+and produce outputs that appear reasonable, yet internal fault accumulation or altered timing
+causes gradual performance degradation. These realities motivate system-level experiments
+that measure not only event counts, but also the consequences of events on functional
+behavior~\cite{natacad2018testing, keller2018dynamic}.
+
+Quantitative analysis typically describes SEE sensitivity using an upset rate or cross-section
+as a function of fluence and particle spectrum~\cite{reed2003ground, shaneyfelt2008qualification}. However, a single rate does not fully capture
+the engineering question of interest: \emph{what does the system do after an event occurs?}
+For embedded control and monitoring platforms, the post-event trajectory---recovery,
+persistence, amplification, or self-correction---is often more important than the event count
+itself. This dissertation therefore emphasizes measurement strategies that preserve and
+interpret the temporal evolution of the system during irradiation.
+
+\section{Field-programmable gate arrays as harsh-environment digital platforms}
+FPGAs implement digital circuits using a fabric of programmable logic blocks, routing
+resources, and embedded hard macros such as block RAM, DSP slices, and high-speed
+serial transceivers. Their defining feature is reconfigurability: functionality is specified by
+a configuration bitstream that programs lookup tables, interconnect, and optional features
+of the device. This capability enables rapid iteration and consolidation of complex digital
+subsystems, which is particularly attractive in experimental environments where
+requirements evolve.
+
+For instrumentation and control, FPGAs provide several practical advantages. Deterministic
+timing can be achieved by implementing synchronous datapaths with precisely controlled
+latency. Multiple heterogeneous functions---such as sensor sampling, filtering, state
+estimation, actuator drive, and communications---can be integrated while maintaining
+tight timing alignment. Hardware-level parallelism also supports high-rate data reduction
+and event detection, enabling long-duration experiments without saturating telemetry
+bandwidth.
+
+These advantages come with a fundamental vulnerability: in many FPGA families, the
+configuration memory that defines the circuit is implemented using radiation-sensitive
+storage~\cite{kastensmidt2014survey, rakhman2017sram}. Upsets in configuration bits can alter logic functions or routing, creating persistent
+errors that remain until the configuration is corrected. Upsets in user logic storage elements
+can corrupt state, and SETs can perturb combinational paths. Consequently, the relevant
+question is not whether an FPGA experiences upsets, but how the overall system is
+architected to \emph{observe}, \emph{tolerate}, and when necessary \emph{recover} from them.
+
+Mitigation strategies exist across multiple layers. At the circuit level, redundancy such as
+duplication or triplication can mask certain classes of errors, though at the cost of resource
+usage and potentially increased sensitivity to common-mode
+faults~\cite{lyons1962tmr, sterpone2005tmr, pratt2008partial}. At the configuration
+level, readback and scrubbing can detect and correct configuration upsets, but they require
+additional infrastructure and can be difficult to integrate with strict timing
+requirements~\cite{heiner2009scrubbing, berg2008scrubbing, stoddard2017hybrid}.
+At the system level, watchdogs and health monitors can detect stalls or inconsistent outputs
+and trigger controlled recovery actions. The selection of mitigations is inherently tied to
+application constraints: a control loop may prioritize bounded recovery time, while a data
+logger may prioritize data integrity and provenance.
+
+A key observation motivating this dissertation is that many experiment-relevant failure
+modes are \emph{control-path} failures rather than straightforward datapath bit flips. Control
+paths include counters, state machines, scheduling flags, communication framing, and mode
+registers. Upsets in these elements can prevent valid comparisons, stop scanning, or lock a
+system into a non-responsive state without producing an unambiguous error signature in
+the primary outputs~\cite{morgan2005seu}. Capturing these failure modes requires on-chip observability and
+telemetry that are designed from the outset to detect ``stuck'' or ``silent'' conditions.
+
+\section{In-situ monitoring and irradiation testing methodology}
+In-situ irradiation testing aims to measure system behavior while the system operates under
+exposure, rather than treating radiation as an off-line stress applied prior to a functional
+check. This approach is essential when the effects of interest are transient, intermittent, or
+dependent on accumulated fluence. It is also essential when recovery actions---such as
+scrubbing, resets, or power-cycling after latchup---are part of the operational concept and
+therefore must be measured as part of system performance.
+
+A practical in-situ methodology must provide fault visibility that is commensurate with the
+complexity of the system. For FPGA platforms, this motivates instrumentation that can
+detect and summarize fault activity within large collections of sequential elements and
+internal control structures without requiring full-state readout. The methodology must also
+provide time-aligned telemetry so that fault indicators can be correlated with external
+conditions, control commands, and measured plant response. Finally, it must support
+repeatable experimentation, including clear run segmentation, metadata capture, and
+post-processing workflows that reduce ambiguity.
+
+One approach to fault visibility is to embed structured test logic within the FPGA design.
+Large sets of flip-flops can be organized into scan structures or signature-based monitors,
+enabling efficient detection of deviations from expected behavior. Complementary watchdog
+logic can supervise progress through known operational phases, flagging stalls or invalid
+states that might otherwise appear as a simple cessation of log messages. Telemetry formats
+can be designed to favor robustness and interpretability, prioritizing concise, periodic
+reports that survive occasional corruption and support automated parsing.
+
+While fault detection infrastructure can quantify upset activity, system relevance is often
+best demonstrated using a meaningful workload. In this dissertation, closed-loop control is
+used as a representative workload because it couples internal computation to externally
+observable behavior. A controller operating on an FPGA interacts with a plant model or
+physical system through measured feedback. Radiation-induced faults can therefore be
+evaluated not only by their occurrence, but by their impact on performance metrics such as
+tracking error, overshoot, actuator saturation, and stability margins. Importantly, a closed-
+loop workload can reveal fault masking and fault amplification: some errors are corrected
+by feedback, while others are reinforced by the loop dynamics.
+
+The combination of on-chip fault monitors, watchdog-based health supervision, robust
+telemetry, and a closed-loop workload provides a foundation for system-level irradiation
+studies that move beyond binary outcomes. Rather than asking whether an FPGA ``survived''
+a run, the experiment can ask how performance evolves with exposure, which subsystems
+dominate observed failures, and which mitigations provide the most impact per unit
+resource cost.
+
+\section{Scope and organization of this dissertation}
+This dissertation focuses on radiation-induced effects in FPGA-based digital systems, with
+an emphasis on in-situ experimentation and system-level interpretation of faults. The work
+considers single-event phenomena that manifest during operation and the architectural
+choices that influence detectability, tolerance, and recovery. While total ionizing dose and
+displacement damage can influence long-term behavior, the primary emphasis is placed on
+single-event-driven disruptions relevant to real-time operation.
+
+Chapter~2 provides background on the physics of radiation interactions relevant to digital
+electronics and reviews prior work in FPGA radiation testing and mitigation. Chapter~3
+describes the hardware and software infrastructure used to conduct in-situ experiments,
+including embedded monitors and telemetry workflows. Chapter~4 presents the closed-loop
+FPGA workload used to connect internal fault activity to externally measurable performance.
+Chapter~5 presents irradiation results and analysis, including event classification and
+quantitative metrics versus exposure. Chapter~6 concludes the dissertation with a synthesis
+of findings and directions for future work in harsh-environment digital platforms and
+radiation-aware system design.
