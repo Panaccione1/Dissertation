@@ -67,7 +67,7 @@ the nominal depletion boundary.
   \centering
   \begin{minipage}[t]{0.47\textwidth}
     \centering
-    \includesvg[width=\linewidth]{figures/2_1-electron-concent-funneling.svg}
+    \includegraphics[width=\linewidth]{figures/2_1-electron-concent-funneling}
     \caption{Simulated electron concentration contours following a heavy-ion strike at
     the drain of an n$^{+}$/p junction. Carriers generated along the ion track are
     swept toward the n$^{+}$ region by both the electric field and the concentration
@@ -78,7 +78,7 @@ the nominal depletion boundary.
   \hfill
   \begin{minipage}[t]{0.47\textwidth}
     \centering
-    \includesvg[width=\linewidth]{figures/2_1-electrostatic-pot-funneling.svg}
+    \includegraphics[width=\linewidth]{figures/2_1-electrostatic-pot-funneling}
     \caption{Simulated electrostatic potential contours in the same structure during
     charge collection. The distortion of the 1.0\,V, 2.0\,V, and 3.0\,V equipotential
     surfaces along the ion track shows how the field-enhanced funneling column extends
@@ -178,7 +178,7 @@ describes the principal SEE types relevant to digital logic and storage circuits
 
 \begin{figure}[htbp]
   \centering
-  \includesvg[width=0.95\textwidth]{figures/2_1-see-tax-tree.svg}
+  \includegraphics[width=0.95\textwidth]{figures/2_1-see-tax-tree}
   \caption{Taxonomy of radiation-induced effects in semiconductor devices.
   Single-event effects are subdivided into soft and recoverable effects---single-event
   upset (SEU), single-event transient (SET), and single-event functional interrupt
@@ -258,7 +258,7 @@ cases preventing capture altogether.
   \caption{Single-event transient capture in a master--slave D flip-flop.
   \emph{(a)}~Circuit schematic showing the strike location at the internal transmission
   gate, with the VSS-connected NMOS transistor as the struck node and the CLK and
-  $\overline{\text{CLK}}$ signals controlling the sampling windows.
+  $\overline{\mathrm{CLK}}$ signals controlling the sampling windows.
   \emph{(b)}~Simulated waveforms: the SET current pulse (top), clock (second), master
   node voltage (third, with dashed threshold line), and slave node output (bottom).
   The upset is captured when the master node exceeds the logic threshold during the
@@ -341,7 +341,7 @@ intrinsic breakdown strength, causing permanent dielectric rupture.
 
 \begin{figure}[htbp]
   \centering
-  \includesvg[width=0.55\textwidth]{figures/2_2-SEGR-Diagram.svg}
+  \includegraphics[width=0.55\textwidth]{figures/2_2-SEGR-Diagram}
   \caption{Cross-sectional diagram of the single-event gate rupture (SEGR) mechanism
   in a power MOSFET. A negatively biased gate ($V_G < 0$) and a large drain-source
   voltage establish a high electric field across the gate oxide. When a heavy ion
@@ -366,7 +366,7 @@ reduction in breakdown threshold with increasing LET~\cite{sexton2003destructive
   \centering
   \begin{minipage}[t]{0.47\textwidth}
     \centering
-    \includesvg[width=\linewidth]{figures/2_2-SEGR-Onset-Xsec.svg}
+    \includegraphics[width=\linewidth]{figures/2_2-SEGR-Onset-Xsec}
     \caption{Measured SEGR cross-section as a function of drain-source voltage
     $V_{\mathrm{DS}}$ for chlorine (Cl), iodine (I), copper (Cu), and iron (Fe)
     ions. Higher-LET ions exhibit lower onset voltages and higher saturation
@@ -376,7 +376,7 @@ reduction in breakdown threshold with increasing LET~\cite{sexton2003destructive
   \hfill
   \begin{minipage}[t]{0.47\textwidth}
     \centering
-    \includesvg[width=\linewidth]{figures/2_2-SEB-Xsection.svg}
+    \includegraphics[width=\linewidth]{figures/2_2-SEB-Xsection}
     \caption{Onset gate voltage for SEGR as a function of ion LET for gold (Au),
     niobium (Nb), and copper (Cu) ions. The solid curve is the empirical Sexton
     model. The threshold gate voltage decreases with increasing LET, reflecting the
@@ -617,7 +617,7 @@ address the most relevant categories in detail.
 
 \begin{figure}[htbp]
   \centering
-  \includesvg[width=0.98\textwidth]{figures/2_5-fault-tolerant-mechanisms.svg}
+  \includegraphics[width=0.98\textwidth]{figures/2_5-fault-tolerant-mechanisms}
   \caption{Taxonomy of fault-tolerant design mechanisms for radiation-hardened digital
   systems. Strategies are organized into five categories: \emph{hardware} redundancy
   (TMR, duplex, standby sparing, lockstep); \emph{software} techniques (N-version
@@ -691,7 +691,7 @@ for example by triggering a full reconfiguration or asserting a safe-state outpu
 
 \begin{figure}[htbp]
   \centering
-  \includesvg[width=0.72\textwidth]{figures/2_5-tmr-voter-flowchart.svg}
+  \includegraphics[width=0.72\textwidth]{figures/2_5-tmr-voter-flowchart}
   \caption{Decision flowchart for a triple modular redundancy (TMR) majority voter
   implementing 2-of-3 voting logic. Three independent replicas (Modules A, B, C)
   feed the voter. When all outputs agree, the result passes through the nominal path.
@@ -775,7 +775,7 @@ limitations that motivate the present work.
 
 \begin{figure}[htbp]
   \centering
-  \includesvg[width=0.90\textwidth]{figures/2_6-testing-approaches.svg}
+  \includegraphics[width=0.90\textwidth]{figures/2_6-testing-approaches}
   \caption{Taxonomy of testing approaches for radiation-hardened digital systems.
   \emph{Static} methods (formal verification, static timing analysis, design rule
   checking, lint/CDC) provide pre-silicon assurance of structural and temporal
