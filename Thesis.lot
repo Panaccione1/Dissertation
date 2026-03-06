@@ -1,0 +1,3 @@
+\vskip 0.55in {\bfseries Table}\hfill {\bfseries Page} \vskip 0.25em\rm 
+\contentsline {table}{\numberline {3.1}{\ignorespaces An example table.}}{44}{}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Same example table but with an unnecessarily long name so as to cause it to go to multiple lines in the List of Figures.}}{44}{}%

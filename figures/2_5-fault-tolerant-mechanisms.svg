@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 340" width="580" height="340"
+  font-family="'Helvetica Neue', Helvetica, Arial, sans-serif">
+
+  <rect width="580" height="340" fill="#ffffff"/>
+
+  <!-- ── COLOURS ──
+       Navy header: #1a5c38
+       Orange category: #1a8c7a
+       Light blue leaf: #5ec8a0
+  -->
+
+  <!-- ══════════════════════════════
+       ROOT
+  ══════════════════════════════ -->
+  <rect x="170" y="10" width="240" height="32" rx="3" fill="#1a5c38"/>
+  <text x="290" y="31" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">
+    Fault Tolerant Mechanisms
+  </text>
+
+  <!-- trunk line down from root -->
+  <line x1="290" y1="42" x2="290" y2="58" stroke="#888" stroke-width="1.2"/>
+  <!-- horizontal bus -->
+  <line x1="52" y1="58" x2="528" y2="58" stroke="#888" stroke-width="1.2"/>
+
+  <!-- ══════════════════════════════
+       CATEGORY STEMS  (x positions: 52, 157, 290, 418, 528)
+  ══════════════════════════════ -->
+  <line x1="52"  y1="58" x2="52"  y2="78" stroke="#888" stroke-width="1.2"/>
+  <line x1="157" y1="58" x2="157" y2="78" stroke="#888" stroke-width="1.2"/>
+  <line x1="290" y1="58" x2="290" y2="78" stroke="#888" stroke-width="1.2"/>
+  <line x1="418" y1="58" x2="418" y2="78" stroke="#888" stroke-width="1.2"/>
+  <line x1="528" y1="58" x2="528" y2="78" stroke="#888" stroke-width="1.2"/>
+
+  <!-- ══════════════════════════════
+       CATEGORY BOXES
+  ══════════════════════════════ -->
+  <!-- Hardware -->
+  <rect x="12"  y="78" width="80" height="28" rx="3" fill="#1a8c7a"/>
+  <text x="52"  y="97" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Hardware</text>
+
+  <!-- Software -->
+  <rect x="117" y="78" width="80" height="28" rx="3" fill="#1a8c7a"/>
+  <text x="157" y="97" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Software</text>
+
+  <!-- Data -->
+  <rect x="255" y="78" width="70" height="28" rx="3" fill="#1a8c7a"/>
+  <text x="290" y="97" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Data</text>
+
+  <!-- Time -->
+  <rect x="383" y="78" width="70" height="28" rx="3" fill="#1a8c7a"/>
+  <text x="418" y="97" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Time</text>
+
+  <!-- Hybrid -->
+  <rect x="488" y="78" width="80" height="28" rx="3" fill="#1a8c7a"/>
+  <text x="528" y="97" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Hybrid</text>
+
+  <!-- ══════════════════════════════
+       LEAF HELPERS
+       Each column: vertical stem down from category box bottom,
+       then individual drops to each leaf.
+  ══════════════════════════════ -->
+
+  <!-- ── HARDWARE  leaves: TMR*, Duplex, Standby Sparing, Lockstep ── -->
+  <line x1="52" y1="106" x2="52" y2="118" stroke="#888" stroke-width="1.2"/>
+
+  <!-- leaf drop lines -->
+  <line x1="52" y1="118" x2="52" y2="130" stroke="#888" stroke-width="1.2"/>
+  <rect x="12" y="130" width="80" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="52" y="146" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">TMR</text>
+
+  <line x1="52" y1="154" x2="52" y2="164" stroke="#888" stroke-width="1.2"/>
+  <rect x="12" y="164" width="80" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="52" y="180" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Duplex</text>
+
+  <line x1="52" y1="188" x2="52" y2="198" stroke="#888" stroke-width="1.2"/>
+  <rect x="12" y="198" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="52" y="211" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Standby</text>
+  <text x="52" y="224" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Sparing</text>
+
+  <line x1="52" y1="232" x2="52" y2="244" stroke="#888" stroke-width="1.2"/>
+  <rect x="12" y="244" width="80" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="52" y="260" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Lockstep</text>
+
+  <!-- ── SOFTWARE  leaves: N-Version Programming, Recovery Blocks, Self-Checking, Design Diversity ── -->
+  <line x1="157" y1="106" x2="157" y2="118" stroke="#888" stroke-width="1.2"/>
+
+  <line x1="157" y1="118" x2="157" y2="130" stroke="#888" stroke-width="1.2"/>
+  <rect x="117" y="130" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="157" y="143" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">N-Version</text>
+  <text x="157" y="156" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Programming</text>
+
+  <line x1="157" y1="164" x2="157" y2="176" stroke="#888" stroke-width="1.2"/>
+  <rect x="117" y="176" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="157" y="189" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Recovery</text>
+  <text x="157" y="202" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Blocks</text>
+
+  <line x1="157" y1="210" x2="157" y2="222" stroke="#888" stroke-width="1.2"/>
+  <rect x="117" y="222" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="157" y="235" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Self-</text>
+  <text x="157" y="248" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Checking</text>
+
+  <line x1="157" y1="256" x2="157" y2="268" stroke="#888" stroke-width="1.2"/>
+  <rect x="117" y="268" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="157" y="281" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Design</text>
+  <text x="157" y="294" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Diversity</text>
+
+  <!-- ── DATA  leaves: Hamming, BCH, Reed-Solomon, LDPC ── -->
+  <line x1="290" y1="106" x2="290" y2="118" stroke="#888" stroke-width="1.2"/>
+
+  <line x1="290" y1="118" x2="290" y2="130" stroke="#888" stroke-width="1.2"/>
+  <rect x="255" y="130" width="70" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="290" y="146" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Hamming</text>
+
+  <line x1="290" y1="154" x2="290" y2="164" stroke="#888" stroke-width="1.2"/>
+  <rect x="255" y="164" width="70" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="290" y="180" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">BCH</text>
+
+  <line x1="290" y1="188" x2="290" y2="198" stroke="#888" stroke-width="1.2"/>
+  <rect x="255" y="198" width="70" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="290" y="211" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Reed-</text>
+  <text x="290" y="224" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Solomon</text>
+
+  <line x1="290" y1="232" x2="290" y2="244" stroke="#888" stroke-width="1.2"/>
+  <rect x="255" y="244" width="70" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="290" y="260" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">LDPC</text>
+
+  <!-- ── TIME  leaves: Repeated Execution, Roll-Back, Shadow Latch, Delayed Clock ── -->
+  <line x1="418" y1="106" x2="418" y2="118" stroke="#888" stroke-width="1.2"/>
+
+  <line x1="418" y1="118" x2="418" y2="130" stroke="#888" stroke-width="1.2"/>
+  <rect x="383" y="130" width="70" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="418" y="143" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Repeated</text>
+  <text x="418" y="156" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Execution</text>
+
+  <line x1="418" y1="164" x2="418" y2="176" stroke="#888" stroke-width="1.2"/>
+  <rect x="383" y="176" width="70" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="418" y="192" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Roll-Back</text>
+
+  <line x1="418" y1="200" x2="418" y2="210" stroke="#888" stroke-width="1.2"/>
+  <rect x="383" y="210" width="70" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="418" y="223" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Shadow</text>
+  <text x="418" y="236" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Latch</text>
+
+  <line x1="418" y1="244" x2="418" y2="254" stroke="#888" stroke-width="1.2"/>
+  <rect x="383" y="254" width="70" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="418" y="267" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Delayed</text>
+  <text x="418" y="280" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Clock</text>
+
+  <!-- ── HYBRID  leaves: Multi-Layer, Hamming+TMR, DPR+TMR, Lockstep+TMR ── -->
+  <line x1="528" y1="106" x2="528" y2="118" stroke="#888" stroke-width="1.2"/>
+
+  <line x1="528" y1="118" x2="528" y2="130" stroke="#888" stroke-width="1.2"/>
+  <rect x="488" y="130" width="80" height="24" rx="3" fill="#5ec8a0"/>
+  <text x="528" y="146" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Multi-Layer</text>
+
+  <line x1="528" y1="154" x2="528" y2="164" stroke="#888" stroke-width="1.2"/>
+  <rect x="488" y="164" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="528" y="177" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Hamming +</text>
+  <text x="528" y="190" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">TMR</text>
+
+  <line x1="528" y1="198" x2="528" y2="210" stroke="#888" stroke-width="1.2"/>
+  <rect x="488" y="210" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="528" y="223" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">DPR + TMR</text>
+
+  <line x1="528" y1="244" x2="528" y2="254" stroke="#888" stroke-width="1.2"/>
+  <rect x="488" y="254" width="80" height="34" rx="3" fill="#5ec8a0"/>
+  <text x="528" y="267" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">Lockstep +</text>
+  <text x="528" y="280" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="600">TMR</text>
+
+  <!-- border -->
+  <rect x="4" y="4" width="572" height="330" rx="3" fill="none" stroke="#a0c8b4" stroke-width="1"/>
+
+</svg>
