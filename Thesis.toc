@@ -3,58 +3,19 @@
 \contentsline {front}{{Dedication}}{iv}{}%
 \contentsline {front}{{Acknowledgments}}{v}{}%
 \contentsline {front}{{Vita}}{vi}{}%
-\contentsline {front}{{List of Tables}}{x}{}%
-\contentsline {front}{List of Figures}{xi}{}%
+\contentsline {front}{{List of Tables}}{viii}{}%
+\contentsline {front}{List of Figures}{ix}{}%
 \contentsline {chapter}{\numberline {1.}Introduction}{1}{}%
-\contentsline {section}{\numberline {1.1}Radiation-tolerant instrumentation and control}{2}{}%
-\contentsline {section}{\numberline {1.2}Radiation environments and single-event effects in electronics}{4}{}%
-\contentsline {section}{\numberline {1.3}Field-programmable gate arrays as harsh-environment digital platforms}{5}{}%
-\contentsline {section}{\numberline {1.4}In-situ monitoring and irradiation testing methodology}{7}{}%
-\contentsline {section}{\numberline {1.5}Scope and organization of this dissertation}{9}{}%
-\contentsline {chapter}{\numberline {2.}Background and Prior Work}{11}{}%
-\contentsline {section}{\numberline {2.1}Radiation interactions with semiconductor devices}{11}{}%
-\contentsline {subsection}{\numberline {2.1.1}Ionization and charge generation}{12}{}%
-\contentsline {subsection}{\numberline {2.1.2}Direct ionization by heavy ions and protons}{14}{}%
-\contentsline {subsection}{\numberline {2.1.3}Neutron interactions}{14}{}%
-\contentsline {subsection}{\numberline {2.1.4}Total ionizing dose and displacement damage}{15}{}%
-\contentsline {section}{\numberline {2.2}Classification of single-event effects}{16}{}%
-\contentsline {subsection}{\numberline {2.2.1}Single-event upset}{16}{}%
-\contentsline {subsection}{\numberline {2.2.2}Single-event transient}{18}{}%
-\contentsline {subsection}{\numberline {2.2.3}Single-event latchup}{19}{}%
-\contentsline {subsection}{\numberline {2.2.4}Single-event functional interrupt}{22}{}%
-\contentsline {subsection}{\numberline {2.2.5}Other destructive effects}{22}{}%
-\contentsline {section}{\numberline {2.3}Architecture of field-programmable gate arrays}{24}{}%
-\contentsline {subsection}{\numberline {2.3.1}Overall device organization}{25}{}%
-\contentsline {subsection}{\numberline {2.3.2}Configurable logic blocks and lookup tables}{26}{}%
-\contentsline {subsection}{\numberline {2.3.3}Programmable routing and interconnect}{27}{}%
-\contentsline {subsection}{\numberline {2.3.4}Block RAM and DSP slices}{27}{}%
-\contentsline {subsection}{\numberline {2.3.5}Clock distribution and management}{28}{}%
-\contentsline {subsection}{\numberline {2.3.6}Configuration memory organization}{28}{}%
-\contentsline {section}{\numberline {2.4}Radiation effects specific to FPGAs}{29}{}%
-\contentsline {subsection}{\numberline {2.4.1}Configuration memory upsets}{29}{}%
-\contentsline {subsection}{\numberline {2.4.2}User logic upsets}{30}{}%
-\contentsline {subsection}{\numberline {2.4.3}Single-event transients in FPGA combinational paths}{30}{}%
-\contentsline {subsection}{\numberline {2.4.4}Single-event functional interrupts in FPGAs}{31}{}%
-\contentsline {section}{\numberline {2.5}Mitigation and hardening strategies}{31}{}%
-\contentsline {subsection}{\numberline {2.5.1}Radiation-hardened FPGA technologies}{33}{}%
-\contentsline {subsection}{\numberline {2.5.2}Triple modular redundancy}{33}{}%
-\contentsline {subsection}{\numberline {2.5.3}Configuration scrubbing}{36}{}%
-\contentsline {subsection}{\numberline {2.5.4}Error detection codes for block RAM and user memory}{37}{}%
-\contentsline {subsection}{\numberline {2.5.5}Watchdog timers and system-level health monitoring}{37}{}%
-\contentsline {section}{\numberline {2.6}Prior work in FPGA irradiation testing}{38}{}%
-\contentsline {subsection}{\numberline {2.6.1}Static cross-section measurements}{39}{}%
-\contentsline {subsection}{\numberline {2.6.2}Dynamic application-based testing}{39}{}%
-\contentsline {subsection}{\numberline {2.6.3}Fault injection as a complement to beam testing}{40}{}%
-\contentsline {subsection}{\numberline {2.6.4}Limitations of existing approaches and motivation for this work}{40}{}%
-\contentsline {chapter}{\numberline {3.}How to Actually Have a Cow}{43}{}%
-\contentsline {section}{\numberline {3.1}Captions of Figures and Tables in \LaTeX }{43}{}%
-\contentsline {section}{\numberline {3.2}Figures in \LaTeX }{44}{}%
-\contentsline {subsection}{\numberline {3.2.1}``Pasting'' Existing Figures in \LaTeX }{45}{}%
-\contentsline {subsection}{\numberline {3.2.2}Postscript figures in \LaTeX }{45}{}%
-\contentsline {subsubsection}{The Recommended Method}{46}{}%
-\contentsline {section}{\numberline {3.3}Tables in \LaTeX }{47}{}%
-\contentsline {chapter}{\numberline {4.}Contributions and Future Work}{48}{}%
-\contentsline {part}{Appendices}{49}{}%
-\contentsline {chapter}{\numberline {A.}The Data on Cows}{49}{}%
-\contentsline {chapter}{\numberline {B.}Important commands defined in {\tt osudissert96}}{50}{}%
-\contentsline {front}{{Bibliography}}{52}{}%
+\contentsline {section}{\numberline {1.1}Nuclear Power and the Global Energy Imperative}{2}{}%
+\contentsline {section}{\numberline {1.2}The Regulatory Foundation for Radiation Monitoring}{3}{}%
+\contentsline {section}{\numberline {1.3}Limitations of Current Radiation Detector Technologies}{5}{}%
+\contentsline {section}{\numberline {1.4}The Economics of Nuclear Instrumentation}{8}{}%
+\contentsline {section}{\numberline {1.5}The Gap: An Integrated Materials-to-Systems Approach}{11}{}%
+\contentsline {section}{\numberline {1.6}Research Objectives and Dissertation Organization}{13}{}%
+\contentsline {chapter}{\numberline {2.}Background and Prior Work}{15}{}%
+\contentsline {chapter}{\numberline {3.}Testing of an Organic Metal Halide Perovskite for Fast Neutron Detection}{16}{}%
+\contentsline {chapter}{\numberline {4.}Contributions and Future Work}{17}{}%
+\contentsline {part}{Appendices}{18}{}%
+\contentsline {chapter}{\numberline {A.}The Data on Cows}{18}{}%
+\contentsline {chapter}{\numberline {B.}Important commands defined in {\tt osudissert96}}{19}{}%
+\contentsline {front}{{Bibliography}}{21}{}%

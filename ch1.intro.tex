@@ -1,221 +1,412 @@
+%% ============================================================
+%%  Chapter 1 — Introduction
+%%  Dissertation: Radiation Responsive Materials for Advanced
+%%  Radiation Detection and Systems
+%% ============================================================
+
 \chapter{Introduction}
-\label{intro.ch}
 
-Digital electronics increasingly occupy safety- and mission-critical roles in radiation
-environments. Nuclear energy systems rely on embedded computation for sensing, data
-acquisition, actuator control, and condition monitoring. Space and high-altitude platforms
-similarly depend on autonomous processing to maintain communications, navigation, and
-health management under particle radiation. In these settings, radiation-induced faults are
-not merely a reliability nuisance; they can compromise observability of the physical
-process, corrupt stored state, or drive a controller into an unsafe or unknown operating
-condition. As modern systems move toward higher integration and tighter coupling between
-software-defined functionality and hardware, the ability to characterize and mitigate
-radiation effects at the \emph{system} level becomes increasingly
-important~\cite{baumann2005radiation, schwank2013radiation}.
+Nuclear power occupies a singular position among low-carbon energy sources:
+it is the only technology that delivers firm, dispatchable, high-density
+electricity without direct greenhouse-gas emissions at a scale already
+proven across decades of operation. Yet the environments that make nuclear
+power possible — intense neutron and gamma fields, high temperatures, and
+aggressive chemical coolants — are precisely the environments that destroy
+the instruments needed to monitor and control it. Reliable radiation
+monitoring is not incidental to safe reactor operation; it is the primary
+mechanism by which operators verify that every barrier to fission-product
+release remains intact. As the existing fleet ages and a generation of
+advanced and small modular reactors (SMRs) moves from blueprint to concrete,
+the instrumentation technologies that have served the industry for half a
+century are confronting hard limits in both technical performance and
+economic viability. This dissertation investigates two complementary
+approaches to resolving that tension: the development of perovskite
+semiconductors as radiation-responsive detector materials, and the
+implementation of radiation-tolerant digital monitoring systems built on
+commercially available field-programmable gate arrays (FPGAs). Taken
+together, these efforts span the full stack from detector material to
+deployable system and aim to demonstrate that next-generation nuclear
+instrumentation can be both technically capable and cost-effective.
 
-Field-programmable gate arrays (FPGAs) are a compelling technology for harsh-environment
-instrumentation and control because they combine high-throughput digital processing with
-reconfigurability. A single FPGA can integrate sensor interfaces, deterministic timing,
-data reduction, fault detection, and control logic that would otherwise require multiple
-discrete components. However, many widely used FPGA families are susceptible to
-radiation-induced single-event effects (SEEs), including transient upsets in sequential
-logic and persistent upsets in configuration
-memory~\cite{kastensmidt2014survey, ostler2009sram}. These effects can manifest as
-straightforward bit flips in data paths, but they can also appear as subtle and difficult-to-
-diagnose failures such as stalled state machines, corrupted mode registers, or sporadic
-timing violations triggered by transients. Consequently, evaluating FPGA-based systems
-using only simplistic benchmarks or post-run inspection can miss the failure mechanisms
-that matter most in real deployments~\cite{artola2021benchmarks}.
+%% ------------------------------------------------------------
+\section{Nuclear Power and the Global Energy Imperative}
+%% ------------------------------------------------------------
 
-This dissertation is motivated by a practical question: \emph{how can FPGA-based digital
-systems be evaluated under irradiation in a way that preserves in-situ operation, provides
-high observability of faults and performance degradation, and yields data products that
-support quantitative analysis?} Addressing this question requires more than a single
-measurement technique. It demands an experimental workflow that spans on-chip
-instrumentation, robust telemetry, test automation, and analysis methods that connect
-radiation events to system-level outcomes. The remainder of this chapter provides the
-system context for the problem, describes the radiation environments of interest, motivates
-the use of FPGAs while acknowledging their vulnerabilities, and outlines the in-situ test
-and monitoring philosophy that underpins the work.
+The scale of the decarbonization challenge facing the global electricity
+system makes any realistic pathway to net-zero heavily dependent on nuclear
+energy. At the COP28 climate summit in December 2023, twenty-two nations
+signed a declaration to triple global nuclear generating capacity from
+approximately 375\,GW(e) to more than 1,125\,GW(e) by 2050; that coalition
+has since grown to thirty-three countries~\cite{DOE_COP28_2023}. The
+International Energy Agency's net-zero pathway requires nuclear capacity to
+reach approximately 1,079\,GW(e) by mid-century, demanding that annual
+investment in the sector roughly double from its current level of
+\$65--75 billion to \$120--150 billion per year by 2030~\cite{IEA_Nuclear_2024}.
+The International Atomic Energy Agency (IAEA) has revised its projections
+upward for five consecutive years, with its 2025 high-case scenario projecting
+992\,GW(e) by 2050~\cite{IAEA_Projections_2025}.
 
-\section{Radiation-tolerant instrumentation and control}
-Digital instrumentation and control (I\&C) systems form the nervous system of complex
-engineering facilities~\cite{nrc1997digital, iaea2016design}. In nuclear applications, I\&C platforms acquire measurements from
-distributed sensors, estimate plant state, and command actuators that regulate power,
-temperature, and flow. Even when safety systems are implemented with conservative
-redundancy and independent protection channels, auxiliary digital subsystems are often
-responsible for data logging, operator interfaces, and supervisory
-control~\cite{korsah1999environmental}. In research and
-test facilities, digital platforms also play a central role in experiment automation, beamline
-instrumentation, and synchronized acquisition of diagnostic signals.
+The existing global fleet comprises approximately 408 operating reactors
+in thirty-one countries, with a combined net capacity that reached a record
+369\,GW(e) in 2024~\cite{WNISR_2025}. Nuclear electricity generation also
+set an all-time high of 2,667\,TWh in 2024, narrowly surpassing the 2006
+record, though nuclear's share of global electricity has fallen to
+approximately 9\% as variable renewables have expanded at a far faster
+pace~\cite{WNISR_2025}. The fleet's average age of 32.4 years — with 141
+units exceeding 41 years of operation — makes life extension, instrumentation
+modernization, and new construction simultaneously urgent priorities.
 
-Radiation environments challenge I\&C systems in two distinct ways. The first is direct
-exposure to particles and secondary radiation that can produce faults in electronics. The
-second is the operational constraint that systems must often remain functional while data
-are collected. In many experiments, the most valuable information occurs \emph{during}
-exposure: transient anomalies, intermittent recoveries, and performance drift with
-accumulated fluence. These behaviors are easy to lose when experiments rely on coarse
-snapshots, infrequent configuration readback, or manual intervention.
+The advanced reactor pipeline is the most active in decades. In the United
+States, TerraPower's 345\,MW(e) Natrium sodium-cooled fast reactor received
+its NRC construction permit in March 2026, the first commercial non-light-water
+reactor approval in over forty years~\cite{PowerMag_Natrium_2026}. Kairos
+Power's Hermes fluoride-salt-cooled test reactor began nuclear
+safety-related construction in 2025~\cite{Kairos_Hermes_2025}, and
+X-energy's Xe-100 pebble-bed high-temperature gas-cooled reactor is under
+development for an industrial host site with over \$1.2 billion in DOE
+cost-share~\cite{Xenergy_ARDP}. Among light-water SMRs, GE-Hitachi's
+BWRX-300 is under construction at Ontario's Darlington site and has
+received a \$400 million DOE award for deployment at TVA's Clinch River
+site~\cite{BWRX300_Wiki}. Each of these programs introduces novel
+coolant chemistries, fuel geometries, and multi-module control architectures
+that existing monitoring technologies were never designed to address.
 
-For embedded digital systems, the most consequential failures are frequently those that
-degrade correctness without producing an obvious halt. A sensor interface that silently
-drops samples, a communications link that intermittently corrupts frames, or a controller
-that remains stable but exhibits increased steady-state error can each undermine mission
-objectives while evading simple ``pass/fail'' criteria. Therefore, a central requirement for
-harsh-environment evaluation is \emph{observability}: the ability to measure internal state,
-detect anomalies, and attribute system-level behaviors to underlying fault mechanisms.
+%% ------------------------------------------------------------
+\section{The Regulatory Foundation for Radiation Monitoring}
+%% ------------------------------------------------------------
 
-In-situ observability must also be engineered within practical constraints. Telemetry
-bandwidth is finite, particularly when long cables, optical links, or radiation-hardened
-interfaces are required. Logging must tolerate resets and interruptions, and it must preserve
-sufficient timing context to correlate faults with external conditions such as beam
-transitions, actuator commands, or power supply events. These realities motivate a design
-philosophy in which monitoring and control are co-designed with the experiment itself.
+Continuous radiation monitoring across neutron flux, gamma dose, primary
+coolant activity, and effluent pathways is mandated by the regulatory
+foundations of nuclear operation, not merely encouraged by best practice.
+The NRC's General Design Criteria, codified in 10~CFR~50 Appendix~A,
+establish this requirement at the highest level of the licensing framework.
+GDC~13 requires instrumentation capable of monitoring all variables that
+affect the reactor core, coolant pressure boundary, and containment integrity;
+GDC~64 mandates monitoring of the containment atmosphere, recirculation
+spaces, and effluent pathways for radioactivity; and GDC~19 requires that
+control room operators maintain safe-shutdown capability with adequate
+instrumentation even under accident conditions~\cite{NRC_GDC_2023}. The IAEA
+mirrors these requirements through SSR-2/1 and provides detailed I\&C system
+guidance in SSG-39~\cite{IAEA_SSR21, IAEA_SSG39}.
 
-\section{Radiation environments and single-event effects in electronics}
-Radiation fields relevant to terrestrial nuclear facilities, beamline experiments, and
-aerospace missions vary widely in particle species and energy spectra. Fast neutrons are of
-particular interest for terrestrial testing because they can produce displacement damage and
-ionization through secondary charged particles generated in nuclear interactions with
-silicon and package materials~\cite{normand1996single, ziegler1996terrestrial}. High-energy protons and heavy ions are often emphasized
-in space applications because they can directly deposit charge along a track in sensitive
-volumes, leading to transient and sometimes destructive events. Gamma radiation primarily
-contributes to total ionizing dose (TID), which can shift device parameters and increase
-leakage currents over time. In practical environments, mixed fields can be present, and
-secondary particles produced in surrounding structures can dominate the effective spectrum
-seen by the electronics.
+The technical scope of these monitoring requirements is extraordinary. Neutron
+flux measurement alone spans approximately twelve decades — from a few counts
+per second during refueling to approximately $10^{15}$\,n\,cm$^{-2}$\,s$^{-1}$
+at full power — requiring three overlapping detector subsystems. Source-range
+monitors based on proportional counters or fission chambers operate in
+pulse-counting mode across the lowest six to seven decades during startup and
+shutdown. Intermediate-range monitors employ compensated ionization chambers
+in Campbell mode across approximately eight to ten decades. Power-range
+monitors using uncompensated boron-lined ionization chambers cover the upper
+two decades and are calibrated against secondary-side heat balance. Each of
+these subsystems must meet independent safety-channel redundancy requirements,
+typically two to four independent channels per range~\cite{NucPower_Excore}.
 
-Single-event effects are a family of phenomena in which a single particle interaction
-perturbs device behavior~\cite{dodd2003basic, messenger1992effects}. In digital logic, the most commonly discussed SEE is the
-single-event upset (SEU), in which a storage element such as a flip-flop or memory bit
-changes state. When an upset occurs in a data register, it may appear as an incorrect numeric
-value that propagates through computation. When it occurs in a state register, it can change
-the sequencing of a controller, alter a mode selection, or prevent a process from advancing.
-Single-event transients (SETs) occur when a particle strike produces a short-duration pulse
-in combinational logic. These pulses may be filtered by logic depth and timing, or they may
-be captured by sequential elements depending on clock phase and pulse
-width~\cite{dodd2004production}. More severe
-events such as single-event latchup (SEL) can induce a high-current state that persists until
-power is cycled or protective circuitry intervenes, potentially damaging the device.
+Beyond neutron flux, plants deploy area gamma monitors throughout containment,
+auxiliary buildings, fuel handling areas, and spent fuel pools to enforce
+occupational dose limits under 10~CFR~20. On-line gamma spectroscopy of the
+primary coolant monitors fission-product signatures that indicate
+fuel-cladding breaches. Containment atmosphere monitors classified as
+Category~1 under Regulatory Guide 1.97, Revision 5, must survive combined
+temperature, pressure, radiation, and chemical-spray environments for the
+full duration of a design-basis accident~\cite{NRC_RG197_2018}. Stack and
+liquid effluent monitors verify compliance with 10~CFR~50 Appendix~I dose
+objectives, while the Radiological Environmental Monitoring Program tracks
+off-site air, water, and vegetation samples under RG~4.1.
 
-A defining challenge of SEE characterization is that observed behavior depends strongly on
-system context. A single bit flip in a redundant arithmetic datapath may have little impact,
-while an identical flip in a control enable or address pointer can halt a test or invalidate
-measurements. Additionally, some failures are \emph{silent}: a system may continue to run
-and produce outputs that appear reasonable, yet internal fault accumulation or altered timing
-causes gradual performance degradation. These realities motivate system-level experiments
-that measure not only event counts, but also the consequences of events on functional
-behavior~\cite{natacad2018testing, keller2018dynamic}.
+The Fukushima Daiichi accident of March 2011 provided a severe demonstration
+of the consequences when monitoring fails. The tsunami rendered 23 of 24
+on-site radiation monitoring stations nonfunctional. The subsequent loss of
+all AC power and battery depletion eliminated reactor vessel pressure,
+temperature, and water-level indication, forcing operators to manage three
+simultaneous core-melt progressions with essentially no real-time process
+data~\cite{NCBI_Fukushima_Lessons, NAS_Fukushima_2016}. Spent fuel pool
+instrumentation was unavailable for nearly two weeks. The NRC's
+post-Fukushima response, including Order EA-12-051 requiring backup-powered
+spent fuel pool level instrumentation, the FLEX diverse-coping strategy
+described in NEI~12-06, and the addition of Type~F severe-accident management
+variables to RG~1.97 Rev.~5, underscored that reliable monitoring is not a
+compliance formality but the operational foundation of accident management.
 
-Quantitative analysis typically describes SEE sensitivity using an upset rate or cross-section
-as a function of fluence and particle spectrum~\cite{reed2003ground, shaneyfelt2008qualification}. However, a single rate does not fully capture
-the engineering question of interest: \emph{what does the system do after an event occurs?}
-For embedded control and monitoring platforms, the post-event trajectory---recovery,
-persistence, amplification, or self-correction---is often more important than the event count
-itself. This dissertation therefore emphasizes measurement strategies that preserve and
-interpret the temporal evolution of the system during irradiation.
+%% ------------------------------------------------------------
+\section{Limitations of Current Radiation Detector Technologies}
+%% ------------------------------------------------------------
 
-\section{Field-programmable gate arrays as harsh-environment digital platforms}
-FPGAs implement digital circuits using a fabric of programmable logic blocks, routing
-resources, and embedded hard macros such as block RAM, DSP slices, and high-speed
-serial transceivers. Their defining feature is reconfigurability: functionality is specified by
-a configuration bitstream that programs lookup tables, interconnect, and optional features
-of the device. This capability enables rapid iteration and consolidation of complex digital
-subsystems, which is particularly attractive in experimental environments where
-requirements evolve.
+The detector materials deployed across the nuclear industry each carry
+critical limitations that constrain their use in existing plants and threaten
+to preclude their adoption in advanced reactor environments. High-purity
+germanium (HPGe) remains the gold standard for gamma spectroscopy, achieving
+better than 0.2\% full-width at half-maximum energy resolution at 662\,keV.
+However, its narrow bandgap of 0.67\,eV mandates cryogenic operation below
+120\,K. Liquid-nitrogen dewars are impractical for unattended or remote
+monitoring; mechanical coolers add substantial cost, complexity, and
+microphonic noise that degrades resolution at low energies. HPGe is therefore
+confined almost exclusively to laboratory and assay applications rather than
+continuous in-plant monitoring~\cite{Springer_HPGe_Cooling}.
 
-For instrumentation and control, FPGAs provide several practical advantages. Deterministic
-timing can be achieved by implementing synchronous datapaths with precisely controlled
-latency. Multiple heterogeneous functions---such as sensor sampling, filtering, state
-estimation, actuator drive, and communications---can be integrated while maintaining
-tight timing alignment. Hardware-level parallelism also supports high-rate data reduction
-and event detection, enabling long-duration experiments without saturating telemetry
-bandwidth.
+Silicon detectors dominate charged-particle detection and fast-neutron
+spectrometry in research settings but suffer irreversible displacement
+damage above approximately $10^{14}$--$10^{15}$\,n$_\mathrm{eq}$\,cm$^{-2}$
+fluence, with charge-collection efficiency falling toward 50\% — a threshold
+easily surpassed in the lifetime of a power-reactor
+instrument~\cite{Nature_SiDamage}. Silicon's low atomic number ($Z = 14$)
+also provides poor photoelectric stopping power for gamma-ray energies above
+a few hundred keV, making it poorly suited to the mixed neutron-gamma fields
+present throughout a reactor plant.
 
-These advantages come with a fundamental vulnerability: in many FPGA families, the
-configuration memory that defines the circuit is implemented using radiation-sensitive
-storage~\cite{kastensmidt2014survey, rakhman2017sram}. Upsets in configuration bits can alter logic functions or routing, creating persistent
-errors that remain until the configuration is corrected. Upsets in user logic storage elements
-can corrupt state, and SETs can perturb combinational paths. Consequently, the relevant
-question is not whether an FPGA experiences upsets, but how the overall system is
-architected to \emph{observe}, \emph{tolerate}, and when necessary \emph{recover} from them.
+Scintillators constitute the most widely deployed class of gamma-detection
+instruments and are valued for their ability to produce measurable light from
+a wide range of ionizing radiations. Sodium iodide thallium-doped
+[NaI(Tl)] crystals, the workhorse material, achieve approximately 6--7\%
+energy resolution at 662\,keV but are highly hygroscopic, mechanically
+fragile, and must be coupled to photomultiplier tubes that are sensitive to
+magnetic fields, fragile under shock and vibration, and require high-voltage
+supplies of 800--1200\,V~\cite{Luxium_NaI}. Advanced scintillators such as
+LaBr$_3$(Ce) achieve approximately 3\% resolution but contain intrinsic
+radioactivity from $^{138}$La that creates a flat background continuum
+complicating low-level measurements. Organic scintillators, including
+plastic scintillators and stilbene crystals, are well established for fast
+neutron detection through proton-recoil interactions, but their low effective
+atomic number renders them essentially transparent to gamma rays, requiring
+either active discrimination electronics or companion gamma-shielding that
+adds mass, cost, and complexity.
 
-Mitigation strategies exist across multiple layers. At the circuit level, redundancy such as
-duplication or triplication can mask certain classes of errors, though at the cost of resource
-usage and potentially increased sensitivity to common-mode
-faults~\cite{lyons1962tmr, sterpone2005tmr, pratt2008partial}. At the configuration
-level, readback and scrubbing can detect and correct configuration upsets, but they require
-additional infrastructure and can be difficult to integrate with strict timing
-requirements~\cite{heiner2009scrubbing, berg2008scrubbing, stoddard2017hybrid}.
-At the system level, watchdogs and health monitors can detect stalls or inconsistent outputs
-and trigger controlled recovery actions. The selection of mitigations is inherently tied to
-application constraints: a control loop may prioritize bounded recovery time, while a data
-logger may prioritize data integrity and provenance.
+Cadmium zinc telluride (CZT) represents the most mature room-temperature
+semiconductor alternative, offering energy resolutions approaching 0.7\%
+at 662\,keV in pixelated geometries with full single-carrier-transport
+correction. However, CZT crystal growth requires extremely precise control
+of stoichiometry and vapor-phase conditions during directional
+solidification: high cadmium vapor pressure promotes vacancy defects,
+tellurium inclusions limit boule diameter, and critical shear stresses
+of only 0.3\,MPa make the material mechanically fragile during
+processing~\cite{CZT_Wikipedia}. Production costs remain high, supply is
+constrained, and the situation deteriorated significantly in 2025 when
+the People's Republic of China imposed export controls on germanium,
+gallium, and related critical materials including cadmium telluride compounds.
 
-A key observation motivating this dissertation is that many experiment-relevant failure
-modes are \emph{control-path} failures rather than straightforward datapath bit flips. Control
-paths include counters, state machines, scheduling flags, communication framing, and mode
-registers. Upsets in these elements can prevent valid comparisons, stop scanning, or lock a
-system into a non-responsive state without producing an unambiguous error signature in
-the primary outputs~\cite{morgan2005seu}. Capturing these failure modes requires on-chip observability and
-telemetry that are designed from the outset to detect ``stuck'' or ``silent'' conditions.
+For thermal neutron detection, the $^3$He tube has been the standard
+technology since the 1950s by virtue of its high neutron absorption
+cross-section (5330\,barns at 0.025\,eV), excellent gamma discrimination,
+and compatibility with conventional pulse-counting electronics. The
+supply of $^3$He — produced exclusively as a decay product of tritium from
+the nuclear-weapons stockpile — was recognized as critically constrained
+following the post-September~11 deployment of approximately 1,300 radiation
+portal monitors for border-security applications. Annual demand reached
+roughly 70,000~L against a production rate of only approximately
+8,000~L\,yr$^{-1}$, driving prices from approximately \$100\,L$^{-1}$ to
+over \$2,000\,L$^{-1}$ and prompting DOE to begin rationing allocation in
+2009~\cite{PhysicsToday_He3}. The episode exposed the fragility of depending
+on a single non-renewable detection medium and has accelerated development
+of alternative neutron detectors using $^{10}$B-lined tubes and
+$^6$LiF:ZnS scintillator screens.
 
-\section{In-situ monitoring and irradiation testing methodology}
-In-situ irradiation testing aims to measure system behavior while the system operates under
-exposure, rather than treating radiation as an off-line stress applied prior to a functional
-check. This approach is essential when the effects of interest are transient, intermittent, or
-dependent on accumulated fluence. It is also essential when recovery actions---such as
-scrubbing, resets, or power-cycling after latchup---are part of the operational concept and
-therefore must be measured as part of system performance.
+Halide perovskites have emerged as a compelling alternative class of
+radiation-responsive materials. Their high effective atomic number — CsPbBr$_3$
+has $Z_\mathrm{eff} = 65.9$, compared to 50.2 for CZT — provides excellent
+photoelectric stopping power for gamma radiation~\cite{Springer_CsPbBr3}.
+Single-crystal MAPbBr$_3$ and CsPbBr$_3$ devices have demonstrated
+mobility-lifetime products of up to $8 \times 10^{-3}$\,cm$^2$\,V$^{-1}$
+and energy resolutions approaching 1.4\% at 662\,keV~\cite{He_NatPhoton_2021},
+approaching CZT performance without cryogenic cooling or Bridgman growth.
+A distinctive self-healing mechanism — in which the soft perovskite lattice
+allows radiation-displaced ions to migrate back toward equilibrium positions
+at room temperature — has been confirmed under proton irradiation to
+$10^{13}$\,p\,cm$^{-2}$ and extended gamma exposures~\cite{RG_SelfHealing}.
+The methylhydrazinium lead chloride (MHyPbCl$_3$) composition investigated
+in this work introduces a high-hydrogen-density 3D perovskite framework
+with a hydrogen density of $3.79 \times 10^{22}$\,cm$^{-3}$ comparable to
+organic scintillators, enabling direct fast-neutron conversion through proton
+recoil without requiring a separate moderator or conversion
+layer~\cite{Panaccione_NIM_2024}.
 
-A practical in-situ methodology must provide fault visibility that is commensurate with the
-complexity of the system. For FPGA platforms, this motivates instrumentation that can
-detect and summarize fault activity within large collections of sequential elements and
-internal control structures without requiring full-state readout. The methodology must also
-provide time-aligned telemetry so that fault indicators can be correlated with external
-conditions, control commands, and measured plant response. Finally, it must support
-repeatable experimentation, including clear run segmentation, metadata capture, and
-post-processing workflows that reduce ambiguity.
+Significant challenges remain. Ion migration under applied electric fields
+and elevated humidity drives hysteresis in current-voltage characteristics
+and accelerates device failure at the biases required for thick-crystal
+direct-conversion operation. Long-term stability data at power-reactor
+fluence levels ($10^{14}$--$10^{15}$\,n\,cm$^{-2}$) remain absent from the
+literature. Lead toxicity presents regulatory and environmental considerations
+for deployed instruments. These challenges motivate the stabilization
+strategies — fluorinated surface passivation, hexagonal boron nitride
+composites, and vacuum operation — investigated in the present work.
 
-One approach to fault visibility is to embed structured test logic within the FPGA design.
-Large sets of flip-flops can be organized into scan structures or signature-based monitors,
-enabling efficient detection of deviations from expected behavior. Complementary watchdog
-logic can supervise progress through known operational phases, flagging stalls or invalid
-states that might otherwise appear as a simple cessation of log messages. Telemetry formats
-can be designed to favor robustness and interpretability, prioritizing concise, periodic
-reports that survive occasional corruption and support automated parsing.
+%% ------------------------------------------------------------
+\section{The Economics of Nuclear Instrumentation}
+\label{sec:intro_economics}
+%% ------------------------------------------------------------
 
-While fault detection infrastructure can quantify upset activity, system relevance is often
-best demonstrated using a meaningful workload. In this dissertation, closed-loop control is
-used as a representative workload because it couples internal computation to externally
-observable behavior. A controller operating on an FPGA interacts with a plant model or
-physical system through measured feedback. Radiation-induced faults can therefore be
-evaluated not only by their occurrence, but by their impact on performance metrics such as
-tracking error, overshoot, actuator saturation, and stability margins. Importantly, a closed-
-loop workload can reveal fault masking and fault amplification: some errors are corrected
-by feedback, while others are reinforced by the loop dynamics.
+Cost overruns in nuclear construction have become the defining obstacle to
+expansion in liberalized electricity markets. The two AP1000 units completed
+at Plant Vogtle in Georgia cost approximately \$35 billion against an original
+estimate of \$14 billion~\cite{AJC_Vogtle}. France's Flamanville~3 EPR
+reached \texteuro{}23.7 billion — seven times its original budget — after
+seventeen years of construction. The UK's Hinkley Point C has escalated to
+an estimated £35 billion in 2015 prices against an initial projection of
+approximately £18 billion~\cite{CounterPunch_HPC}. New nuclear levelized
+cost of electricity in the United States ranges from approximately
+\$110\,MWh$^{-1}$ (EIA) to \$180\,MWh$^{-1}$ (Lazard), compared to
+approximately \$55\,MWh$^{-1}$ for utility-scale solar and
+\$40\,MWh$^{-1}$ for onshore wind. The existing U.S. fleet operates far
+more competitively — NEI reports a 2023 average total generating cost of
+\$31.76\,MWh$^{-1}$, the lowest on record~\cite{NEI_Costs_2025} — but
+twelve commercial reactors have closed since 2013 due to competitive
+pressure, and emergency support programs including a \$6 billion Civil
+Nuclear Credit allocation have been required to prevent further
+premature retirements~\cite{NBC_CivilNuclear}.
 
-The combination of on-chip fault monitors, watchdog-based health supervision, robust
-telemetry, and a closed-loop workload provides a foundation for system-level irradiation
-studies that move beyond binary outcomes. Rather than asking whether an FPGA ``survived''
-a run, the experiment can ask how performance evolves with exposure, which subsystems
-dominate observed failures, and which mitigations provide the most impact per unit
-resource cost.
+Instrumentation and control systems, while representing an estimated 5--10\%
+of total plant capital cost, exert a disproportionate influence on both
+construction timelines and long-term operating expenses. A typical large
+light-water reactor contains approximately 10,000 sensors, 5,000~km of
+I\&C cabling, and hundreds of electronic cabinets. Nuclear-grade quality
+assurance requirements under 10~CFR~50 Appendix~B impose a cost premium that
+pervades the entire supply chain: components manufactured to identical
+functional specifications have been documented at price ratios of 4:1 or
+greater between nuclear-qualified and commercial-grade procurement, driven
+by QA documentation requirements, environmental qualification testing, and
+the severe scarcity of nuclear-qualified suppliers~\cite{ANS_ICModernization_2025}.
+Dominion Energy's comprehensive digital I\&C modernization across four units
+at Surry and North Anna is budgeted at \$5.45 billion as part of subsequent
+license renewal~\cite{PowerEng_DigitalAge}. The DOE Light Water Reactor
+Sustainability (LWRS) Program has explicitly cautioned that
+``wide-scale modernization of legacy I\&C systems could prove to be
+cost-prohibitive unless implemented to enable significant business innovation.''
 
-\section{Scope and organization of this dissertation}
-This dissertation focuses on radiation-induced effects in FPGA-based digital systems, with
-an emphasis on in-situ experimentation and system-level interpretation of faults. The work
-considers single-event phenomena that manifest during operation and the architectural
-choices that influence detectability, tolerance, and recovery. While total ionizing dose and
-displacement damage can influence long-term behavior, the primary emphasis is placed on
-single-event-driven disruptions relevant to real-time operation.
+The cost of radiation-hardened digital electronics amplifies this problem
+at the component level. Purpose-built radiation-hardened FPGAs — the
+Microchip RTG4, AMD/Xilinx XQRKU060, and their equivalents — carry price
+tags of tens of thousands to hundreds of thousands of dollars per device,
+a premium of 10$\times$ to 100$\times$ over commercial equivalents that
+cost \$10--500~\cite{BISResearch_RadHardFPGA}. The radiation-hardened
+FPGA market, valued at \$465.5 million in 2024, serves primarily space
+and defense applications where unit volumes are small and alternatives
+do not exist. These devices trail commercial FPGAs by two to three process
+generations: the Microchip RTG4 uses a 65~nm flash-based process while
+commercial devices operate at 3--5~nm, a gap representing multiple orders
+of magnitude in logic density, performance, and power
+efficiency~\cite{Microchip_RTG4, AMD_XQRKU060}. Long lead times of 6--18
+months, ITAR export restrictions, and the absence of advanced intellectual
+property cores compound the challenge. For SMRs targeting a levelized cost
+of electricity of \$60--90\,MWh$^{-1}$, this cost structure is untenable:
+I\&C requirements do not scale down proportionally with reactor output,
+making instrumentation a higher fraction of total cost in smaller plants.
+The DOE's GEMINA program has set an aspirational target of reducing
+advanced reactor operations and maintenance cost from \$23\,MWh$^{-1}$
+to \$2\,MWh$^{-1}$ through autonomous operations and advanced diagnostics —
+a goal that cannot be achieved without fundamentally cheaper and more
+capable sensing and processing hardware~\cite{DOE_GEMINA}.
 
-Chapter~2 provides background on the physics of radiation interactions relevant to digital
-electronics and reviews prior work in FPGA radiation testing and mitigation. Chapter~3
-describes the hardware and software infrastructure used to conduct in-situ experiments,
-including embedded monitors and telemetry workflows. Chapter~4 presents the closed-loop
-FPGA workload used to connect internal fault activity to externally measurable performance.
-Chapter~5 presents irradiation results and analysis, including event classification and
-quantitative metrics versus exposure. Chapter~6 concludes the dissertation with a synthesis
-of findings and directions for future work in harsh-environment digital platforms and
-radiation-aware system design.
+The alternative to purpose-built rad-hard electronics is software-defined
+radiation tolerance using commercial off-the-shelf FPGAs with designer-inserted
+mitigation. Triple modular redundancy (TMR) triplicates critical logic with
+majority voting to correct single-event upsets in real time; configuration
+memory scrubbing periodically corrects bit-flip errors in SRAM-based
+FPGAs before they propagate; and partial dynamic reconfiguration enables
+real-time repair of corrupted fabric regions. CERN's two-year study of
+Kintex-7 FPGAs under mixed-field radiation found no permanent operational
+failures to 300\,krad total ionizing dose with TMR and
+scrubbing~\cite{CERN_FPGA_Rad}. Montana State University's RadSat program
+demonstrated COTS FPGA-based radiation tolerance at ``a cost 100$\times$
+lower than existing radiation-hardened computers.'' A TMR-with-spares
+architecture for nuclear reactor protection system logic has been
+validated under cyclotron irradiation~\cite{SciDirect_TMR_Nuclear}. These
+results suggest that COTS FPGAs with mature mitigation strategies can meet
+nuclear monitoring requirements at a fraction of the cost of purpose-built
+rad-hard devices, provided the mitigation architecture is co-designed with
+the application from the outset.
+
+%% ------------------------------------------------------------
+\section{The Gap: An Integrated Materials-to-Systems Approach}
+%% ------------------------------------------------------------
+
+Nuclear instrumentation research has historically operated in disciplinary
+silos. Detector material development, device fabrication, signal processing
+electronics, and system-level integration have each been pursued as largely
+independent research tracks. The DOE's Nuclear Energy Enabling Technologies
+(NEET) Advanced Sensors and Instrumentation (ASI) program, which has funded
+more than 43 projects since FY~2011 with a combined investment exceeding
+\$36 million, organizes its solicitations into discrete categories covering
+sensors, control systems, communications, and data analytics~\cite{DOE_ASI}.
+Conference proceedings from the ANIMMA international instrumentation
+symposium similarly separate detector development sessions from electronics
+sessions, with system integration papers being comparatively rare.
+
+The cost of this fragmentation is measurable. A 2024 Nature Communications
+study on CsPbBr$_3$ alpha-particle detectors achieved 6.9\% energy resolution
+with commercial laboratory electronics and 1.1\% energy resolution with a
+custom-designed readout ASIC matched to the perovskite's specific
+carrier-transport characteristics — a sixfold improvement achieved
+entirely through electronics optimization rather than material
+improvement~\cite{NatComm_CsPbBr3_ASIC}. Yet the authors note that
+``perovskite semiconductors combined with corresponding electronic designs
+have not been largely explored so far.'' Meanwhile, in-reactor perovskite
+dosimetry demonstrations have relied on bench-top source-measurement units
+costing thousands of dollars, because no deployable, radiation-tolerant
+readout system exists for these materials. The fundamental economic argument
+for perovskites — low-cost solution processing, room-temperature operation,
+and material costs orders of magnitude below CZT — is negated if the readout
+system costs remain at the level of conventional rad-hard electronics.
+
+This dissertation addresses that gap through three integrated areas of
+investigation. First, at the materials level, perovskite compositions
+spanning 3D and 2D structures and ranging from high-energy photon monitoring
+to fast neutron direct conversion are synthesized, characterized, and
+evaluated for radiation response. Second, at the device level, these
+materials are developed into functional detectors, with each device
+architecture matched to a specific radiation detection application. Third,
+at the system level, a radiation-tolerant FPGA-based monitoring platform
+is developed and validated through digital plant simulation, providing
+the processing infrastructure necessary to deploy perovskite-based detectors
+in a nuclear environment without reliance on purpose-built rad-hard
+components. The connecting thesis is straightforward: novel radiation-responsive
+materials and cost-effective radiation-tolerant systems must be developed
+together if the resulting instrumentation is to be technically capable
+and economically viable for advanced reactor deployment.
+
+%% ------------------------------------------------------------
+\section{Research Objectives and Dissertation Organization}
+%% ------------------------------------------------------------
+
+The research presented in this dissertation is organized around three
+complementary objectives aligned with the materials-to-systems hierarchy
+described above.
+
+The first objective is to characterize the radiation response of halide
+perovskite materials across a range of compositions, device architectures,
+and radiation types relevant to nuclear monitoring. This encompasses
+gamma-photon response from Cs-137 and Co-60 sources, X-ray sensitivity
+as a function of applied bias, alpha-particle spectroscopy, and the material
+instability mechanisms — ion migration, humidity-dependent breakdown, and
+charge trapping — that currently limit perovskite detector lifetimes.
+
+The second objective is to develop and demonstrate perovskite-based
+radiation detection devices optimized for specific applications in the
+nuclear fuel cycle: high-energy photon monitoring for post-detonation
+forensics, direct-conversion X-ray detection, alpha-particle spectroscopy
+for thermal neutron sensing feasibility, and direct fast-neutron conversion
+using the hydrogen-rich MHyPbCl$_3$ composition. Each device is
+characterized through electrical transport measurements, Monte Carlo
+simulation, and experimental irradiation at a research reactor facility.
+
+The third objective is to implement and validate a radiation-tolerant
+FPGA-based digital monitoring system suitable for nuclear plant
+instrumentation applications. This includes design and testing of a
+fault-tolerant flip-flop scrubbing register (FFSR) architecture, integration
+of TMR voter logic, and validation of the combined system against a
+digital plant simulation environment representing nuclear I\&C functions.
+
+The remainder of this dissertation is organized as follows. Chapter~2
+provides the background necessary for each area of investigation,
+encompassing perovskite crystal structure and radiation interaction physics,
+ion migration mechanisms, radiation effects on digital electronics, and
+the taxonomy of fault-tolerant design approaches. Chapter~3 presents the
+characterization of Cs$_{0.1}$FA$_{0.9}$PbI perovskite solar cells under
+extended gamma irradiation. Chapter~4 addresses the voltage-induced
+instability problem in two-dimensional perovskite detectors and the
+5F-PEAI surface passivation strategy developed to overcome it. Chapter~5
+describes the MAPbI$_3$-hBN composite detector and its characterization
+for X-ray and alpha-particle detection. Chapter~6 presents the
+MHyPbCl$_3$ fast neutron detector, from crystal synthesis through
+beam-facility testing and gamma discrimination analysis. Chapter~7 describes
+the radiation-tolerant FPGA monitoring system, including the FFSR design,
+TMR integration, and digital plant simulation validation. Chapter~8
+provides overall conclusions and recommendations for future work.

@@ -1,368 +1,237 @@
 \begin{thebibliography}{10}
 
-\bibitem{adell2008assessing}
-P.~Adell and G.~Allen.
-\newblock Assessing and mitigating radiation effects in {Xilinx FPGAs}.
-\newblock Technical Report JPL Publication 08-9, NASA Jet Propulsion
-  Laboratory, 2008.
+\bibitem{AMD_XQRKU060}
+{AMD/Xilinx}.
+\newblock {XQRKU060} space-grade {FPGA}.
+\newblock \url{https://www.xilinx.com}.
+\newblock Accessed March 2026.
 
-\bibitem{artola2021benchmarks}
-L.~Artola, G.~Hubert, and T.~Rousselin.
-\newblock On the evaluation of {FPGA} radiation benchmarks.
-\newblock {\em Microelectronics Reliability}, 126:114299, 2021.
+\bibitem{ANS_ICModernization_2025}
+{ANS Nuclear Newswire}.
+\newblock Modernizing {I\&C} for operations and maintenance, one phase at a
+  time.
+\newblock \url{https://www.ans.org/news/2025-12-05/article-7556/}, 2025.
 
-\bibitem{baumann2001soft}
-R.~C. Baumann.
-\newblock Soft errors in advanced semiconductor devices---part {I}: The three
-  radiation sources.
-\newblock {\em IEEE Transactions on Device and Materials Reliability},
-  1(1):17--22, 2001.
+\bibitem{AJC_Vogtle}
+{Atlanta Journal-Constitution}.
+\newblock {PSC} raises {Georgia Power} rates, passing most {Plant Vogtle}
+  expansion costs on to customers.
+\newblock \url{https://www.ajc.com}, 2024.
 
-\bibitem{baumann2005radiation}
-R.~C. Baumann.
-\newblock Radiation-induced soft errors in advanced semiconductor technologies.
-\newblock {\em IEEE Transactions on Device and Materials Reliability},
-  5(3):305--316, 2005.
+\bibitem{BISResearch_RadHardFPGA}
+{BIS Research}.
+\newblock Radiation-hardened {FPGA} market: Global and regional analysis,
+  2024--2034.
+\newblock Technical report, BIS Research, 2024.
 
-\bibitem{berg2008scrubbing}
-M.~Berg, C.~Poivey, D.~Petrick, D.~Espinosa, A.~Lesea, K.~A. LaBel,
-  M.~Friendlich, H.~Kim, and A.~Phan.
-\newblock Effectiveness of internal versus external {SEU} scrubbing mitigation
-  strategies in a {Xilinx FPGA}: Design, test, and analysis.
-\newblock {\em IEEE Transactions on Nuclear Science}, 55(4):2259--2266, 2008.
+\bibitem{PhysicsToday_He3}
+A.~Cho.
+\newblock {DOE} begins rationing helium-3.
+\newblock Physics Today, 2009.
 
-\bibitem{black2013mcu}
-J.~D. Black, P.~E. Dodd, and K.~M. Warren.
-\newblock Physics of multiple-node charge collection and impacts on
-  single-event characterization and soft error rate prediction.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1836--1851, 2013.
+\bibitem{CounterPunch_HPC}
+{CounterPunch}.
+\newblock What a turkey: {Hinkley Point C} costs hit a new high.
+\newblock \url{https://www.counterpunch.org}, 2024.
 
-\bibitem{cannon2019strategies}
-M.~Cannon and M.~Wirthlin.
-\newblock Strategies for removing common-mode failures from {TMR} designs
-  deployed on {SRAM} {FPGAs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 66(1):207--215, 2019.
+\bibitem{Springer_HPGe_Cooling}
+F.~C.~L. Crespi et~al.
+\newblock New cooling methods for {HPGe} detectors and associated electronics.
+\newblock {\em Journal of Radioanalytical and Nuclear Chemistry}, 2005.
 
-\bibitem{coronetti2021systemlevel}
-A.~Coronetti, R.~G. Alia, J.~Budroweit, et~al.
-\newblock Radiation hardness assurance through system-level testing: Risk
-  acceptance, facility requirements, test methodology, and data exploitation.
-\newblock {\em IEEE Transactions on Nuclear Science}, 68(5):958--969, 2021.
+\bibitem{CERN_FPGA_Rad}
+others.
+\newblock Radiation effects and mitigation strategies for modern {FPGAs}.
+\newblock CERN Document Server.
 
-\bibitem{dijks2026systematic}
-J.~Dijks, S.~{de Jong}, A.~Menicucci, and I.~Akay.
-\newblock Systematic review of engineering and testing approaches for radiation
-  hardness assurance in commercial space avionics.
-\newblock {\em Acta Astronautica}, 238:1354--1366, 2026.
+\bibitem{RG_SelfHealing}
+others.
+\newblock Radiation hardness and self-healing of perovskite solar cells.
+\newblock ResearchGate, 2016.
 
-\bibitem{dodd2005simulation}
-P.~E. Dodd.
-\newblock Physics-based simulation of single-event effects.
-\newblock {\em IEEE Transactions on Device and Materials Reliability},
-  5(3):343--357, 2005.
+\bibitem{Springer_CsPbBr3}
+others.
+\newblock {\em Inorganic Perovskite {CsPbBr$_3$} Gamma-Ray Detector}.
+\newblock Springer, 2021.
 
-\bibitem{dodd2003basic}
-P.~E. Dodd and L.~W. Massengill.
-\newblock Basic mechanisms and modeling of single-event upset in digital
-  microelectronics.
-\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):583--602, 2003.
+\bibitem{SciDirect_TMR_Nuclear}
+others.
+\newblock Active redundant hardware architecture for increased reliability in
+  {FPGA}-based nuclear reactors critical systems.
+\newblock {\em Microelectronics Reliability}, 2022.
 
-\bibitem{dodd2004production}
-P.~E. Dodd, M.~R. Shaneyfelt, J.~A. Felix, and J.~R. Schwank.
-\newblock Production and propagation of single-event transients in high-speed
-  digital logic {ICs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 51(6):3278--3284, 2004.
+\bibitem{NatComm_CsPbBr3_ASIC}
+others.
+\newblock High energy resolution {CsPbBr$_3$} alpha particle detector with a
+  full-customized readout application specific integrated circuit.
+\newblock {\em Nature Communications}, 2024.
 
-\bibitem{ecoffet2013inorbit}
-R.~Ecoffet.
-\newblock Overview of in-orbit radiation induced spacecraft anomalies.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1791--1815, 2013.
+\bibitem{He_NatPhoton_2021}
+Yihui He et~al.
+\newblock {CsPbBr$_3$} perovskite detectors with 1.4\% energy resolution for
+  high-energy $\gamma$-rays.
+\newblock {\em Nature Photonics}, 15:36--42, 2021.
 
-\bibitem{ferletcavrois2013set}
-V.~Ferlet-Cavrois, L.~W. Massengill, and P.~Gouker.
-\newblock Single event transients in digital {CMOS}---a review.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1767--1790, 2013.
-
-\bibitem{fleetwood2013total}
-D.~M. Fleetwood.
-\newblock Total ionizing dose effects in {MOS} and low-dose-rate-sensitive
-  linear-bipolar devices.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1706--1730, 2013.
-
-\bibitem{fleetwood2021postmoore}
-D.~M. Fleetwood.
-\newblock Radiation effects in a post-{Moore} world.
-\newblock {\em IEEE Transactions on Nuclear Science}, 68(5):509--545, 2021.
-
-\bibitem{graham2003seu}
-P.~Graham, M.~Caffrey, M.~Wirthlin, D.~E. Johnson, and N.~Rollins.
-\newblock {SEU} mitigation for half-latches in {Xilinx} {Virtex} {FPGAs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 50(6):2139--2146, 2003.
-
-\bibitem{heiner2009scrubbing}
-J.~Heiner, B.~Sellers, M.~Wirthlin, and J.~Kalb.
-\newblock {FPGA} partial reconfiguration via configuration scrubbing.
-\newblock In {\em International Conference on Field Programmable Logic and
-  Applications ({FPL})}, pages 99--104. IEEE, 2009.
-
-\bibitem{herreraalzu2013scrubbers}
-I.~Herrera-Alzu and M.~L{\'o}pez-Vallejo.
-\newblock Design techniques for {Xilinx} {Virtex} {FPGA} configuration memory
-  scrubbers.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(1):376--385, 2013.
-
-\bibitem{iaea2016design}
+\bibitem{IAEA_SSG39}
 {International Atomic Energy Agency}.
-\newblock {\em Design of Instrumentation and Control Systems for Nuclear Power
-  Plants}.
-\newblock Safety Standards Series No. SSG-39. IAEA, Vienna, 2016.
+\newblock Design of instrumentation and control systems for nuclear power
+  plants ({SSG-39}).
+\newblock Technical report, IAEA, 2016.
 
-\bibitem{jedec2006jesd89a}
-{JEDEC Solid State Technology Association}.
-\newblock Measurement and reporting of alpha particle and terrestrial cosmic
-  ray-induced soft errors in semiconductor devices.
-\newblock Technical Report JESD89A, JEDEC, Arlington, VA, 2006.
+\bibitem{IAEA_SSR21}
+{International Atomic Energy Agency}.
+\newblock Safety of nuclear power plants: Design ({SSR-2/1}).
+\newblock Technical report, IAEA, 2016.
 
-\bibitem{johnson2010voter}
-J.~M. Johnson and M.~J. Wirthlin.
-\newblock Voter insertion algorithms for {FPGA} designs using triple modular
-  redundancy.
-\newblock In {\em Proceedings of the 18th Annual ACM/SIGDA International
-  Symposium on Field Programmable Gate Arrays ({FPGA})}, pages 249--258. ACM,
-  2010.
+\bibitem{IAEA_Projections_2025}
+{International Atomic Energy Agency}.
+\newblock {IAEA} raises nuclear power projections for fifth consecutive year.
+\newblock Technical report, IAEA, 2025.
 
-\bibitem{kastensmidt2014survey}
-F.~L. Kastensmidt and L.~Carro.
-\newblock Mitigation of radiation effects in {SRAM}-based {FPGAs} for space
-  applications.
-\newblock {\em ACM Computing Surveys}, 47(2):1--37, 2014.
+\bibitem{IEA_Nuclear_2024}
+{International Energy Agency}.
+\newblock The path to a new era for nuclear energy.
+\newblock Technical report, IEA, 2024.
 
-\bibitem{keller2018dynamic}
-A.~M. Keller, T.~A. Whiting, K.~B. Sawyer, and M.~J. Wirthlin.
-\newblock Dynamic {SEU} sensitivity of designs on two 28-nm {SRAM}-based {FPGA}
-  architectures.
-\newblock {\em IEEE Transactions on Nuclear Science}, 65(1):280--287, 2018.
-
-\bibitem{korsah1999environmental}
-K.~Korsah, R.~T. Wood, T.~J. Tanaka, and G.~Yee.
-\newblock Current research results on the technical basis for environmental
-  qualification of safety-related digital {I\&C} hardware in nuclear power
-  plants.
-\newblock {\em Nuclear Engineering and Design}, 194(2--3):205--213, 1999.
-
-\bibitem{kuon2008fpga}
-I.~Kuon, R.~Tessier, and J.~Rose.
-\newblock {FPGA} architecture: Survey and challenges.
-\newblock {\em Foundations and Trends in Electronic Design Automation},
-  2(2):135--253, 2008.
+\bibitem{Kairos_Hermes_2025}
+{Kairos Power}.
+\newblock Kairos power begins nuclear safety-related construction of {Hermes}
+  low-power demonstration reactor.
+\newblock \url{https://kairospower.com}, 2025.
+\newblock Accessed March 2026.
 
 \bibitem{lamport:latex}
 Leslie Lamport.
 \newblock {\em \LaTeX\ : {A Document Preparation System}}.
 \newblock Addison-Wesley, {S}econd edition, 1994.
 
-\bibitem{lee2014kintex}
-D.~S. Lee, M.~Wirthlin, G.~Swift, and A.~C. Le.
-\newblock Single-event characterization of the 28~nm {Xilinx Kintex-7}
-  field-programmable gate array under heavy ion irradiation.
-\newblock In {\em IEEE Radiation Effects Data Workshop ({REDW})}, pages 1--5,
-  2014.
+\bibitem{Luxium_NaI}
+{Luxium Solutions}.
+\newblock {NaI(Tl)} scintillation crystals.
+\newblock
+  \url{https://luxiumsolutions.com/radiation-detection-scintillators/crystal-scintillators/naitl-scintillation-crystals}.
+\newblock Accessed March 2026.
 
-\bibitem{lesea2005rosetta}
-A.~Lesea, S.~Drimer, J.~J. Fabula, C.~Carmichael, and P.~Alfke.
-\newblock The {Rosetta} experiment: Atmospheric soft error rate testing in
-  differing technology {FPGAs}.
-\newblock {\em IEEE Transactions on Device and Materials Reliability},
-  5(3):317--328, 2005.
+\bibitem{Microchip_RTG4}
+{Microchip Technology}.
+\newblock {RTG4} radiation-tolerant {FPGAs}.
+\newblock
+  \url{https://www.microchip.com/en-us/products/fpgas-and-plds/radiation-tolerant-fpgas/rtg4-radiation-tolerant-fpgas}.
+\newblock Accessed March 2026.
 
-\bibitem{lyons1962tmr}
-R.~E. Lyons and W.~Vanderkulk.
-\newblock The use of triple-modular redundancy to improve computer reliability.
-\newblock {\em IBM Journal of Research and Development}, 6(2):200--209, 1962.
-
-\bibitem{messenger1992effects}
-G.~C. Messenger and M.~S. Ash.
-\newblock {\em The Effects of Radiation on Electronic Systems}.
-\newblock Van Nostrand Reinhold, 2nd edition, 1992.
-
-\bibitem{morgan2005seu}
-K.~S. Morgan, M.~Caffrey, P.~Graham, E.~Johnson, B.~Pratt, and M.~Wirthlin.
-\newblock {SEU}-induced persistent error propagation in {FPGAs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 52(6):2438--2445, 2005.
-
-\bibitem{morgan2007comparison}
-K.~S. Morgan, D.~L. McMurtrey, B.~H. Pratt, and M.~J. Wirthlin.
-\newblock A comparison of {TMR} with alternative fault-tolerant design
-  techniques for {FPGAs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 54(6):2065--2072, 2007.
-
-\bibitem{natacad2018testing}
+\bibitem{NCBI_Fukushima_Lessons}
 {National Academies of Sciences, Engineering, and Medicine}.
-\newblock {\em Testing at the Speed of Light: The State of {U.S.} Electronic
-  Parts Space Radiation Testing Infrastructure}.
-\newblock The National Academies Press, Washington, DC, 2018.
+\newblock Lessons learned: Plant operations and safety regulations ---
+  {Fukushima} nuclear accident.
+\newblock \url{https://www.ncbi.nlm.nih.gov/books/NBK253925/}.
+\newblock Accessed March 2026.
 
-\bibitem{nrc1997digital}
-{National Research Council}.
-\newblock {\em Digital Instrumentation and Control Systems in Nuclear Power
-  Plants: Safety and Reliability Issues}.
-\newblock The National Academies Press, Washington, DC, 1997.
+\bibitem{NAS_Fukushima_2016}
+{National Academies of Sciences, Engineering, and Medicine}.
+\newblock {\em Lessons Learned from the {Fukushima} Nuclear Accident for
+  Improving Safety and Security of {U.S.} Nuclear Plants: Phase~2}.
+\newblock National Academies Press, Washington, D.C., 2016.
 
-\bibitem{normand1996single}
-E.~Normand.
-\newblock Single event upset at ground level.
-\newblock {\em IEEE Transactions on Nuclear Science}, 43(6):2742--2750, 1996.
+\bibitem{Nature_SiDamage}
+{Nature Research Intelligence}.
+\newblock Silicon detectors and radiation damage.
+\newblock
+  \url{https://www.nature.com/research-intelligence/nri-topic-summaries/silicon-detectors-and-radiation-damage-micro-530460}.
+\newblock Accessed March 2026.
 
-\bibitem{oldham2003total}
-T.~R. Oldham and F.~B. McLean.
-\newblock Total ionizing dose effects in {MOS} oxides and devices.
-\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):483--499, 2003.
+\bibitem{NBC_CivilNuclear}
+{NBC News}.
+\newblock Biden launches \$6{B} effort to save distressed nuclear plants.
+\newblock \url{https://www.nbcnews.com}, 2022.
 
-\bibitem{ostler2009sram}
-P.~S. Ostler, M.~P. Caffrey, D.~S. Gibelyou, P.~S. Graham, K.~S. Morgan, B.~H.
-  Pratt, H.~M. Quinn, and M.~J. Wirthlin.
-\newblock {SRAM} {FPGA} reliability analysis for harsh radiation environments.
-\newblock {\em IEEE Transactions on Nuclear Science}, 56(6):3519--3526, 2009.
+\bibitem{NEI_Costs_2025}
+{Nuclear Energy Institute}.
+\newblock Nuclear costs in context.
+\newblock Technical report, NEI, 2025.
 
-\bibitem{petersen2011single}
-E.~Petersen.
-\newblock {\em Single Event Effects in Aerospace}.
-\newblock IEEE Press / Wiley, Piscataway, NJ, 2011.
+\bibitem{NucPower_Excore}
+{Nuclear-Power.com}.
+\newblock Excore nuclear instrumentation system.
+\newblock
+  \url{https://www.nuclear-power.com/nuclear-power-plant/nuclear-reactor/nuclear-instrumentation/excore-nuclear-instrumentation/}.
+\newblock Accessed March 2026.
 
-\bibitem{petersen2013revolution}
-E.~Petersen, R.~Koga, M.~A. Shoga, J.~C. Pickel, and W.~E. Price.
-\newblock The single event revolution.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1824--1835, 2013.
+\bibitem{Panaccione_NIM_2024}
+Wyatt Panaccione, Zhifang Shi, Praneeth Kandlakunta, Taylor Nichols, Susan
+  White, Jinsong Huang, and Lei~R. Cao.
+\newblock Testing of an organic metal halide perovskite for fast neutron
+  detection.
+\newblock {\em Nuclear Instruments and Methods in Physics Research A},
+  1064:169340, 2024.
 
-\bibitem{petersen1992rate}
-E.~L. Petersen, J.~C. Pickel, J.~H. Adams, and E.~C. Smith.
-\newblock Rate prediction for single event effects---a critique.
-\newblock {\em IEEE Transactions on Nuclear Science}, 39(6):1577--1599, 1992.
+\bibitem{PowerEng_DigitalAge}
+{Power Engineering}.
+\newblock Entering the digital age.
+\newblock \url{https://www.power-eng.com/nuclear/entering-the-digital-age-2/}.
+\newblock Accessed March 2026.
 
-\bibitem{pignol2010cots}
-M.~Pignol.
-\newblock {COTS}-based applications in space avionics.
-\newblock In {\em Design, Automation and Test in Europe Conference ({DATE})},
-  pages 1213--1219, 2010.
+\bibitem{PowerMag_Natrium_2026}
+{POWER Magazine}.
+\newblock A historic first: {NRC} clears {TerraPower's Natrium} nuclear reactor
+  for construction.
+\newblock {\em POWER Magazine}, 2026.
 
-\bibitem{pratt2008partial}
-B.~Pratt, M.~Caffrey, J.~F. Carroll, P.~Graham, K.~Morgan, and M.~Wirthlin.
-\newblock Fine-grain {SEU} mitigation for {FPGAs} using partial {TMR}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 55(4):2274--2280, 2008.
+\bibitem{WNISR_2025}
+Mycle Schneider, Antony Froggatt, et~al.
+\newblock World nuclear industry status report 2025.
+\newblock Technical report, World Nuclear Industry Status Report, 2025.
 
-\bibitem{quinn2014challenges}
-H.~Quinn.
-\newblock Challenges in testing complex systems.
-\newblock {\em IEEE Transactions on Nuclear Science}, 61(2):766--786, 2014.
+\bibitem{DOE_COP28_2023}
+{U.S. Department of Energy}.
+\newblock At {COP28}, countries launch declaration to triple nuclear energy
+  capacity by 2050.
+\newblock
+  \url{https://www.energy.gov/articles/cop28-countries-launch-declaration-triple-nuclear-energy-capacity-2050},
+  2023.
+\newblock Accessed March 2026.
 
-\bibitem{quinn2007review}
-H.~Quinn, K.~Morgan, P.~Graham, J.~Krone, and M.~Caffrey.
-\newblock A review of {Xilinx} {FPGA} architectural reliability concerns from
-  {Virtex} to {Virtex-5}.
-\newblock In {\em 9th European Conference on Radiation and Its Effects on
-  Components and Systems ({RADECS})}, pages 1--8, 2007.
+\bibitem{DOE_GEMINA}
+{U.S. Department of Energy, Office of Nuclear Energy}.
+\newblock {GEMINA}: Generating electricity managed by intelligent nuclear
+  assets.
+\newblock \url{https://www.energy.gov/ne}.
+\newblock Accessed March 2026.
 
-\bibitem{quinn2007domain}
-H.~Quinn, K.~Morgan, P.~Graham, J.~Krone, M.~Caffrey, and K.~Lundgreen.
-\newblock Domain crossing errors: Limitations on single device triple-modular
-  redundancy circuits in {Xilinx} {FPGAs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 54(6):2037--2043, 2007.
+\bibitem{DOE_ASI}
+{U.S. Department of Energy, Office of Nuclear Energy}.
+\newblock {NEET} crosscut --- advanced sensors and instrumentation.
+\newblock
+  \url{https://www.energy.gov/ne/neet-crosscut-advanced-sensors-and-instrumentation}.
+\newblock Accessed March 2026.
 
-\bibitem{rakhman2017sram}
-A.~Rakhman, N.~T. {Dang Nguyen}, H.~T. Le, and C.~Lee.
-\newblock Understanding radiation effects in {SRAM}-based field programmable
-  gate arrays for implementing instrumentation and control systems of nuclear
-  power plants.
-\newblock {\em Nuclear Engineering and Technology}, 49(8):1589--1599, 2017.
+\bibitem{NRC_RG197_2018}
+{U.S. Nuclear Regulatory Commission}.
+\newblock Regulatory guide~1.97, revision~5: Criteria for accident monitoring
+  instrumentation for nuclear power plants.
+\newblock Technical Report RG 1.97 Rev. 5, NRC, 2018.
 
-\bibitem{reed2003ground}
-R.~A. Reed, J.~Kinnison, J.~Pickel, S.~Buchner, P.~W. Marshall, S.~Kniffin, and
-  K.~A. LaBel.
-\newblock Single-event effects ground testing and on-orbit rate prediction
-  methods: The past, present, and future.
-\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):622--634, 2003.
+\bibitem{NRC_GDC_2023}
+{U.S. Nuclear Regulatory Commission}.
+\newblock Appendix~{A} to part~50 --- general design criteria for nuclear power
+  plants.
+\newblock 10~{CFR}~50 Appendix~{A}, 2023.
 
-\bibitem{rose1993architecture}
-J.~Rose, A.~El Gamal, and A.~Sangiovanni-Vincentelli.
-\newblock Architecture of field-programmable gate arrays.
-\newblock {\em Proceedings of the IEEE}, 81(7):1013--1029, 1993.
+\bibitem{BWRX300_Wiki}
+{Wikipedia}.
+\newblock {BWRX-300}.
+\newblock \url{https://en.wikipedia.org/wiki/BWRX-300}.
+\newblock Accessed March 2026.
 
-\bibitem{osu:guidelines}
-Graduate School.
-\newblock {Guidelines for Preparing and Submitting Theses, Dissertations, and
-  D.M.A. Documents}.
-\newblock In {\em The 1995--1996 Graduate Student Handbook}, pages 83--130. The
-  Ohio State University, 1996.
+\bibitem{CZT_Wikipedia}
+{Wikipedia}.
+\newblock Cadmium zinc telluride.
+\newblock \url{https://en.wikipedia.org/wiki/Cadmium_zinc_telluride}.
+\newblock Accessed March 2026.
 
-\bibitem{schwank2013radiation}
-J.~R. Schwank, M.~R. Shaneyfelt, and P.~E. Dodd.
-\newblock Radiation hardness assurance testing of microelectronic devices and
-  integrated circuits: Radiation environments, physical mechanisms, and
-  foundations for hardness assurance.
-\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):2074--2100, 2013.
-
-\bibitem{sexton2003destructive}
-F.~W. Sexton.
-\newblock Destructive single-event effects in semiconductor devices and {ICs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):603--621, 2003.
-
-\bibitem{shaneyfelt2008qualification}
-M.~R. Shaneyfelt, J.~R. Schwank, P.~E. Dodd, and J.~A. Felix.
-\newblock Total ionizing dose and single event effects hardness assurance
-  qualification issues for microelectronics.
-\newblock {\em IEEE Transactions on Nuclear Science}, 55(4):1926--1946, 2008.
-
-\bibitem{simpson:cows}
-M.~Simpson and H.~Simpson.
-\newblock ``{On having a Cow}''.
-\newblock {\em Applied Gnarly Cows}, 99(9):9--99, Sept. 1999.
-
-\bibitem{reorda2005multiple}
-M.~{Sonza Reorda}, L.~Sterpone, and M.~Violante.
-\newblock Multiple errors produced by single upsets in {FPGA} configuration
-  memory: A possible solution.
-\newblock In {\em European Test Symposium ({ETS})}, pages 136--141, 2005.
-
-\bibitem{sterpone2005tmr}
-L.~Sterpone and M.~Violante.
-\newblock A new analytical approach to estimate the effects of {SEUs} in {TMR}
-  architectures implemented through {SRAM}-based {FPGAs}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 52(6):2217--2223, 2005.
-
-\bibitem{stirk2023comparison}
-W.~Stirk, E.~Poff, J.~Smith, J.~Goeders, and M.~Wirthlin.
-\newblock Comparison of neutron radiation testing approaches for a complex
-  {SoC}.
-\newblock {\em IEEE Transactions on Nuclear Science}, 70(4):505--514, 2023.
-
-\bibitem{stoddard2017hybrid}
-A.~Stoddard, A.~Gruwell, P.~Zabriskie, and M.~J. Wirthlin.
-\newblock A hybrid approach to {FPGA} configuration scrubbing in high-radiation
-  environments.
-\newblock {\em IEEE Transactions on Nuclear Science}, 64(1):497--503, 2017.
-
-\bibitem{wirthlin2015high}
-M.~Wirthlin.
-\newblock High-reliability {FPGA}-based systems: Space, high-energy physics,
-  and beyond.
-\newblock {\em Proceedings of the IEEE}, 103(3):379--389, 2015.
-
-\bibitem{wirthlin2016scrubbing}
-M.~Wirthlin and A.~Harding.
-\newblock Hybrid configuration scrubbing for {Xilinx} 7-series {FPGAs}.
-\newblock In F.~Kastensmidt and P.~Rech, editors, {\em FPGAs and Parallel
-  Architectures for Aerospace Applications}, pages 117--131. Springer, 2016.
-
-\bibitem{wirthlin2016leon3}
-M.~J. Wirthlin, A.~Keller, C.~McCloskey, P.~Ridd, D.~Lee, and J.~Draper.
-\newblock {SEU} mitigation and validation of the {LEON3} soft processor using
-  triple modular redundancy for space processing.
-\newblock In {\em Proceedings of the International Symposium on
-  Field-Programmable Gate Arrays ({FPGA})}, pages 205--214. ACM, 2016.
-
-\bibitem{ziegler1996terrestrial}
-J.~F. Ziegler.
-\newblock Terrestrial cosmic rays.
-\newblock {\em IBM Journal of Research and Development}, 40(1):19--39, 1996.
+\bibitem{Xenergy_ARDP}
+{X-energy}.
+\newblock Advanced reactor demonstration program ({ARDP}).
+\newblock \url{https://x-energy.com/ardp}.
+\newblock Accessed March 2026.
 
 \end{thebibliography}
