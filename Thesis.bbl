@@ -1,4 +1,16 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{100}
+
+\bibitem{adell2008assessing}
+P.~Adell and G.~Allen.
+\newblock Assessing and mitigating radiation effects in {Xilinx FPGAs}.
+\newblock Technical Report JPL Publication 08-9, NASA Jet Propulsion
+  Laboratory, 2008.
+
+\bibitem{agostinelli2003geant4}
+S.~Agostinelli et~al.
+\newblock {GEANT4}---a simulation toolkit.
+\newblock {\em Nuclear Instruments and Methods in Physics Research Section A},
+  506(3):250--303, 2003.
 
 \bibitem{AMD_XQRKU060}
 {AMD/Xilinx}.
@@ -12,11 +24,44 @@
   time.
 \newblock \url{https://www.ans.org/news/2025-12-05/article-7556/}, 2025.
 
+\bibitem{artola2021benchmarks}
+L.~Artola, G.~Hubert, and T.~Rousselin.
+\newblock On the evaluation of {FPGA} radiation benchmarks.
+\newblock {\em Microelectronics Reliability}, 126:114299, 2021.
+
 \bibitem{AJC_Vogtle}
 {Atlanta Journal-Constitution}.
 \newblock {PSC} raises {Georgia Power} rates, passing most {Plant Vogtle}
   expansion costs on to customers.
 \newblock \url{https://www.ajc.com}, 2024.
+
+\bibitem{Baikie2013}
+Tom Baikie, Yanan Fang, Jeannette~M. Kadro, Martin Schreyer, Fengxia Wei,
+  Subodh~G. Mhaisalkar, Michael Gratzel, and Timothy~J. White.
+\newblock Synthesis and crystal chemistry of the hybrid perovskite
+  ({CH$_3$NH$_3$}){PbI$_3$} for solid-state sensitised solar cell applications.
+\newblock {\em Journal of Materials Chemistry A}, 1:5628--5641, 2013.
+
+\bibitem{baumann2005radiation}
+R.~C. Baumann.
+\newblock Radiation-induced soft errors in advanced semiconductor technologies.
+\newblock {\em IEEE Transactions on Device and Materials Reliability},
+  5(3):305--316, 2005.
+
+\bibitem{berg2008scrubbing}
+M.~Berg, C.~Poivey, D.~Petrick, D.~Espinosa, A.~Lesea, K.~A. LaBel,
+  M.~Friendlich, H.~Kim, and A.~Phan.
+\newblock Effectiveness of internal versus external {SEU} scrubbing mitigation
+  strategies in a {Xilinx FPGA}: Design, test, and analysis.
+\newblock {\em IEEE Transactions on Nuclear Science}, 55(4):2259--2266, 2008.
+
+\bibitem{Berger2010xcom}
+M.~J. Berger, J.~H. Hubbell, S.~M. Seltzer, J.~Chang, J.~S. Coursey,
+  R.~Sukumar, D.~S. Zucker, and K.~Olsen.
+\newblock {XCOM}: Photon cross sections database.
+\newblock {NIST Standard Reference Database 8 (XGAM)}, 2010.
+\newblock National Institute of Standards and Technology, Gaithersburg, MD.
+  \url{https://www.nist.gov/pml/xcom-photon-cross-sections-database}.
 
 \bibitem{BISResearch_RadHardFPGA}
 {BIS Research}.
@@ -24,10 +69,43 @@
   2024--2034.
 \newblock Technical report, BIS Research, 2024.
 
+\bibitem{black2013mcu}
+J.~D. Black, P.~E. Dodd, and K.~M. Warren.
+\newblock Physics of multiple-node charge collection and impacts on
+  single-event characterization and soft error rate prediction.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1836--1851, 2013.
+
+\bibitem{Boldyreva2020gammarad}
+Aleksandra~G. Boldyreva et~al.
+\newblock Halide perovskite photovoltaic cells as self-powered radiation
+  detectors: {MAPbI$_3$} tolerance to high-dose {$^{60}$Co} gamma irradiation.
+\newblock {\em The Journal of Physical Chemistry Letters}, 11(6):2236--2243,
+  2020.
+
+\bibitem{Boldyreva2024cs137}
+Aleksandra~G. Boldyreva et~al.
+\newblock Perovskite solar cells under {Cs-137} $\gamma$-irradiation: threshold
+  doses and degradation pathways for {MAPbI$_3$}.
+\newblock {\em Physical Chemistry Chemical Physics}, 26:12934--12942, 2024.
+
+\bibitem{Cao2018}
+Xinxin Cao, Linjian Zhi, Yingcai Li, Fangfang Fang, Xu~Cui, Yanjun Ci, Kaibo
+  Zheng, Jijun Zhao, and Jun Li.
+\newblock Fabrication of perovskite films with large columnar grains via
+  solvent-mediated {Ostwald} ripening for efficient inverted perovskite solar
+  cells.
+\newblock {\em ACS Applied Energy Materials}, 1:868--875, 2018.
+
 \bibitem{PhysicsToday_He3}
 A.~Cho.
 \newblock {DOE} begins rationing helium-3.
 \newblock Physics Today, 2009.
+
+\bibitem{coronetti2021systemlevel}
+A.~Coronetti, R.~G. Alia, J.~Budroweit, et~al.
+\newblock Radiation hardness assurance through system-level testing: Risk
+  acceptance, facility requirements, test methodology, and data exploitation.
+\newblock {\em IEEE Transactions on Nuclear Science}, 68(5):958--969, 2021.
 
 \bibitem{CounterPunch_HPC}
 {CounterPunch}.
@@ -38,6 +116,23 @@ A.~Cho.
 F.~C.~L. Crespi et~al.
 \newblock New cooling methods for {HPGe} detectors and associated electronics.
 \newblock {\em Journal of Radioanalytical and Nuclear Chemistry}, 2005.
+
+\bibitem{dodd2003basic}
+P.~E. Dodd and L.~W. Massengill.
+\newblock Basic mechanisms and modeling of single-event upset in digital
+  microelectronics.
+\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):583--602, 2003.
+
+\bibitem{Eames2015}
+Christopher Eames, Jarvist~M. Frost, Piers R.~F. Barnes, Brian~C. O'Regan, Aron
+  Walsh, and M.~Saiful Islam.
+\newblock Ionic transport in hybrid lead iodide perovskite solar cells.
+\newblock {\em Nature Communications}, 6:7497, 2015.
+
+\bibitem{ecoffet2013inorbit}
+R.~Ecoffet.
+\newblock Overview of in-orbit radiation induced spacecraft anomalies.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1791--1815, 2013.
 
 \bibitem{CERN_FPGA_Rad}
 others.
@@ -66,11 +161,63 @@ others.
   full-customized readout application specific integrated circuit.
 \newblock {\em Nature Communications}, 2024.
 
+\bibitem{ferletcavrois2013set}
+V.~Ferlet-Cavrois, L.~W. Massengill, and P.~Gouker.
+\newblock Single event transients in digital {CMOS}---a review.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1767--1790, 2013.
+
+\bibitem{fleetwood2013total}
+D.~M. Fleetwood.
+\newblock Total ionizing dose effects in {MOS} and low-dose-rate-sensitive
+  linear-bipolar devices.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1706--1730, 2013.
+
+\bibitem{Goldschmidt1926}
+V.~M. Goldschmidt.
+\newblock Die {G}esetze der {K}rystallochemie.
+\newblock {\em Naturwissenschaften}, 14(21):477--485, 1926.
+
+\bibitem{Guerrero2021chemrev}
+Antonio Guerrero, Germa Garcia-Belmonte, Ivan Mora-Sero, Juan Bisquert, et~al.
+\newblock Properties and operation of perovskite solar cells: From the
+  equivalent circuit model to impedance spectroscopy.
+\newblock {\em Chemical Reviews}, 121(23):14430--14484, 2021.
+
+\bibitem{harling2006fission}
+O.~K. Harling, K.~J. Riley, T.~H. Newton, P.~J. Binns, and I.~Auterinen.
+\newblock The fission converter based epithermal neutron irradiation facility
+  at the {Massachusetts Institute of Technology Reactor}.
+\newblock {\em IEEE Transactions on Nuclear Science}, 53(1):261--268, 2006.
+
 \bibitem{He_NatPhoton_2021}
 Yihui He et~al.
 \newblock {CsPbBr$_3$} perovskite detectors with 1.4\% energy resolution for
   high-energy $\gamma$-rays.
 \newblock {\em Nature Photonics}, 15:36--42, 2021.
+
+\bibitem{Hecht1932}
+K.~Hecht.
+\newblock {Z}um {M}echanismus des lichtelektrischen {P}rim\"{a}rstromes in
+  isolierenden {K}ristallen.
+\newblock {\em Zeitschrift f{\"u}r Physik}, 77:235--245, 1932.
+
+\bibitem{heiner2009scrubbing}
+J.~Heiner, B.~Sellers, M.~Wirthlin, and J.~Kalb.
+\newblock {FPGA} partial reconfiguration via configuration scrubbing.
+\newblock In {\em International Conference on Field Programmable Logic and
+  Applications ({FPL})}, pages 99--104. IEEE, 2009.
+
+\bibitem{herreraalzu2013scrubbers}
+I.~Herrera-Alzu and M.~L{\'o}pez-Vallejo.
+\newblock Design techniques for {Xilinx} {Virtex} {FPGA} configuration memory
+  scrubbers.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(1):376--385, 2013.
+
+\bibitem{iaea2016design}
+{International Atomic Energy Agency}.
+\newblock {\em Design of Instrumentation and Control Systems for Nuclear Power
+  Plants}.
+\newblock Safety Standards Series No. SSG-39. IAEA, Vienna, 2016.
 
 \bibitem{IAEA_SSG39}
 {International Atomic Energy Agency}.
@@ -93,6 +240,20 @@ Yihui He et~al.
 \newblock The path to a new era for nuclear energy.
 \newblock Technical report, IEA, 2024.
 
+\bibitem{jedec2006jesd89a}
+{JEDEC Solid State Technology Association}.
+\newblock Measurement and reporting of alpha particle and terrestrial cosmic
+  ray-induced soft errors in semiconductor devices.
+\newblock Technical Report JESD89A, JEDEC, Arlington, VA, 2006.
+
+\bibitem{johnson2010voter}
+J.~M. Johnson and M.~J. Wirthlin.
+\newblock Voter insertion algorithms for {FPGA} designs using triple modular
+  redundancy.
+\newblock In {\em Proceedings of the 18th Annual ACM/SIGDA International
+  Symposium on Field Programmable Gate Arrays ({FPGA})}, pages 249--258. ACM,
+  2010.
+
 \bibitem{Kairos_Hermes_2025}
 {Kairos Power}.
 \newblock Kairos power begins nuclear safety-related construction of {Hermes}
@@ -100,10 +261,59 @@ Yihui He et~al.
 \newblock \url{https://kairospower.com}, 2025.
 \newblock Accessed March 2026.
 
-\bibitem{lamport:latex}
-Leslie Lamport.
-\newblock {\em \LaTeX\ : {A Document Preparation System}}.
-\newblock Addison-Wesley, {S}econd edition, 1994.
+\bibitem{kastensmidt2014survey}
+F.~L. Kastensmidt and L.~Carro.
+\newblock Mitigation of radiation effects in {SRAM}-based {FPGAs} for space
+  applications.
+\newblock {\em ACM Computing Surveys}, 47(2):1--37, 2014.
+
+\bibitem{Kieslich2015}
+Gregor Kieslich, Shijing Sun, and Anthony~K. Cheetham.
+\newblock An extended tolerance factor approach for organic-inorganic
+  perovskites.
+\newblock {\em Chemical Science}, 6:3430--3433, 2015.
+
+\bibitem{Klein1968}
+C.~A. Klein.
+\newblock Bandgap dependence and related features of radiation ionization
+  energies in semiconductors.
+\newblock {\em Journal of Applied Physics}, 39(4):2029--2038, 1968.
+
+\bibitem{knoll2010}
+Glenn~F. Knoll.
+\newblock {\em Radiation Detection and Measurement}.
+\newblock John Wiley \& Sons, 4th edition, 2010.
+
+\bibitem{kuon2008fpga}
+I.~Kuon, R.~Tessier, and J.~Rose.
+\newblock {FPGA} architecture: Survey and challenges.
+\newblock {\em Foundations and Trends in Electronic Design Automation},
+  2(2):135--253, 2008.
+
+\bibitem{lee2014kintex}
+D.~S. Lee, M.~Wirthlin, G.~Swift, and A.~C. Le.
+\newblock Single-event characterization of the 28~nm {Xilinx Kintex-7}
+  field-programmable gate array under heavy ion irradiation.
+\newblock In {\em IEEE Radiation Effects Data Workshop ({REDW})}, pages 1--5,
+  2014.
+
+\bibitem{Li2026record}
+Xin Li et~al.
+\newblock Perovskite solar cells with certified power conversion efficiency
+  exceeding 27\%.
+\newblock {\em Nature Photonics}, 2026.
+
+\bibitem{Liu2024inverted}
+Shunde Liu et~al.
+\newblock Efficient and stable perovskite solar cells with a 26.54\% efficiency
+  inverted structure.
+\newblock {\em Nature}, 632:536--542, 2024.
+
+\bibitem{Luke1995}
+P.~N. Luke.
+\newblock Unipolar charge sensing with coplanar electrodes --- application to
+  semiconductor detectors.
+\newblock {\em IEEE Transactions on Nuclear Science}, 42(4):207--213, 1995.
 
 \bibitem{Luxium_NaI}
 {Luxium Solutions}.
@@ -112,12 +322,33 @@ Leslie Lamport.
   \url{https://luxiumsolutions.com/radiation-detection-scintillators/crystal-scintillators/naitl-scintillation-crystals}.
 \newblock Accessed March 2026.
 
+\bibitem{lyons1962tmr}
+R.~E. Lyons and W.~Vanderkulk.
+\newblock The use of triple-modular redundancy to improve computer reliability.
+\newblock {\em IBM Journal of Research and Development}, 6(2):200--209, 1962.
+
+\bibitem{messenger1992effects}
+G.~C. Messenger and M.~S. Ash.
+\newblock {\em The Effects of Radiation on Electronic Systems}.
+\newblock Van Nostrand Reinhold, 2nd edition, 1992.
+
 \bibitem{Microchip_RTG4}
 {Microchip Technology}.
 \newblock {RTG4} radiation-tolerant {FPGAs}.
 \newblock
   \url{https://www.microchip.com/en-us/products/fpgas-and-plds/radiation-tolerant-fpgas/rtg4-radiation-tolerant-fpgas}.
 \newblock Accessed March 2026.
+
+\bibitem{morgan2007comparison}
+K.~S. Morgan, D.~L. McMurtrey, B.~H. Pratt, and M.~J. Wirthlin.
+\newblock A comparison of {TMR} with alternative fault-tolerant design
+  techniques for {FPGAs}.
+\newblock {\em IEEE Transactions on Nuclear Science}, 54(6):2065--2072, 2007.
+
+\bibitem{Murty1965}
+R.~C. Murty.
+\newblock Effective atomic numbers of heterogeneous materials.
+\newblock {\em Nature}, 207:398--399, 1965.
 
 \bibitem{NCBI_Fukushima_Lessons}
 {National Academies of Sciences, Engineering, and Medicine}.
@@ -132,6 +363,18 @@ Leslie Lamport.
   Improving Safety and Security of {U.S.} Nuclear Plants: Phase~2}.
 \newblock National Academies Press, Washington, D.C., 2016.
 
+\bibitem{natacad2018testing}
+{National Academies of Sciences, Engineering, and Medicine}.
+\newblock {\em Testing at the Speed of Light: The State of {U.S.} Electronic
+  Parts Space Radiation Testing Infrastructure}.
+\newblock The National Academies Press, Washington, DC, 2018.
+
+\bibitem{nrc1997digital}
+{National Research Council}.
+\newblock {\em Digital Instrumentation and Control Systems in Nuclear Power
+  Plants: Safety and Reliability Issues}.
+\newblock The National Academies Press, Washington, DC, 1997.
+
 \bibitem{Nature_SiDamage}
 {Nature Research Intelligence}.
 \newblock Silicon detectors and radiation damage.
@@ -143,6 +386,19 @@ Leslie Lamport.
 {NBC News}.
 \newblock Biden launches \$6{B} effort to save distressed nuclear plants.
 \newblock \url{https://www.nbcnews.com}, 2022.
+
+\bibitem{normand1996single}
+E.~Normand.
+\newblock Single event upset at ground level.
+\newblock {\em IEEE Transactions on Nuclear Science}, 43(6):2742--2750, 1996.
+
+\bibitem{Nowok2021}
+Aleksander Nowok, Adam Piecha, Miroslaw Maczka, Szymon Sobczak, Marcin Saski,
+  Janusz Lewiński, and Adam Sieradzki.
+\newblock Unprecedented methylhydrazinium lead chloride hybrid perovskite:
+  towards better understanding of structural dynamics and non-linear optical
+  features.
+\newblock {\em Journal of Materials Chemistry C}, 9:5740--5749, 2021.
 
 \bibitem{NEI_Costs_2025}
 {Nuclear Energy Institute}.
@@ -156,6 +412,28 @@ Leslie Lamport.
   \url{https://www.nuclear-power.com/nuclear-power-plant/nuclear-reactor/nuclear-instrumentation/excore-nuclear-instrumentation/}.
 \newblock Accessed March 2026.
 
+\bibitem{oldham2003total}
+T.~R. Oldham and F.~B. McLean.
+\newblock Total ionizing dose effects in {MOS} oxides and devices.
+\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):483--499, 2003.
+
+\bibitem{Owens2004}
+Alan Owens and A.~Peacock.
+\newblock {\em Compound Semiconductor Radiation Detectors}.
+\newblock Taylor \& Francis, New York, 2004.
+\newblock Comprehensive reference for wide bandgap detector materials and
+  figures of merit.
+
+\bibitem{Pan2019}
+Weiqiang Pan, Haifeng Wu, Jiajun Luo, Zilong Deng, Cong Ge, Chen Chen, Xianwei
+  Jiang, Wei-Jie Yin, Gengzhao Niu, Lianjun Zhu, Liyan Yin, Yanling Zhou,
+  Qinggang Xie, Xiaohong Ke, Naijia Sui, and Jianlong Tang.
+\newblock Cs$_2$agbibr$_6$ single-crystal {X}-ray detectors with a low
+  detection limit.
+\newblock {\em Nature Photonics}, 13:460--466, 2019.
+\newblock Cited for CsPbBr$_3$ single-crystal characterization methodology and
+  polarization phenomena.
+
 \bibitem{Panaccione_NIM_2024}
 Wyatt Panaccione, Zhifang Shi, Praneeth Kandlakunta, Taylor Nichols, Susan
   White, Jinsong Huang, and Lei~R. Cao.
@@ -163,6 +441,27 @@ Wyatt Panaccione, Zhifang Shi, Praneeth Kandlakunta, Taylor Nichols, Susan
   detection.
 \newblock {\em Nuclear Instruments and Methods in Physics Research A},
   1064:169340, 2024.
+
+\bibitem{petersen2011single}
+E.~Petersen.
+\newblock {\em Single Event Effects in Aerospace}.
+\newblock IEEE Press / Wiley, Piscataway, NJ, 2011.
+
+\bibitem{petersen2013revolution}
+E.~Petersen, R.~Koga, M.~A. Shoga, J.~C. Pickel, and W.~E. Price.
+\newblock The single event revolution.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1824--1835, 2013.
+
+\bibitem{petersen1992rate}
+E.~L. Petersen, J.~C. Pickel, J.~H. Adams, and E.~C. Smith.
+\newblock Rate prediction for single event effects---a critique.
+\newblock {\em IEEE Transactions on Nuclear Science}, 39(6):1577--1599, 1992.
+
+\bibitem{pignol2010cots}
+M.~Pignol.
+\newblock {COTS}-based applications in space avionics.
+\newblock In {\em Design, Automation and Test in Europe Conference ({DATE})},
+  pages 1213--1219, 2010.
 
 \bibitem{PowerEng_DigitalAge}
 {Power Engineering}.
@@ -176,10 +475,101 @@ Wyatt Panaccione, Zhifang Shi, Praneeth Kandlakunta, Taylor Nichols, Susan
   for construction.
 \newblock {\em POWER Magazine}, 2026.
 
+\bibitem{pratt2008partial}
+B.~Pratt, M.~Caffrey, J.~F. Carroll, P.~Graham, K.~Morgan, and M.~Wirthlin.
+\newblock Fine-grain {SEU} mitigation for {FPGAs} using partial {TMR}.
+\newblock {\em IEEE Transactions on Nuclear Science}, 55(4):2274--2280, 2008.
+
+\bibitem{quinn2007review}
+H.~Quinn, K.~Morgan, P.~Graham, J.~Krone, and M.~Caffrey.
+\newblock A review of {Xilinx} {FPGA} architectural reliability concerns from
+  {Virtex} to {Virtex-5}.
+\newblock In {\em 9th European Conference on Radiation and Its Effects on
+  Components and Systems ({RADECS})}, pages 1--8, 2007.
+
+\bibitem{rakhman2017sram}
+A.~Rakhman, N.~T. {Dang Nguyen}, H.~T. Le, and C.~Lee.
+\newblock Understanding radiation effects in {SRAM}-based field programmable
+  gate arrays for implementing instrumentation and control systems of nuclear
+  power plants.
+\newblock {\em Nuclear Engineering and Technology}, 49(8):1589--1599, 2017.
+
+\bibitem{Saidaminov2015}
+Makhsud~I. Saidaminov, Abdul~Latif Abdelhady, Banavoth Murali, Erkki Alarousu,
+  Victor~M. Burlakov, Wei Peng, Ibrahim Dursun, Lifu Wang, Yao He, Gediminas
+  Maculan, Alain Goriely, Tom Wu, Omar~F. Mohammed, and Osman~M. Bakr.
+\newblock High-quality bulk hybrid perovskite single crystals within minutes by
+  inverse temperature crystallization.
+\newblock {\em Nature Communications}, 6:7586, 2015.
+
 \bibitem{WNISR_2025}
 Mycle Schneider, Antony Froggatt, et~al.
 \newblock World nuclear industry status report 2025.
 \newblock Technical report, World Nuclear Industry Status Report, 2025.
+
+\bibitem{schwank2013radiation}
+J.~R. Schwank, M.~R. Shaneyfelt, and P.~E. Dodd.
+\newblock Radiation hardness assurance testing of microelectronic devices and
+  integrated circuits: Radiation environments, physical mechanisms, and
+  foundations for hardness assurance.
+\newblock {\em IEEE Transactions on Nuclear Science}, 60(3):2074--2100, 2013.
+
+\bibitem{sexton2003destructive}
+F.~W. Sexton.
+\newblock Destructive single-event effects in semiconductor devices and {ICs}.
+\newblock {\em IEEE Transactions on Nuclear Science}, 50(3):603--621, 2003.
+
+\bibitem{shaneyfelt2008qualification}
+M.~R. Shaneyfelt, J.~R. Schwank, P.~E. Dodd, and J.~A. Felix.
+\newblock Total ionizing dose and single event effects hardness assurance
+  qualification issues for microelectronics.
+\newblock {\em IEEE Transactions on Nuclear Science}, 55(4):1926--1946, 2008.
+
+\bibitem{sterpone2005tmr}
+L.~Sterpone and M.~Violante.
+\newblock A new analytical approach to estimate the effects of {SEUs} in {TMR}
+  architectures implemented through {SRAM}-based {FPGAs}.
+\newblock {\em IEEE Transactions on Nuclear Science}, 52(6):2217--2223, 2005.
+
+\bibitem{stirk2023comparison}
+W.~Stirk, E.~Poff, J.~Smith, J.~Goeders, and M.~Wirthlin.
+\newblock Comparison of neutron radiation testing approaches for a complex
+  {SoC}.
+\newblock {\em IEEE Transactions on Nuclear Science}, 70(4):505--514, 2023.
+
+\bibitem{stoddard2017hybrid}
+A.~Stoddard, A.~Gruwell, P.~Zabriskie, and M.~J. Wirthlin.
+\newblock A hybrid approach to {FPGA} configuration scrubbing in high-radiation
+  environments.
+\newblock {\em IEEE Transactions on Nuclear Science}, 64(1):497--503, 2017.
+
+\bibitem{Stoumpos2013}
+Constantinos~C. Stoumpos, Christos~D. Malliakas, and Mercouri~G. Kanatzidis.
+\newblock Semiconducting {Tin} and {Lead} {Iodide} {Perovskites} with organic
+  cations: Phase transitions, high mobilities, and near-infrared
+  photoluminescent properties.
+\newblock {\em Inorganic Chemistry}, 52(15):9019--9038, 2013.
+
+\bibitem{Sze2007}
+Simon~M. Sze and Kwok~K. Ng.
+\newblock {\em Physics of Semiconductor Devices}.
+\newblock John Wiley \& Sons, Hoboken, NJ, 3rd edition, 2007.
+
+\bibitem{Thiesbrummel2024ionmig}
+Jarla Thiesbrummel et~al.
+\newblock Ion-migration-induced field screening as the dominant operational
+  factor in lead halide perovskite photovoltaics.
+\newblock {\em Nature Energy}, 9:959--970, 2024.
+
+\bibitem{Tsai2018}
+Hsinhan Tsai, Wanyi Nie, Jean-Christophe Blancon, Constantinos~C. Stoumpos,
+  Reza Asadpour, Boris Harutyunyan, Amanda~J. Neukirch, Rafael Verduzco,
+  Jared~J. Crochet, Sergei Tretiak, Laurent Pedesseau, Jacky Even, Muhammad~A.
+  Alam, Gautam Gupta, Jun Lou, Paul~M. Ajayan, Michael~J. Bedzyk, Mercouri~G.
+  Kanatzidis, and Aditya~D. Mohite.
+\newblock High-efficiency two-dimensional {Ruddlesden-Popper} perovskite solar
+  cells.
+\newblock {\em Nature}, 536:312--316, 2016.
 
 \bibitem{DOE_COP28_2023}
 {U.S. Department of Energy}.
@@ -197,13 +587,6 @@ Mycle Schneider, Antony Froggatt, et~al.
 \newblock \url{https://www.energy.gov/ne}.
 \newblock Accessed March 2026.
 
-\bibitem{DOE_ASI}
-{U.S. Department of Energy, Office of Nuclear Energy}.
-\newblock {NEET} crosscut --- advanced sensors and instrumentation.
-\newblock
-  \url{https://www.energy.gov/ne/neet-crosscut-advanced-sensors-and-instrumentation}.
-\newblock Accessed March 2026.
-
 \bibitem{NRC_RG197_2018}
 {U.S. Nuclear Regulatory Commission}.
 \newblock Regulatory guide~1.97, revision~5: Criteria for accident monitoring
@@ -215,6 +598,31 @@ Mycle Schneider, Antony Froggatt, et~al.
 \newblock Appendix~{A} to part~50 --- general design criteria for nuclear power
   plants.
 \newblock 10~{CFR}~50 Appendix~{A}, 2023.
+
+\bibitem{Wei2016}
+Haotong Wei, Yanjun Fang, Padhraic Mulligan, William Chuirazzi, Hong-Hua Fang,
+  Congcong Wang, Benjamin~R. Ecker, Yilei Gao, Maxim~A. Loi, Lei Cao, and
+  Jinsong Huang.
+\newblock Sensitive {X}-ray detectors made of methylammonium lead tribromide
+  perovskite single crystals.
+\newblock {\em Nature Photonics}, 10:333--339, 2016.
+
+\bibitem{Wei2017}
+Haotong Wei and Jingjing Huang.
+\newblock Halide lead perovskites for ionizing radiation detection.
+\newblock {\em Nature Communications}, 10:1066, 2019.
+
+\bibitem{Weller2015}
+Mark~T. Weller, Oliver~J. Weber, Jarvist~M. Frost, and Aron Walsh.
+\newblock Cubic perovskite structure of black formamidinium lead iodide,
+  $\alpha$-[{HC(NH$_2$)$_2$}][{PbI$_3$}], at 298~{K}.
+\newblock {\em Journal of Physical Chemistry Letters}, 6(16):3209--3212, 2015.
+
+\bibitem{Wells1945}
+H.~L. Wells.
+\newblock Über die {C}äsium- und {K}alium-{B}leihaloidsalze.
+\newblock {\em Zeitschrift f{\"u}r anorganische Chemie}, 3:195--210, 1893.
+\newblock Historical reference for the perovskite ABX$_3$ mineral structure.
 
 \bibitem{BWRX300_Wiki}
 {Wikipedia}.
@@ -228,10 +636,65 @@ Mycle Schneider, Antony Froggatt, et~al.
 \newblock \url{https://en.wikipedia.org/wiki/Cadmium_zinc_telluride}.
 \newblock Accessed March 2026.
 
+\bibitem{wirthlin2015high}
+M.~Wirthlin.
+\newblock High-reliability {FPGA}-based systems: Space, high-energy physics,
+  and beyond.
+\newblock {\em Proceedings of the IEEE}, 103(3):379--389, 2015.
+
+\bibitem{wirthlin2016scrubbing}
+M.~Wirthlin and A.~Harding.
+\newblock Hybrid configuration scrubbing for {Xilinx} 7-series {FPGAs}.
+\newblock In F.~Kastensmidt and P.~Rech, editors, {\em FPGAs and Parallel
+  Architectures for Aerospace Applications}, pages 117--131. Springer, 2016.
+
+\bibitem{wirthlin2016leon3}
+M.~J. Wirthlin, A.~Keller, C.~McCloskey, P.~Ridd, D.~Lee, and J.~Draper.
+\newblock {SEU} mitigation and validation of the {LEON3} soft processor using
+  triple modular redundancy for space processing.
+\newblock In {\em Proceedings of the International Symposium on
+  Field-Programmable Gate Arrays ({FPGA})}, pages 205--214. ACM, 2016.
+
 \bibitem{Xenergy_ARDP}
 {X-energy}.
 \newblock Advanced reactor demonstration program ({ARDP}).
 \newblock \url{https://x-energy.com/ardp}.
 \newblock Accessed March 2026.
+
+\bibitem{Xu2020}
+Yihui Xu, Hui Ding, Zhu-Yu Jiang, Ying Chen, Shan Wang, Jian-Ping Sun, Qi-Dai
+  Chen, and Hong-Bo Sun.
+\newblock Two-dimensional layered perovskite butylammonium lead iodide for
+  {X}-ray detection.
+\newblock {\em ACS Applied Electronic Materials}, 2:3851--3858, 2020.
+
+\bibitem{Yakunin2015}
+Sergii Yakunin, Mykhailo Sytnyk, Dietmar Kriegner, Shreetu Shrestha, Markus
+  Richter, Gebhard~J. Matt, Hamed Azimi, Christoph~J. Brabec, Johannes Stangl,
+  Maksym~V. Kovalenko, and Wolfgang Heiss.
+\newblock Detection of {X}-ray photons by solution-processed lead halide
+  perovskites.
+\newblock {\em Nature Photonics}, 9:444--449, 2015.
+
+\bibitem{Yi2016}
+Chenyi Yi, Jingshan Luo, Sonia Meloni, Antonio Boziki, Negar Ashari-Astani,
+  Carole Gratzel, Simone~M. Zakeeruddin, Ursula Rothlisberger, and Michael
+  Gratzel.
+\newblock Entropic stabilization of mixed {A}-cation {ABX$_3$} metal halide
+  perovskites for high performance perovskite solar cells.
+\newblock {\em Energy \& Environmental Science}, 9:656--662, 2016.
+
+\bibitem{Zhao2019}
+Zhonghua Zhao, Fang Gu, Yuhao Li, Weihua Sun, Sisi Ye, Hongwei Rao, Zhiqun Liu,
+  Zuqiang Bian, and Chunhui Huang.
+\newblock Mixed-organic-cation tin iodide for lead-free perovskite solar cells
+  with an efficiency of 8.12\%.
+\newblock {\em Advanced Science}, 6:1801649, 2019.
+\newblock Cited for ion-migration polarization recovery dynamics.
+
+\bibitem{ziegler1996terrestrial}
+J.~F. Ziegler.
+\newblock Terrestrial cosmic rays.
+\newblock {\em IBM Journal of Research and Development}, 40(1):19--39, 1996.
 
 \end{thebibliography}

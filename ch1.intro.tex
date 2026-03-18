@@ -10,13 +10,17 @@ Nuclear power occupies a singular position among low-carbon energy sources:
 it is the only technology that delivers firm, dispatchable, high-density
 electricity without direct greenhouse-gas emissions at a scale already
 proven across decades of operation. Yet the environments that make nuclear
-power possible — intense neutron and gamma fields, high temperatures, and
-aggressive chemical coolants — are precisely the environments that destroy
+power possible, intense neutron and gamma fields, high temperatures, and
+chemically aggressive primary coolants (e.g., liquid sodium, molten
+fluoride salts, and high-pressure water), are precisely the environments
+that destroy
 the instruments needed to monitor and control it. Reliable radiation
 monitoring is not incidental to safe reactor operation; it is the primary
-mechanism by which operators verify that every barrier to fission-product
-release remains intact. As the existing fleet ages and a generation of
-advanced and small modular reactors (SMRs) moves from blueprint to concrete,
+mechanism by which operators verify that every defense-in-depth barrier
+to fission-product release — fuel cladding, reactor pressure boundary,
+and containment — remains intact. As the existing fleet ages and a generation of
+advanced and small modular reactors (SMRs) moves from concept to
+construction,
 the instrumentation technologies that have served the industry for half a
 century are confronting hard limits in both technical performance and
 economic viability. This dissertation investigates two complementary
@@ -26,29 +30,31 @@ implementation of radiation-tolerant digital monitoring systems built on
 commercially available field-programmable gate arrays (FPGAs). Taken
 together, these efforts span the full stack from detector material to
 deployable system and aim to demonstrate that next-generation nuclear
-instrumentation can be both technically capable and cost-effective.
+instrumentation can be both technically capable and represent a meaningful
+improvement in economic viability over current approaches.
 
 %% ------------------------------------------------------------
-\section{Nuclear Power and the Global Energy Imperative}
+\section{Nuclear Power and the Global Decarbonization Context}
 %% ------------------------------------------------------------
 
 The scale of the decarbonization challenge facing the global electricity
 system makes any realistic pathway to net-zero heavily dependent on nuclear
 energy. At the COP28 climate summit in December 2023, twenty-two nations
 signed a declaration to triple global nuclear generating capacity from
-approximately 375\,GW(e) to more than 1,125\,GW(e) by 2050; that coalition
-has since grown to thirty-three countries~\cite{DOE_COP28_2023}. The
+approximately 375\,GWe to more than 1,125\,GWe by 2050; that coalition
+has since grown to thirty-three countries~\cite{DOE_COP28_2023}. %% TODO: verify bib entry DOE_COP28_2023
+The
 International Energy Agency's net-zero pathway requires nuclear capacity to
-reach approximately 1,079\,GW(e) by mid-century, demanding that annual
+reach approximately 1,079\,GWe by 2050, demanding that annual
 investment in the sector roughly double from its current level of
-\$65--75 billion to \$120--150 billion per year by 2030~\cite{IEA_Nuclear_2024}.
+\$65--75 billion to \$120--150 billion per year by 2030~\cite{IEA_Nuclear_2024}. %% TODO: verify bib entry IEA_Nuclear_2024
 The International Atomic Energy Agency (IAEA) has revised its projections
 upward for five consecutive years, with its 2025 high-case scenario projecting
-992\,GW(e) by 2050~\cite{IAEA_Projections_2025}.
+992\,GWe by 2050~\cite{IAEA_Projections_2025}. %% TODO: verify bib entry IAEA_Projections_2025
 
 The existing global fleet comprises approximately 408 operating reactors
 in thirty-one countries, with a combined net capacity that reached a record
-369\,GW(e) in 2024~\cite{WNISR_2025}. Nuclear electricity generation also
+369\,GWe in 2024~\cite{WNISR_2025}. Nuclear electricity generation also
 set an all-time high of 2,667\,TWh in 2024, narrowly surpassing the 2006
 record, though nuclear's share of global electricity has fallen to
 approximately 9\% as variable renewables have expanded at a far faster
@@ -56,7 +62,8 @@ pace~\cite{WNISR_2025}. The fleet's average age of 32.4 years — with 141
 units exceeding 41 years of operation — makes life extension, instrumentation
 modernization, and new construction simultaneously urgent priorities.
 
-The advanced reactor pipeline is the most active in decades. In the United
+Development of advanced reactors is more active and better funded than
+at any point in the last several decades. In the United
 States, TerraPower's 345\,MW(e) Natrium sodium-cooled fast reactor received
 its NRC construction permit in March 2026, the first commercial non-light-water
 reactor approval in over forty years~\cite{PowerMag_Natrium_2026}. Kairos
@@ -78,7 +85,7 @@ that existing monitoring technologies were never designed to address.
 Continuous radiation monitoring across neutron flux, gamma dose, primary
 coolant activity, and effluent pathways is mandated by the regulatory
 foundations of nuclear operation, not merely encouraged by best practice.
-The NRC's General Design Criteria, codified in 10~CFR~50 Appendix~A,
+The NRC's General Design Criteria (GDC), codified in 10~CFR~50 Appendix~A,
 establish this requirement at the highest level of the licensing framework.
 GDC~13 requires instrumentation capable of monitoring all variables that
 affect the reactor core, coolant pressure boundary, and containment integrity;
@@ -86,10 +93,11 @@ GDC~64 mandates monitoring of the containment atmosphere, recirculation
 spaces, and effluent pathways for radioactivity; and GDC~19 requires that
 control room operators maintain safe-shutdown capability with adequate
 instrumentation even under accident conditions~\cite{NRC_GDC_2023}. The IAEA
-mirrors these requirements through SSR-2/1 and provides detailed I\&C system
+mirrors these requirements through the Safety Requirements for Nuclear
+Power Plants (SSR-2/1) and provides detailed I\&C system
 guidance in SSG-39~\cite{IAEA_SSR21, IAEA_SSG39}.
 
-The technical scope of these monitoring requirements is extraordinary. Neutron
+The technical scope of these monitoring requirements is exceptionally broad. Neutron
 flux measurement alone spans approximately twelve decades — from a few counts
 per second during refueling to approximately $10^{15}$\,n\,cm$^{-2}$\,s$^{-1}$
 at full power — requiring three overlapping detector subsystems. Source-range
@@ -144,8 +152,9 @@ microphonic noise that degrades resolution at low energies. HPGe is therefore
 confined almost exclusively to laboratory and assay applications rather than
 continuous in-plant monitoring~\cite{Springer_HPGe_Cooling}.
 
-Silicon detectors dominate charged-particle detection and fast-neutron
-spectrometry in research settings but suffer irreversible displacement
+Silicon detectors dominate charged-particle detection and, in research
+settings, are used for fast-neutron spectrometry via proton-recoil
+interactions~\cite{Nature_SiDamage}, but suffer irreversible displacement
 damage above approximately $10^{14}$--$10^{15}$\,n$_\mathrm{eq}$\,cm$^{-2}$
 fluence, with charge-collection efficiency falling toward 50\% — a threshold
 easily surpassed in the lifetime of a power-reactor
@@ -204,7 +213,8 @@ Halide perovskites have emerged as a compelling alternative class of
 radiation-responsive materials. Their high effective atomic number — CsPbBr$_3$
 has $Z_\mathrm{eff} = 65.9$, compared to 50.2 for CZT — provides excellent
 photoelectric stopping power for gamma radiation~\cite{Springer_CsPbBr3}.
-Single-crystal MAPbBr$_3$ and CsPbBr$_3$ devices have demonstrated
+Single-crystal MAPbBr$_3$ and CsPbBr$_3$ devices, operating at room
+temperature, have demonstrated
 mobility-lifetime products of up to $8 \times 10^{-3}$\,cm$^2$\,V$^{-1}$
 and energy resolutions approaching 1.4\% at 662\,keV~\cite{He_NatPhoton_2021},
 approaching CZT performance without cryogenic cooling or Bridgman growth.
@@ -315,54 +325,6 @@ rad-hard devices, provided the mitigation architecture is co-designed with
 the application from the outset.
 
 %% ------------------------------------------------------------
-\section{The Gap: An Integrated Materials-to-Systems Approach}
-%% ------------------------------------------------------------
-
-Nuclear instrumentation research has historically operated in disciplinary
-silos. Detector material development, device fabrication, signal processing
-electronics, and system-level integration have each been pursued as largely
-independent research tracks. The DOE's Nuclear Energy Enabling Technologies
-(NEET) Advanced Sensors and Instrumentation (ASI) program, which has funded
-more than 43 projects since FY~2011 with a combined investment exceeding
-\$36 million, organizes its solicitations into discrete categories covering
-sensors, control systems, communications, and data analytics~\cite{DOE_ASI}.
-Conference proceedings from the ANIMMA international instrumentation
-symposium similarly separate detector development sessions from electronics
-sessions, with system integration papers being comparatively rare.
-
-The cost of this fragmentation is measurable. A 2024 Nature Communications
-study on CsPbBr$_3$ alpha-particle detectors achieved 6.9\% energy resolution
-with commercial laboratory electronics and 1.1\% energy resolution with a
-custom-designed readout ASIC matched to the perovskite's specific
-carrier-transport characteristics — a sixfold improvement achieved
-entirely through electronics optimization rather than material
-improvement~\cite{NatComm_CsPbBr3_ASIC}. Yet the authors note that
-``perovskite semiconductors combined with corresponding electronic designs
-have not been largely explored so far.'' Meanwhile, in-reactor perovskite
-dosimetry demonstrations have relied on bench-top source-measurement units
-costing thousands of dollars, because no deployable, radiation-tolerant
-readout system exists for these materials. The fundamental economic argument
-for perovskites — low-cost solution processing, room-temperature operation,
-and material costs orders of magnitude below CZT — is negated if the readout
-system costs remain at the level of conventional rad-hard electronics.
-
-This dissertation addresses that gap through three integrated areas of
-investigation. First, at the materials level, perovskite compositions
-spanning 3D and 2D structures and ranging from high-energy photon monitoring
-to fast neutron direct conversion are synthesized, characterized, and
-evaluated for radiation response. Second, at the device level, these
-materials are developed into functional detectors, with each device
-architecture matched to a specific radiation detection application. Third,
-at the system level, a radiation-tolerant FPGA-based monitoring platform
-is developed and validated through digital plant simulation, providing
-the processing infrastructure necessary to deploy perovskite-based detectors
-in a nuclear environment without reliance on purpose-built rad-hard
-components. The connecting thesis is straightforward: novel radiation-responsive
-materials and cost-effective radiation-tolerant systems must be developed
-together if the resulting instrumentation is to be technically capable
-and economically viable for advanced reactor deployment.
-
-%% ------------------------------------------------------------
 \section{Research Objectives and Dissertation Organization}
 %% ------------------------------------------------------------
 
@@ -374,16 +336,15 @@ The first objective is to characterize the radiation response of halide
 perovskite materials across a range of compositions, device architectures,
 and radiation types relevant to nuclear monitoring. This encompasses
 gamma-photon response from Cs-137 and Co-60 sources, X-ray sensitivity
-as a function of applied bias, alpha-particle spectroscopy, and the material
+as a function of applied bias, fast-neutron response, and the material
 instability mechanisms — ion migration, humidity-dependent breakdown, and
 charge trapping — that currently limit perovskite detector lifetimes.
 
 The second objective is to develop and demonstrate perovskite-based
 radiation detection devices optimized for specific applications in the
 nuclear fuel cycle: high-energy photon monitoring for post-detonation
-forensics, direct-conversion X-ray detection, alpha-particle spectroscopy
-for thermal neutron sensing feasibility, and direct fast-neutron conversion
-using the hydrogen-rich MHyPbCl$_3$ composition. Each device is
+forensics, direct-conversion X-ray detection, and direct fast-neutron
+conversion using the hydrogen-rich MHyPbCl$_3$ composition. Each device is
 characterized through electrical transport measurements, Monte Carlo
 simulation, and experimental irradiation at a research reactor facility.
 
@@ -395,18 +356,21 @@ of TMR voter logic, and validation of the combined system against a
 digital plant simulation environment representing nuclear I\&C functions.
 
 The remainder of this dissertation is organized as follows. Chapter~2
-provides the background necessary for each area of investigation,
-encompassing perovskite crystal structure and radiation interaction physics,
-ion migration mechanisms, radiation effects on digital electronics, and
-the taxonomy of fault-tolerant design approaches. Chapter~3 presents the
-characterization of Cs$_{0.1}$FA$_{0.9}$PbI perovskite solar cells under
-extended gamma irradiation. Chapter~4 addresses the voltage-induced
-instability problem in two-dimensional perovskite detectors and the
-5F-PEAI surface passivation strategy developed to overcome it. Chapter~5
-describes the MAPbI$_3$-hBN composite detector and its characterization
-for X-ray and alpha-particle detection. Chapter~6 presents the
+provides the perovskite-focused background necessary for the materials and
+device investigations, encompassing perovskite crystal structure, radiation
+interaction physics, ion migration mechanisms, and the current state of
+perovskite-based radiation detectors. Chapter~3 provides the electronics
+background, covering radiation effects on digital devices, single-event
+effects in SRAM-based FPGAs, and the taxonomy of fault-tolerant design
+approaches including triple modular redundancy and configuration scrubbing.
+Chapter~4 presents the characterization of Cs$_{0.1}$FA$_{0.9}$PbI
+perovskite solar cells under extended gamma irradiation. Chapter~5 addresses
+the voltage-induced instability problem in two-dimensional perovskite
+detectors and the 5F-PEAI surface passivation strategy developed to
+overcome it. Chapter~6 describes the MAPbI$_3$-hBN composite detector and
+its characterization for X-ray detection. Chapter~7 presents the
 MHyPbCl$_3$ fast neutron detector, from crystal synthesis through
-beam-facility testing and gamma discrimination analysis. Chapter~7 describes
+beam-facility testing and gamma discrimination analysis. Chapter~8 describes
 the radiation-tolerant FPGA monitoring system, including the FFSR design,
-TMR integration, and digital plant simulation validation. Chapter~8
+TMR integration, and digital plant simulation validation. Chapter~9
 provides overall conclusions and recommendations for future work.

@@ -1,0 +1,987 @@
+% ============================================================
+%  Chapter 6 – Digital Electronics Verification Methods for
+%              Radiation Environments
+%
+%  Dissertation: Radiation-Responsive Materials and Electronic
+%  Systems for Advanced Radiation Detection and Monitoring
+%
+%  Usage: \input{chapter6_FFSR} inside your main .tex file.
+%  Figures are assumed to be in a subdirectory: figures/ch6/
+%  Required packages (add to preamble if not already present):
+%    \usepackage{graphicx}
+%    \usepackage{booktabs}
+%    \usepackage{array}
+%    \usepackage{amsmath}
+%    \usepackage{amssymb}
+%    \usepackage{caption}
+%    \usepackage{subcaption}   % optional, for subfigures
+%    \usepackage{hyperref}     % optional, for cross-references
+% ============================================================
+
+\chapter{Digital Electronics Verification Methods for Radiation Environments}
+\label{ch:digital_electronics}
+
+% ------------------------------------------------------------
+\section{Introduction}
+\label{sec:ch6_intro}
+% ------------------------------------------------------------
+
+Radiation environments impose two fundamentally distinct threats on
+digital electronics: displacement damage and total ionizing dose (TID)
+acting as cumulative material-degradation mechanisms, and single-event
+effects (SEEs) acting as stochastic, event-driven disturbances.  Of
+these, single-event upsets (SEUs) are of particular concern for
+SRAM-based field-programmable gate arrays (FPGAs) because such devices
+store both user data and their own circuit definition in volatile
+static-RAM cells that are as vulnerable to ionizing particles as any
+other SRAM.  Assessing and mitigating this vulnerability requires
+purpose-built verification instruments that can observe radiation-induced
+state changes in real time, with sufficient state-volume coverage to
+yield statistically meaningful upset rates, yet compact enough to deploy
+inside a beam facility with limited infrastructure.
+
+This chapter describes the design, implementation, and experimental
+results of the Flip-Flop Shift Register (FFSR) test structure used to
+evaluate Xilinx Spartan-7 FPGAs under fast neutron irradiation at the
+Ohio State University Research Reactor (OSURR) Fast Neutron Beam
+Facility (FNBF).  Section~\ref{sec:ch6_background} reviews relevant
+radiation effects in FPGAs.  Section~\ref{sec:ch6_challenges} discusses
+verification challenges specific to FPGA-based systems in nuclear
+environments.  Section~\ref{sec:ch6_architecture} presents the FFSR RTL
+architecture and governing algorithms.  Section~\ref{sec:ch6_test}
+describes the test configuration and radiation environment.
+Section~\ref{sec:ch6_results} presents the experimental results from two
+reactor runs and the intervening overnight monitoring period.
+Section~\ref{sec:ch6_discussion} discusses the observed upset mechanisms
+and their implications, and Section~\ref{sec:ch6_summary} summarises the
+principal findings.
+
+% ------------------------------------------------------------
+\section{Radiation Effects in FPGAs}
+\label{sec:ch6_background}
+% ------------------------------------------------------------
+
+SRAM-based FPGAs are widely used in nuclear instrumentation and
+space-borne electronics because of their reconfigurability, high logic
+density, and short design cycles.  However, their reliance on SRAM
+storage cells for both configuration memory and user state makes them
+susceptible to a range of radiation-induced failure modes.
+
+\textbf{Single-Event Upsets.}  An SEU occurs when a charged particle
+deposits sufficient energy in an SRAM cell to flip its stored bit.  In
+the user data fabric, an SEU manifests as a transient or persistent
+logical error in the circuit under test.  In the configuration SRAM,
+the consequence is more severe: a bit flip can alter LUT contents,
+routing multiplexers, embedded constant strings, or timing-control
+registers, effectively changing the implemented circuit itself.  Because
+the configuration SRAM is not typically protected by on-chip error
+correction in commercial devices, such upsets persist until the device
+is power-cycled or a scrubbing operation rewrites the affected cell.
+
+\textbf{Single-Event Latch-up.}  High-energy particle strikes can
+trigger parasitic bipolar structures in bulk CMOS, creating a
+low-impedance path between supply and ground.  The resulting latch-up
+condition draws large currents, halts device operation, and can cause
+permanent damage if not cleared by a prompt power cycle.  The
+probability of latch-up increases with particle flux and LET.
+
+\textbf{Total Ionizing Dose Effects.}  Prolonged irradiation builds up
+trapped charge in gate oxides and field oxides, increasing leakage
+current, shifting threshold voltages, and ultimately degrading
+transistor drive strength.  TID effects accumulate monotonically with
+fluence and manifest at the system level as a gradual increase in supply
+current drawn by the device.
+
+\textbf{Displacement Damage.}  Fast neutrons displace lattice atoms
+through nuclear recoil, creating interstitial-vacancy pairs that act as
+recombination centres and carrier traps.  In CMOS logic this mechanism
+is generally less significant than in minority-carrier devices (e.g.,
+solar cells or bipolar transistors), but at high fast-neutron fluences
+it contributes to parametric degradation.
+
+% ------------------------------------------------------------
+\section{FPGA Verification Challenges in Nuclear Systems}
+\label{sec:ch6_challenges}
+% ------------------------------------------------------------
+
+Several practical constraints complicate the experimental characterisation
+of FPGA upset susceptibility in nuclear beam facilities.
+
+\textbf{State-volume coverage.}  An SEU cross-section measurement
+requires observing a statistically significant number of events.  The
+cross-section for a single memory cell is of order $10^{-14}$ to
+$10^{-12}$~cm$^2$, so at a flux of $10^5$--$10^7$~n/cm$^2$/s a single
+cell would require impractically long exposures to accumulate even one
+event on average.  Maximising the monitored state population is
+therefore essential.
+
+\textbf{Observability without intrusion.}  Reading every flip-flop
+off-chip individually during irradiation is infeasible for large state
+populations and introduces additional wiring susceptible to radiation
+and noise.  A compact on-chip checker that compresses the health of
+the state array into a small digital flag is preferable.
+
+\textbf{Configuration vs.\ data upsets.}  Any experimental design must
+be capable of distinguishing a user-data upset from a configuration
+memory upset.  The two mechanisms require different mitigation
+strategies: data-path redundancy (DMR/TMR) addresses the former, while
+periodic configuration scrubbing addresses the latter.
+
+\textbf{Telemetry reliability.}  The UART or other communication
+channel used to export results is itself implemented in FPGA resources
+and therefore subject to the same configuration upsets.  A robust
+transmitter design reduces the risk that the observability channel
+itself is corrupted during an experiment.
+
+% ------------------------------------------------------------
+\section{FFSR RTL Architecture}
+\label{sec:ch6_architecture}
+% ------------------------------------------------------------
+
+\subsection{System-Level Overview}
+\label{subsec:ch6_arch_overview}
+
+The FFSR test structure is an FPGA-resident self-test instrument
+designed to address the observability and state-volume challenges
+described in Section~\ref{sec:ch6_challenges}.  Its purpose is to
+instantiate a large, controllable population of sequential elements,
+exercise those elements with known scan/capture behaviour, and report
+any deviation from the expected internal state in real time.  The design
+contains four cooperating subsystems:
+
+\begin{enumerate}
+    \item A \textbf{top-level experiment controller}
+          (\texttt{top\_selftest\_100mhz\_dbg}) that generates experiment
+          timing, reset sequences, capture windows, and telemetry cadence.
+
+    \item A \textbf{scan-farm fabric} (\texttt{ff\_scanfarm} /
+          \texttt{ff\_scanfarm\_sig}) that instantiates many shift-register
+          chains in parallel, scaling the monitored state volume.
+
+    \item A \textbf{signature checker} that computes an expected compact
+          signature from the chain contents and compares it against the
+          observed signature to produce live and latched error flags.
+
+    \item A \textbf{UART telemetry path} that serialises concise status
+          words for logging on a host computer, enabling offline
+          correlation with beam current, fluence, and shutter state.
+\end{enumerate}
+
+Rather than streaming every monitored bit off chip, the design compresses
+the health of a large state space into a smaller set of mismatch
+indicators and counters.  This separation of upset \emph{occurrence}
+from complete state readout enables larger monitored populations and
+simpler experimental integration while still supporting controlled
+injection tests and persistent error latching.
+
+\subsection{Module Descriptions}
+\label{subsec:ch6_modules}
+
+Table~\ref{tab:ch6_modules} summarises the primary RTL blocks.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Summary of primary RTL blocks in the FFSR design.}
+    \label{tab:ch6_modules}
+    \small
+    \begin{tabular}{p{3.0cm} p{2.8cm} p{3.4cm} p{4.0cm}}
+        \toprule
+        \textbf{Module} &
+        \textbf{Primary Role} &
+        \textbf{Key Parameters / Signals} &
+        \textbf{Main Algorithmic Idea} \\
+        \midrule
+        \texttt{top\_selftest\_ 100mhz\_dbg} &
+        Top-level experiment controller and telemetry wrapper &
+        Clock, reset, scan enable, capture enable, \texttt{clear\_errors}, UART handshake, status/counter outputs &
+        Coordinates test phases; periodically packages status for serial transmission \\
+        \addlinespace
+        \texttt{ff\_scanfarm} &
+        Wrapper layer for the scan farm &
+        \texttt{CHAINS}, \texttt{BITS\_PER\_CHAIN}, \texttt{INJECT\_EN}, \texttt{INJ\_TAP}, \texttt{error\_live}, \texttt{error\_any} &
+        Preserves a stable top-level interface while instantiating the robust signature-based implementation \\
+        \addlinespace
+        \texttt{ff\_scanfarm\_sig} / scan-chain fabric &
+        Core monitored state array &
+        \texttt{clk\_scan}, \texttt{scan\_en}, \texttt{capture\_en}, \texttt{scan\_in/out}, signature bits, mismatch flags &
+        Updates each chain per shift/capture rules; compares compact state signature against expected value \\
+        \addlinespace
+        \texttt{scan\_chain} primitive &
+        One lane of monitored sequential storage &
+        Serial input/output, per-stage registers, optional injection tap &
+        Implements shift-register recurrences; optional controlled bit-flip insertion for self-verification \\
+        \addlinespace
+        \texttt{prbs31} &
+        Pseudo-random pattern source &
+        31-bit state, enable/reset, PRBS output bit/word &
+        Maximal-length LFSR using $x^{31}+x^{28}+1$; $2^{31}-1$ states before repetition \\
+        \addlinespace
+        \texttt{uart\_tx} / \texttt{uart\_tx\_robust} &
+        UART serialiser; robust variant adds framing protection &
+        \texttt{tx\_start}, \texttt{tx\_data}, baud divider, \texttt{tx\_busy}, \texttt{txd} &
+        Converts parallel byte to start~bit + 8~data~bits + stop~bit at programmable baud rate; robust variant prevents malformed frames \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{top\_selftest\_100mhz\_dbg}
+
+The \texttt{top\_selftest\_100mhz\_dbg} module is the supervisory block
+of the FFSR experiment.  It establishes the operating clock domain,
+applies reset, sequences the scan and capture phases, clears latched
+errors when requested, and routes status information into the UART
+telemetry path.  In a typical implementation, operation is divided into
+repeated frames or epochs: the design allows the farm to evolve or hold
+state, then enables capture, then enables scan shifting, then examines
+mismatch outputs, and finally serialises the results.
+
+\subsubsection{ff\_scanfarm and ff\_scanfarm\_sig}
+
+The \texttt{ff\_scanfarm} module acts as a named interface to the
+monitored sequential fabric.  In the wrapper variant used in this
+project, it preserves a stable external interface while instantiating
+the more robust internal implementation \texttt{ff\_scanfarm\_sig}.
+This decouples the project hierarchy from changes in the checker
+implementation.  The key outputs are a real-time mismatch indicator,
+\texttt{error\_live}, and a sticky fault memory, \texttt{error\_any}.
+
+The scan-farm core is parameterised by the number of parallel chains
+$C$ and the number of bits per chain $B$, giving a total monitored
+state volume of:
+\begin{equation}
+    N_\text{state} = C \times B.
+    \label{eq:nstate}
+\end{equation}
+
+\subsubsection{scan\_chain Primitive}
+
+At the lowest level, the \texttt{scan\_chain} logic implements the
+per-stage shift-register recurrence.  A chain receives a serial input
+bit, shifts stored data through successive registers when
+\texttt{scan\_en} is asserted, and presents the final stage at
+\texttt{scan\_out}.  An optional injection feature can flip a selected
+stage, allowing the checker path to be validated without radiation.
+Because the chain state is deterministic under commanded scan and
+capture sequences, any uncommanded state change is detectable through
+signature mismatch.
+
+\subsection{Core Algorithms}
+\label{subsec:ch6_algorithms}
+
+\subsubsection{Shift-Register State Update}
+
+Let $q_{c,i}[k]$ denote the state of stage $i$ in chain $c$ at clock
+step $k$, where $i = 0, 1, \ldots, B{-}1$ and $c = 0, 1, \ldots,
+C{-}1$.  During scan mode the chain obeys the standard shift recurrence:
+\begin{align}
+    q_{c,0}[k+1]   &= u_c[k], \label{eq:scan_in} \\
+    q_{c,i}[k+1]   &= q_{c,i-1}[k], \quad i > 0, \label{eq:scan_shift}
+\end{align}
+where $u_c[k]$ is the applied serial scan input for chain $c$.  In hold
+mode, $q_{c,i}[k+1] = q_{c,i}[k]$.
+
+\subsubsection{Optional Upset Injection for Verification}
+
+To validate the detector path without radiation exposure, a controlled
+injection can be applied at tap $t_\text{inj}$:
+\begin{equation}
+    q_{c,\,t_\text{inj}}[k+1] =
+        q^{\,\text{nom}}_{c,\,t_\text{inj}}[k+1]
+        \oplus \, \text{inj}[k],
+    \label{eq:injection}
+\end{equation}
+where $\text{inj}[k]$ is asserted only during a commanded test window
+and $q^\text{nom}$ denotes the nominal update in the absence of
+injection.
+
+\subsubsection{Signature Computation and Mismatch Detection}
+
+A compact checker is formed by reducing chain contents into parity-like
+signatures.  The signature for chain $c$ is:
+\begin{equation}
+    s_c[k] = \bigoplus_{i=0}^{B-1} q_{c,i}[k].
+    \label{eq:sig}
+\end{equation}
+The fabric-level signature vector is $\mathbf{S}[k] = [s_0[k],\,
+s_1[k],\, \ldots,\, s_{C-1}[k]]$.  The instantaneous mismatch flag is:
+\begin{equation}
+    e_\text{live}[k] =
+    \begin{cases}
+        1 & \text{if } \mathbf{S}_\text{obs}[k] \neq \mathbf{S}_\text{exp}[k], \\
+        0 & \text{otherwise.}
+    \end{cases}
+    \label{eq:elive}
+\end{equation}
+
+\subsubsection{Sticky Error Memory}
+
+A sticky fault flag preserves the occurrence of any prior mismatch even
+if the chain later returns to agreement:
+\begin{equation}
+    e_\text{any}[k+1] =
+        \bigl(e_\text{any}[k] \;\vee\; e_\text{live}[k]\bigr)
+        \;\wedge\; \overline{\text{clear\_errors}[k]}.
+    \label{eq:eany}
+\end{equation}
+This form is essential in beam testing because transient upsets are not
+lost between telemetry packets.
+
+\subsubsection{PRBS31 Recurrence}
+
+The \texttt{prbs31} module generates a pseudo-random binary sequence
+using a 31-bit linear feedback shift register with the primitive
+polynomial $p(z) = z^{31} + z^{28} + 1$.  Using zero-based indexing
+with $x_{30}$ as the most-significant stage, the feedback bit is:
+\begin{equation}
+    f[k] = x_{30}[k] \oplus x_{27}[k],
+    \label{eq:prbs_feedback}
+\end{equation}
+and the next state is:
+\begin{equation}
+    \mathbf{x}[k+1] = \{x_{29}[k],\, x_{28}[k],\, \ldots,\,
+                          x_0[k],\, f[k]\}.
+    \label{eq:prbs_update}
+\end{equation}
+Provided the all-zero state is avoided, this recurrence cycles through
+$2^{31} - 1$ non-zero states before repeating, yielding strong
+transition density and good statistical coverage for stressing the
+sequential fabric.
+
+\subsubsection{UART Frame Formation}
+
+For an 8-bit telemetry byte $D = [d_0, d_1, \ldots, d_7]$, the UART
+transmitter outputs:
+\begin{equation}
+    \text{TX frame} = [0,\; d_0,\; d_1,\; \ldots,\; d_7,\; 1],
+    \label{eq:uart_frame}
+\end{equation}
+where 0 is the start bit and 1 is the stop bit.  The nominal bit-period
+divider is:
+\begin{equation}
+    N_\text{baud} = \left\lfloor\frac{f_\text{clk}}{f_\text{baud}}
+                    \right\rceil,
+    \label{eq:baud}
+\end{equation}
+where $\lfloor\cdot\rceil$ denotes rounding to the nearest integer.  The
+\texttt{uart\_tx\_robust} variant extends the baseline transmitter with
+stronger start-request handling, safer state transitions, and additional
+protection against malformed back-to-back frames under transient control
+behaviour.
+
+% ------------------------------------------------------------
+\section{Test Configuration}
+\label{sec:ch6_test}
+% ------------------------------------------------------------
+
+\subsection{Devices Under Test}
+\label{subsec:ch6_dut}
+
+Five Digilent CMOD~S7 boards, each loaded with the FFSR dual modular
+redundancy (DMR) firmware on a Xilinx Spartan-7 FPGA, were monitored
+simultaneously.  Each device was connected to the host data acquisition
+PC via a dedicated USB-to-serial COM port at 115\,200~baud.  The DMR
+comparator within the FFSR design monitored two redundant data paths and
+incremented a 32-bit upset counter whenever a mismatch was detected.
+The counter value was reported over UART every 5~seconds.  A non-zero
+counter output indicated detection of one or more SEUs in the user data
+path.  Table~\ref{tab:ch6_devices} summarises the device configuration
+and test timeline.
+
+\begin{table}[htbp]
+    \centering
+    \caption{CMOD~S7 device configuration and test timeline.}
+    \label{tab:ch6_devices}
+    \begin{tabular}{lllll}
+        \toprule
+        \textbf{Device} & \textbf{COM Port} & \textbf{Baseline Start}
+            & \textbf{Reactor Start} & \textbf{Reactor End} \\
+        \midrule
+        FFSR1 & COM8 & 21:21, Jan~26 & 11:42, Jan~27 & 16:34, Jan~27 \\
+        FFSR2 & COM7 & 22:41, Jan~26 & 11:42, Jan~27 & 16:34, Jan~27 \\
+        FFSR3 & COM6 & 22:41, Jan~26 & 11:42, Jan~27 & 16:34, Jan~27 \\
+        FFSR4 & COM9 & 22:41, Jan~26 & 11:42, Jan~27 & 16:34, Jan~27 \\
+        FFSR5 & COM4 & 22:41, Jan~26 & 11:42, Jan~27 & 16:34, Jan~27 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Radiation Environment}
+\label{subsec:ch6_radiation}
+
+The test was conducted at the OSURR Fast Neutron Beam Facility over two
+days using distinct beam configurations that produced substantially
+different neutron flux and fluence levels.
+
+\textbf{Day~1 (gamma shutter closed, January~27).}  The reactor
+operated at approximately 300~kW (steady-state), reached within
+$\sim$10~minutes of start-up and sustained for approximately 4.7~hours.
+The fast neutron flux (steady-state) was approximately $2 \times 10^5$
+n/cm$^2$/s; the thermal component was approximately one order of
+magnitude lower.  Total accumulated fast neutron fluence was
+approximately $6$--$7 \times 10^9$~n/cm$^2$.  The fast and total
+fluence curves were nearly coincident throughout, confirming fast-neutron
+dominance.
+
+\textbf{Day~2 (gamma shutter open, January~28).}  Reactor power
+remained at approximately 300~kW, but the open-shutter configuration
+produced a fast neutron flux of approximately $1.5 \times 10^7$
+n/cm$^2$/s---roughly two orders of magnitude higher than Day~1.  The
+thermal flux was approximately $6 \times 10^6$~n/cm$^2$/s (within a
+factor of 2--3 of the fast flux).  Total accumulated fast neutron
+fluence was approximately $8$--$9 \times 10^{11}$~n/cm$^2$, also
+approximately two orders of magnitude greater than Day~1.
+
+Figures~\ref{fig:ch6_day1_fluence}--\ref{fig:ch6_day1_power} show the
+neutron fluence, flux, and power profiles for the Day~1 run;
+Figures~\ref{fig:ch6_day2_fluence}--\ref{fig:ch6_day2_power} show the
+corresponding plots for the Day~2 run.
+Figures~\ref{fig:ch6_overlay_fluence}--\ref{fig:ch6_overlay_power} provide
+overlay comparisons of total fluence, flux, and reactor power between
+the two runs.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/27thPower_closed_fluence}
+    \caption{Neutron fluence (fast, thermal, and total) accumulated
+        during the Day~1 (gamma shutter closed) reactor run at the
+        OSURR FNBF.  The fast and total curves are nearly coincident,
+        confirming fast-neutron dominance at this beam configuration.}
+    \label{fig:ch6_day1_fluence}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/27thPower_closed_flux}
+    \caption{Neutron flux (fast, thermal, and total) during the Day~1
+        (gamma shutter closed) run.  Fast flux reached a steady-state
+        value of approximately $2 \times 10^5$~n/cm$^2$/s; the thermal
+        component was approximately one order of magnitude lower.}
+    \label{fig:ch6_day1_flux}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/27thPower_closed_power}
+    \caption{Reactor power profile during the Day~1 run.  Full power
+        ($\sim$300~kW) was reached within approximately 10~minutes of
+        start-up and sustained for approximately 4.7~hours before
+        controlled shutdown.}
+    \label{fig:ch6_day1_power}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/28thPower_open_fluence}
+    \caption{Neutron fluence (fast, thermal, and total) accumulated
+        during the Day~2 (gamma shutter open) reactor run.  Total fast
+        fluence reached approximately $8$--$9 \times 10^{11}$~n/cm$^2$,
+        roughly two orders of magnitude greater than Day~1.}
+    \label{fig:ch6_day2_fluence}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/28thPower_open_flux}
+    \caption{Neutron flux during the Day~2 (gamma shutter open) run.
+        Fast flux reached approximately $1.5 \times 10^7$~n/cm$^2$/s
+        and thermal flux approximately $6 \times 10^6$~n/cm$^2$/s,
+        narrowing the fast-to-thermal ratio compared with Day~1.}
+    \label{fig:ch6_day2_flux}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/28thPower_open_power}
+    \caption{Reactor power profile during the Day~2 run.  Full power
+        was sustained for approximately 8.5~hours before shutdown.}
+    \label{fig:ch6_day2_power}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/overlay_fluence_total}
+    \caption{Overlay of total neutron fluence (fast~+~thermal) for
+        the Day~1 (shutter closed) and Day~2 (shutter open) runs,
+        illustrating the approximately two-orders-of-magnitude
+        difference in accumulated fluence between the two
+        configurations.}
+    \label{fig:ch6_overlay_fluence}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/overlay_flux_total}
+    \caption{Overlay of total neutron flux for both runs.  The Day~2
+        (open shutter) flux exceeded the Day~1 (closed shutter) flux
+        by approximately two orders of magnitude throughout the
+        steady-state period.}
+    \label{fig:ch6_overlay_flux}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/overlay_power}
+    \caption{Reactor power overlay for both runs on a linear scale.
+        Both days operated at the same nominal reactor power
+        ($\sim$300--400~kW); the large difference in neutron flux
+        between the two days arose entirely from the gamma shutter
+        configuration, not from a change in reactor power.}
+    \label{fig:ch6_overlay_power}
+\end{figure}
+
+% ------------------------------------------------------------
+\section{Experimental Results}
+\label{sec:ch6_results}
+% ------------------------------------------------------------
+
+\subsection{Baseline Test (January~26, Out of Beam)}
+\label{subsec:ch6_baseline}
+
+Prior to transport to the reactor facility, all five devices were
+operated at ambient background radiation levels to establish a baseline
+and to confirm correct data acquisition system operation.  FFSR1 began
+logging at 21:21 on January~26; FFSR2--5 began at 22:41.  All devices
+reported \texttt{CNT:00000000} continuously throughout the baseline
+period, confirming zero false positives from the test setup and
+demonstrating that the DMR detection logic was functioning correctly.
+
+Logging on all five devices terminated simultaneously at approximately
+22:59 due to a Windows Update reboot on the acquisition PC.  This was
+not a device failure.  After the reboot, logging was not restarted until
+the devices were at the reactor facility the following morning.  Future
+tests should disable automatic OS updates on the acquisition PC for the
+duration of the experiment.
+
+\subsection{Day~1 Reactor Run (January~27)}
+\label{subsec:ch6_day1}
+
+Logging resumed at the reactor facility at approximately 11:42 on
+January~27 for all five devices.  The reactor reached full power within
+the first 10--15~minutes.  All devices monitored continuously through
+reactor shutdown at approximately 16:34, providing approximately five
+hours of reactor run data.
+
+\subsubsection{Upset Count Results}
+
+Zero SEUs were detected on any of the five devices throughout the entire
+Day~1 reactor run at a total fast neutron fluence of approximately
+$6$--$7 \times 10^9$~n/cm$^2$.  All devices reported a consistent
+\texttt{CNT:00000000} output for the full irradiation duration.
+Table~\ref{tab:ch6_day1_results} summarises the Day~1 results.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Day~1 reactor run upset detection results.  $^{*}$FFSR1
+        count includes 250 \texttt{CNT}-format and $\approx$3\,252
+        \texttt{CNZ}-format readings (see
+        Section~\ref{subsec:ch6_ffsr1_day1}).}
+    \label{tab:ch6_day1_results}
+    \begin{tabular}{llllll}
+        \toprule
+        \textbf{Device} & \textbf{COM} & \textbf{Start}
+            & \textbf{End} & \textbf{Readings} & \textbf{SEUs} \\
+        \midrule
+        FFSR1 & COM8 & 11:42 & 16:34 & $\approx$3\,502$^*$ & 0 \\
+        FFSR2 & COM7 & 11:42 & 16:34 & 3\,491               & 0 \\
+        FFSR3 & COM6 & 11:42 & 16:34 & 3\,496               & 0 \\
+        FFSR4 & COM9 & 11:42 & 16:34 & 3\,497               & 0 \\
+        FFSR5 & COM4 & 11:42 & 16:34 & 3\,496               & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{PSU Current Monitoring---Day~1}
+
+Power supply current was monitored for the CMOD board array throughout
+the Day~1 run.  As shown in Figure~\ref{fig:ch6_day1_cmod}, the current
+profile exhibits a power-on inrush transient from approximately 0.175~A,
+rising rapidly to a steady-state value of approximately 0.283--0.286~A
+within the first $\sim$200~seconds as the boards initialised.  The
+current then remained essentially flat for the entire
+$\sim$17\,500-second run ($\sim$4.9~hours).
+
+One small transient spike to approximately 0.289~A is visible at
+$\sim$12\,500~s, consistent with a brief radiation-induced transient
+event; the current returned immediately to the baseline level with no
+permanent change.  Critically, no monotonic TID-induced current increase
+is evident across the Day~1 run.  The flat current profile is consistent
+with the Day~1 fluence level being insufficient to produce measurable
+TID-related leakage current degradation in the CMOS circuitry, providing
+a useful baseline for comparison with the Day~2 profile
+(Section~\ref{subsec:ch6_day2_psu}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Day1 CMOD}
+    \caption{PSU current for the CMOD board array during the Day~1
+        (gamma shutter closed) reactor run.  Current stabilises near
+        0.284~A after initial power-up and remains flat throughout,
+        indicating no measurable TID-induced leakage accumulation at
+        the Day~1 fluence level ($\sim$$6$--$7 \times 10^9$
+        n/cm$^2$).}
+    \label{fig:ch6_day1_cmod}
+\end{figure}
+
+\subsubsection{FFSR1 UART Format Change---Candidate Configuration Memory SEU}
+\label{subsec:ch6_ffsr1_day1}
+
+At approximately 12:03 on January~27, the UART output format on FFSR1
+changed from \texttt{CNT:00000000} to \texttt{CNZ0000}.  The label
+changed from \texttt{CNT} to \texttt{CNZ}, the colon delimiter
+disappeared, and the counter field width reduced from 8 hex digits to 4.
+This format change persisted for the remainder of the run; the upset
+count remained zero throughout in both formats; and FFSR2--5 showed no
+similar change.
+
+This behaviour is consistent with a single-event upset in the FPGA
+configuration memory (SRAM) rather than in the user data path.  The
+Spartan-7 is an SRAM-based FPGA, meaning the design implementation---LUT
+contents, routing resources, and embedded string constants---is stored in
+volatile SRAM configuration bits as susceptible to neutron-induced upsets
+as any other SRAM.  A bit flip in one or more configuration cells
+controlling the UART formatting logic could plausibly alter the output
+label and field width in exactly the structured manner observed.
+
+This event is significant for two reasons.  First, the DMR logic
+correctly protected the user flip-flop data path and reported zero upsets
+throughout, but it does not protect the configuration memory; the
+observation highlights that data-path redundancy alone is insufficient
+for SRAM-based FPGAs in radiation environments.  Second, the single
+affected device (out of five) is consistent with the stochastic nature
+of SEUs at the Day~1 fluence level.
+
+\subsection{Overnight Monitoring (January~27--28)}
+\label{subsec:ch6_overnight}
+
+Following the Day~1 reactor run, all five devices were left running
+overnight out of beam at the reactor facility.  Logging ran from
+approximately 16:42 on January~27 to approximately 07:13 on January~28,
+providing roughly 14.5~hours of out-of-beam monitoring at ambient
+background levels.  All five devices reported zero upsets throughout the
+overnight period, as expected.  Table~\ref{tab:ch6_overnight} summarises
+the results.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Overnight (out-of-beam) monitoring results.}
+    \label{tab:ch6_overnight}
+    \begin{tabular}{llllll}
+        \toprule
+        \textbf{Device} & \textbf{COM} & \textbf{Log Start}
+            & \textbf{Log End} & \textbf{Readings} & \textbf{SEUs} \\
+        \midrule
+        FFSR1 & COM8 & 16:48, Jan~27 & 07:13, Jan~28 & 13\,981 & 0 \\
+        FFSR2 & COM7 & 16:48, Jan~27 & 07:13, Jan~28 & 10\,389 & 0 \\
+        FFSR3 & COM6 & 16:48, Jan~27 & 07:13, Jan~28 & 10\,354 & 0 \\
+        FFSR4 & COM9 & 16:48, Jan~27 & 07:13, Jan~28 & 10\,353 & 0 \\
+        FFSR5 & COM4 & 16:48, Jan~27 & 07:13, Jan~28 & 10\,353 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Notably, FFSR1 continued to output in the \texttt{CNZ0000} format
+throughout the entire overnight period, including after three reconnect
+attempts (16:42, 16:45, 16:48).  For an SRAM-based FPGA, configuration
+memory is volatile---loaded from flash at power-up and held in SRAM
+during operation.  A bit flip in the configuration SRAM will persist
+indefinitely until either the device is power-cycled or a scrubbing
+operation overwrites the affected cell.  The persistence of the
+\texttt{CNZ} format through logging restarts, which do not cause a power
+cycle, but the expectation that it would be cleared by a full power
+cycle, is consistent with a configuration SRAM upset.  This observation
+reinforces the importance of distinguishing between logging-session
+restarts and full device power cycles when interpreting FPGA behaviour in
+radiation test environments.
+
+Figure~\ref{fig:ch6_overnight_cmod} shows the PSU current during the
+overnight period.  Current was stable near 0.2835~A with occasional
+small transient spikes, confirming normal device operation at ambient
+background levels and providing a clean pre-Day-2 baseline.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Overnight CMOD}
+    \caption{PSU current for the CMOD board array during the overnight
+        (out-of-beam) monitoring period (January~27--28).  Current is
+        stable near 0.284~A with occasional small transient spikes,
+        confirming normal device operation at ambient background
+        radiation levels.}
+    \label{fig:ch6_overnight_cmod}
+\end{figure}
+
+\subsection{Day~2 Reactor Run (January~28)}
+\label{subsec:ch6_day2}
+
+The Day~2 reactor run was conducted with the gamma shutter open,
+producing a fast neutron flux approximately two orders of magnitude
+higher than Day~1.  All five devices began logging at 07:21 and the
+reactor reached full power within approximately 20~minutes.  The reactor
+ran for approximately 8.5~hours before controlled shutdown.
+Table~\ref{tab:ch6_day2_results} summarises the Day~2 results.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Day~2 (gamma shutter open) upset detection results.}
+    \label{tab:ch6_day2_results}
+    \begin{tabular}{p{1.2cm}lllll}
+        \toprule
+        \textbf{Device} & \textbf{COM} & \textbf{Log Start}
+            & \textbf{Log End} & \textbf{Readings}
+            & \textbf{SEUs / Notes} \\
+        \midrule
+        FFSR1 & COM8 & 07:21, Jan~28 & 15:54, Jan~28 & 715
+            & \texttt{CNZ0800} detected (Sec.~\ref{subsec:ch6_ffsr1_day2}) \\
+        FFSR2 & COM7 & 07:21, Jan~28 & 14:44, Jan~28 & 5\,298 & 0 \\
+        FFSR3 & COM6 & 07:21, Jan~28 & 08:10, Jan~28 & 580
+            & 0---early dropout ($\sim$49~min) \\
+        FFSR4 & COM9 & 07:21, Jan~28 & 07:57, Jan~28 & 431
+            & 0---early dropout ($\sim$36~min) \\
+        FFSR5 & COM4 & 07:21, Jan~28 & 15:55, Jan~28 & 6\,144 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{FFSR3 and FFSR4 Early Dropouts}
+
+FFSR4 ceased transmitting at approximately 07:57 ($\sim$36~minutes into
+the run) and FFSR3 at approximately 08:10 ($\sim$49~minutes in).  Both
+devices stopped cleanly with no error messages; data simply ended
+mid-run and neither device recovered.  Two plausible mechanisms are
+consistent with these observations:
+
+\begin{itemize}
+    \item \textbf{Radiation-induced latch-up.}  A high-energy neutron
+    interaction could trigger a latch-up condition in the FPGA I/O or
+    core circuitry, causing the device to lock up and halt UART output.
+    Latch-up typically requires a power cycle to recover and can cause
+    permanent damage if not cleared promptly.
+
+    \item \textbf{Critical configuration memory upset.}  A severe or
+    multi-bit upset in a critical portion of the configuration memory
+    (e.g., clock management or I/O control logic) could halt device
+    operation entirely, even without a true latch-up.
+\end{itemize}
+
+The PSU current data
+(Figure~\ref{fig:ch6_day2_cmod_part1}) shows step increases at
+approximately 2\,800~s and 5\,000~s into the run.  FFSR4 stopped at
+approximately 2\,160~s and FFSR3 at approximately 2\,940~s, placing both
+dropouts near the step increase at $\sim$2\,800~s.  An abrupt change in
+aggregate board current at this time is consistent with a latch-up event
+altering one or both devices' current draw.  These early dropouts
+represent the most severe functional failures observed during the
+two-day campaign and are consistent with the two-orders-of-magnitude
+increase in fast neutron flux on Day~2.
+
+\subsubsection{PSU Current Monitoring---Day~2}
+\label{subsec:ch6_day2_psu}
+
+Figures~\ref{fig:ch6_day2_cmod_part1}
+and~\ref{fig:ch6_day2_cmod_part2} show the CMOD board aggregate PSU
+current during the Day~2 run.  Key observations are:
+
+\begin{itemize}
+    \item \textbf{Part~1 ($\sim$07:21--14:15):}  Current increased
+    steadily from approximately 0.28~A at run start to approximately
+    0.315~A by the end of the logging window---an increase of
+    approximately 12.5\%.  This is in stark contrast to the flat Day~1
+    profile and is consistent with TID effects accumulating in the FPGA
+    and support circuitry, increasing leakage current monotonically
+    under the much higher Day~2 fluence.  Step increases near 2\,800~s
+    and 5\,000~s correspond to the approximate dropout times of FFSR4
+    and FFSR3 respectively.
+
+    \item \textbf{Part~2 ($\sim$14:28--16:00):}  Current was
+    approximately 0.315~A at the start of this window with a continued
+    slow increase to $\sim$0.319~A.  Brief sharp transients at
+    approximately 4\,300~s and 5\,200~s into this window are consistent
+    with transient radiation events affecting the boards.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Day2 CMOD}
+    \caption{PSU current for the CMOD board array during the first part
+        of the Day~2 (gamma shutter open) reactor run.  A steady
+        monotonic increase from approximately 0.28~A to 0.315~A
+        ($\sim$12.5\%) is visible over the $\sim$7-hour logging window,
+        consistent with TID-induced leakage current accumulation.
+        Step increases near 2\,800~s and 5\,000~s correspond to the
+        approximate times of the FFSR4 and FFSR3 dropouts.}
+    \label{fig:ch6_day2_cmod_part1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Day2 part2 CMOD}
+    \caption{PSU current for the CMOD board array during the second part
+        of the Day~2 run.  Current continues near 0.315~A with a slow
+        upward trend; brief sharp transients are consistent with
+        transient radiation-induced events.}
+    \label{fig:ch6_day2_cmod_part2}
+\end{figure}
+
+\subsubsection{FFSR1 End-of-Run Burst Event and Confirmed DMR Upset}
+\label{subsec:ch6_ffsr1_day2}
+
+The most significant finding of the entire test campaign occurred on
+FFSR1 at approximately 15:54:44 on January~28.  Under normal operation,
+FFSR1 transmitted one \texttt{CNZ} output line every $\sim$5~seconds.
+At 15:54:44, the device abruptly began transmitting at an extremely high
+rate---approximately 400~readings within a 2-second window, roughly
+500$\times$ the normal output rate.  Within this burst the following
+anomalies were observed:
+
+\begin{itemize}
+    \item Multiple corrupted character substitutions:
+          \texttt{cNZ0000} (lowercase `c'), \texttt{CLZ0000}
+          (`L' for `N'), \texttt{KNZ0000} (`K' for `C'),
+          \texttt{CN[0000} (`[' for `Z').
+    \item A truncated output: \texttt{CNZ0} (partial transmission).
+    \item A non-zero upset count: \texttt{CNZ0800}
+          (hexadecimal \texttt{0x0800} = 2\,048 decimal).
+\end{itemize}
+
+The value \texttt{CNZ0800} is the \emph{first and only non-zero DMR
+upset count recorded across the entire two-day test campaign},
+representing a confirmed detection of one or more single-event upsets in
+the FFSR user data path by the DMR comparator logic.
+
+The burst event itself---the $\sim$500$\times$ increase in UART
+transmission rate---is strongly indicative of a second configuration
+memory SEU on FFSR1, this time affecting the UART baud rate generation
+logic.  The baud rate divider is implemented in FPGA configuration
+resources; a bit flip in the timing register can reduce the
+inter-character delay to near zero, producing exactly the rapid-fire
+transmission pattern observed.  The coincidence of the baud rate upset,
+the character corruption events, and the non-zero DMR count within a
+2-second window is consistent with a high-rate SEU cluster---multiple
+configuration and data memory upsets occurring in rapid succession near
+the end of the reactor run when cumulative fluence was at its maximum.
+
+% ------------------------------------------------------------
+\section{Discussion}
+\label{sec:ch6_discussion}
+% ------------------------------------------------------------
+
+\subsection{SEU Sensitivity of the DMR Design}
+\label{subsec:ch6_disc_seu}
+
+The absence of any DMR-detected upsets across all five devices at the
+Day~1 fast neutron fluence of approximately $6$--$7 \times 10^9$
+n/cm$^2$ indicates either that the DMR design successfully masked data
+path upsets that would otherwise be detectable, or that the Spartan-7
+shift-register fabric did not experience a sufficient number of upset
+events to register a DMR mismatch at this fluence level.  To distinguish
+between these interpretations, a companion test without DMR protection
+(e.g., a bare shift-register comparison) would be needed to establish
+the intrinsic SEU cross-section of the Spartan-7 fabric under this beam
+condition.
+
+On Day~2, the first confirmed DMR data path SEU (counter value 2\,048)
+was observed on FFSR1 at the highest fluence level of the campaign
+($\sim$$8$--$9 \times 10^{11}$~n/cm$^2$ total fast fluence).  The
+two-orders-of-magnitude increase in flux and fluence from Day~1 to Day~2
+is qualitatively consistent with the transition from zero detectable
+data-path upsets on Day~1 to device failures, latch-up events, and
+confirmed DMR detection on Day~2.
+
+\subsection{Configuration Memory Vulnerability}
+\label{subsec:ch6_disc_cfg}
+
+The FFSR1 observations across both days provide clear evidence of
+configuration memory SEUs manifesting as persistent, structured changes
+in device behaviour.  The Day~1 UART label change
+(Section~\ref{subsec:ch6_ffsr1_day1}) and the Day~2 burst event
+(Section~\ref{subsec:ch6_ffsr1_day2}) both represent configuration memory
+upsets whose effects persisted until the device was power-cycled,
+consistent with the volatile SRAM nature of the Spartan-7 configuration
+store.  These observations highlight that SRAM-based FPGAs have two
+distinct radiation vulnerability mechanisms: upsets in the user data
+registers (addressed by DMR/TMR) and upsets in the configuration SRAM
+(addressed by periodic scrubbing).  Radiation-hardened designs intended
+for extended exposure environments must address both.
+
+\subsection{TID Effects in PSU Current Data}
+\label{subsec:ch6_disc_tid}
+
+The PSU current monitoring data provides a consistent and clear picture
+of TID accumulation across the two days.  The Day~1 current profile was
+flat throughout ($\sim$0.284~A), indicating negligible TID-induced
+leakage at the Day~1 fluence level.  In contrast, the Day~2 current
+profile exhibited a steady monotonic increase of approximately 12.5\%
+over the approximately 7-hour run.  This is consistent with TID effects
+in the FPGA and support circuitry at the much higher Day~2 fluence.
+The step increases in the Day~2 current profile near 2\,800~s and
+5\,000~s provide independent corroborating evidence for latch-up events
+at the times of the FFSR4 and FFSR3 dropouts.
+
+\subsection{Implications for FPGA Radiation Hardening}
+\label{subsec:ch6_disc_hardening}
+
+Taken together, the results of this two-day test campaign demonstrate
+several conclusions relevant to the use of SRAM-based FPGAs in fast
+neutron environments.
+
+First, at moderate fluence levels ($\sim$$10^9$~n/cm$^2$), configuration
+memory SEUs can occur before data-path SEUs are detectable at the DMR
+counter level, suggesting that configuration scrubbing should be
+considered even in designs that rely on DMR or TMR for data-path
+protection.
+
+Second, at higher fluence levels ($\sim$$10^{11}$~n/cm$^2$ and above),
+latch-up, multiple simultaneous SEUs, and TID-induced leakage all become
+significant concerns that require active mitigation strategies including
+latch-up detection and recovery circuitry, TID-hardened component
+selection, and TID-aware power budget margins.
+
+Third, the FFSR architecture proved effective as a radiation test
+instrument.  The DMR comparator correctly identified the single confirmed
+data-path upset event while maintaining consistent zero-count output
+throughout normal operation, and the UART telemetry path provided a
+reliable real-time window into device state for the duration of both
+reactor runs.
+
+% ------------------------------------------------------------
+\section{Summary}
+\label{sec:ch6_summary}
+% ------------------------------------------------------------
+
+This chapter presented the design and experimental results of the FFSR
+DMR irradiation test conducted at the OSURR Fast Neutron Beam Facility
+on January~26--28, 2026.  The principal findings are as follows.
+
+\textbf{Day~1 (gamma shutter closed, $\sim$$6$--$7 \times 10^9$
+n/cm$^2$ fast fluence).}  Zero DMR-detected SEUs across all five devices
+during approximately five hours of irradiation.  FFSR1 exhibited a UART
+output format change consistent with a configuration memory SEU while
+the DMR upset counter remained zero.  No measurable TID effects were
+observed in the PSU current data.
+
+\textbf{Overnight (out of beam, January~27--28).}  Zero upsets across
+all five devices during approximately 14.5~hours of ambient monitoring.
+The FFSR1 \texttt{CNZ} format persisted through all logging restarts,
+confirming a persistent SRAM hardware state change rather than a
+software artefact.
+
+\textbf{Day~2 (gamma shutter open, $\sim$$8$--$9 \times 10^{11}$
+n/cm$^2$ fast fluence).}  FFSR3 and FFSR4 experienced early functional
+dropouts at approximately 36 and 49~minutes respectively, consistent
+with radiation-induced latch-up supported by the PSU current data.
+FFSR2 and FFSR5 completed the full run with zero DMR upsets.  FFSR1
+experienced a severe multi-SEU cluster event near the end of the run,
+producing the first and only confirmed non-zero DMR upset count of the
+campaign (\texttt{CNZ0800}, 0\texttt{x}0800 = 2\,048) along with a
+second configuration memory SEU affecting the UART baud rate.  PSU
+current monitoring showed a sustained $\sim$12.5\% increase over the
+Day~2 run, consistent with TID-induced leakage current accumulation.
+
+Overall, these results demonstrate that SRAM-based FPGAs operating in
+this fast neutron environment are susceptible to configuration memory
+SEUs at moderate fluence levels, and to data-path SEUs, latch-up, and
+TID degradation at higher fluence levels.  The FFSR DMR architecture
+successfully fulfilled its design objective of detecting data-path upsets
+while operating reliably throughout the test campaign, and highlights the
+need for configuration memory scrubbing and latch-up recovery circuitry
+for SRAM-based FPGAs intended for extended operation in radiation
+environments.

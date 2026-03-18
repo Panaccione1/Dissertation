@@ -1,1 +1,892 @@
-\chapter{Background and Prior Work}
+%% ============================================================
+%%  Chapter 2 — Background: Halide Perovskite Semiconductors
+%%              for Radiation Detection
+%%  Dissertation: Radiation Responsive Materials for Advanced
+%%  Radiation Detection and Systems
+%% ============================================================
+
+\chapter{Background: Halide Perovskite Semiconductors for Radiation Detection}
+
+The research reported in Chapters~\ref{ch:CsFAPbI}--\ref{ch:MHyPbCl3}
+rests on three intersecting bodies of knowledge: the crystal chemistry and
+electronic structure of halide perovskites, the physics governing how
+ionizing radiation deposits energy in matter, and the device physics that
+determines how efficiently that deposited energy is converted into a
+measurable electrical signal.  This chapter develops each body of knowledge
+in sufficient depth to motivate the experimental choices made in later
+chapters and to place the results in the context of the broader literature
+on semiconductor radiation detectors.  The FPGA-based systems work is
+treated separately in Chapter~\ref{ch:FPGA_background}.
+
+%% ------------------------------------------------------------
+\section{The Perovskite Crystal Structure and Material Families}
+\label{sec:perovskite_structure}
+%% ------------------------------------------------------------
+
+\subsection{The ABX$_3$ Archetype}
+
+The term ``perovskite'' derives from the mineral calcium titanate
+(CaTiO$_3$), named for the Russian mineralogist Lev von Perovski and
+first synthesized in the nineteenth century~\cite{Wells1945}.  The
+defining structural motif is a three-dimensional network of corner-sharing
+BX$_6$ octahedra in which a larger A-site cation occupies the
+12-coordinate cuboctahedral void at the unit-cell body-center (in the
+ideal cubic setting, space group $Pm\bar{3}m$).  The versatility of this
+archetype arises from the wide range of chemistries that can be
+accommodated without destroying the framework: in the oxide family,
+B-sites range from Ti$^{4+}$ to Pb$^{4+}$, while in the halide family
+addressed here, B is almost exclusively Pb$^{2+}$ (or Sn$^{2+}$) and
+X is a monovalent halide (I$^{-}$, Br$^{-}$, or Cl$^{-}$).
+
+The stability of a given ABX$_3$ composition is conveniently predicted by
+the Goldschmidt tolerance factor,
+\begin{equation}
+  t = \frac{r_{\rm A} + r_{\rm X}}{\sqrt{2}\,(r_{\rm B} + r_{\rm X})},
+  \label{eq:tolerance}
+\end{equation}
+where $r_i$ denotes the ionic radius of species $i$~\cite{Goldschmidt1926}.
+Perovskite formation is generally favored for $0.80 \le t \le 1.05$;
+values close to unity favor the ideal cubic structure, while smaller
+values drive cooperative octahedral tilting that lowers the symmetry to
+tetragonal or orthorhombic phases.  Kieslich et al.\ extended this
+framework to hybrid organic-inorganic systems by defining effective radii
+for polyatomic organic cations from the root-mean-square displacement of
+their hydrogen envelope~\cite{Kieslich2015}, enabling quantitative phase
+stability predictions for the methylammonium and formamidinium compounds
+central to this work.
+
+A complementary criterion is the octahedral factor $\mu = r_{\rm B}/r_{\rm X}$,
+which must satisfy $0.414 \le \mu \le 0.732$ for the B cation to fit stably
+inside the halide octahedron.  Pb$^{2+}$ ($r = 1.19$~\AA) paired with
+I$^{-}$ ($r = 2.20$~\AA) gives $\mu = 0.54$, comfortably within the stable
+range and consistent with the broad tunability of the Pb-halide framework.
+
+\subsection{Three-Dimensional Structures}
+
+\textbf{Methylammonium lead iodide (MAPbI$_3$).}
+The most extensively studied hybrid halide perovskite, MAPbI$_3$
+(methylammonium = CH$_3$NH$_3^+$, MA$^+$), adopts a cubic structure
+above 327~K, a tetragonal structure between 162~K and 327~K, and an
+orthorhombic structure below 162~K~\cite{Baikie2013}.  At room temperature,
+the tetragonal phase (space group $I4/mcm$) is therefore the operative
+structure for detector applications.  MAPbI$_3$ has a direct bandgap of
+approximately 1.55~eV and a high optical absorption coefficient
+($>10^4$~cm$^{-1}$ above the bandgap), along with the excellent charge
+transport described in Section~\ref{sec:hecht}.  Large single crystals
+with centimeter-scale dimensions can be grown from solution by inverse
+temperature crystallization~\cite{Saidaminov2015}, making bulk detector
+fabrication feasible.  The principal weakness of MAPbI$_3$ for detector
+applications is the light A-site cation: the low atomic masses of C, N,
+and H contribute minimally to gamma-ray stopping power, and the modest
+hydrogen density in the cubic CH$_3$NH$_3^+$ cation limits fast-neutron
+response.  The MAPbI$_3$-hBN composite detector described in
+Chapter~\ref{ch:MAPbI3hBN} addresses the neutron sensitivity limitation
+by incorporating high-\emph{n} boron-containing nanoflakes within a
+MAPbI$_3$ matrix.
+
+\textbf{Cesium lead bromide (CsPbBr$_3$).}
+Replacing the organic MA$^+$ cation with the monoatomic Cs$^+$
+($r = 1.67$~\AA) yields an all-inorganic perovskite with significantly
+improved thermal and photochemical stability~\cite{Stoumpos2013}.
+CsPbBr$_3$ undergoes orthorhombic-to-tetragonal ($\sim$88~$^\circ$C)
+and tetragonal-to-cubic ($\sim$130~$^\circ$C) transitions, remaining
+in the orthorhombic phase at room temperature.  Its bandgap of
+approximately 2.3~eV is wide enough to suppress intrinsic carrier
+excitation at 300~K, yielding resistivities exceeding $10^9$~$\Omega$\,cm
+in single crystals~\cite{He_NatPhoton_2021} — a prerequisite for the low
+dark-current operation required in radiation counting.  Most critically
+for gamma detection, the presence of both Cs ($Z = 55$) and Pb ($Z = 82$)
+gives CsPbBr$_3$ a calculated effective atomic number of approximately
+65.9, far exceeding that of conventional detector materials such as silicon
+($Z_{\rm eff} = 14$) and approaching that of cadmium zinc telluride
+($Z_{\rm eff} \approx 49.1$)~\cite{Springer_CsPbBr3}.  This high
+$Z_{\rm eff}$ makes CsPbBr$_3$ among the most promising semiconductor
+candidates for room-temperature gamma spectroscopy.
+
+\textbf{Mixed cation Cs$_{0.1}$FA$_{0.9}$PbI$_3$.}
+Pure formamidinium lead iodide (FAPbI$_3$, FA$^+$ = CH(NH$_2$)$_2^+$)
+has a narrower bandgap of approximately 1.48~eV and superior thermal
+stability relative to MAPbI$_3$, but the desired black
+$\alpha$-phase is metastable at room temperature, spontaneously converting
+to the photoinactive yellow $\delta$-phase~\cite{Weller2015}.  Partial
+substitution of FA$^+$ with Cs$^+$ (typically 5--15 mol\%) suppresses
+this phase transition by reducing the tolerance factor toward unity,
+entropy-stabilizing the cubic $\alpha$-phase at ambient
+conditions~\cite{Yi2016}.  The composition Cs$_{0.1}$FA$_{0.9}$PbI$_3$
+investigated in Chapter~\ref{ch:CsFAPbI} exploits this stabilization
+while retaining the narrow bandgap and large absorption cross-section of
+FAPbI$_3$, enabling its use as a photon-responsive active layer in a
+photovoltaic architecture repurposed as a radiation monitor.
+
+\subsection{Two-Dimensional Ruddlesden-Popper Structures}
+
+The three-dimensional perovskite framework can be sliced along specific
+crystallographic planes and the resulting slabs separated by layers of
+large organic spacer cations to form two-dimensional (2D) or quasi-2D
+structures.  In the Ruddlesden-Popper series the general formula is
+$(R)_2$(MA)$_{n-1}$Pb$_n$X$_{3n+1}$, where $R$ is a large organic
+cation that cannot fit the A-site of the 3D structure, $n$ is the number
+of corner-sharing PbX$_6$ octahedral layers between adjacent organic
+spacer bilayers, and the ratio of inorganic to organic content increases
+with $n$~\cite{Tsai2018}.  In the limit $n \rightarrow \infty$ the
+three-dimensional structure is recovered.
+
+For the present work, the relevant composition is the $n = 3$ member
+PEA$_2$MA$_2$Pb$_3$I$_{10}$, where PEA$^+$ denotes the
+phenylethylammonium cation (C$_6$H$_5$(CH$_2$)$_2$NH$_3^+$).
+The alternating organic-inorganic layering creates a natural quantum-well
+electrostatic landscape in which charge is preferentially confined within
+the higher-dielectric inorganic slabs.  From a detector perspective, this
+layered architecture confers two important advantages over its 3D
+counterpart: the bulky PEA$^+$ layers act as physical barriers to halide
+vacancy migration, substantially suppressing the ion-transport instabilities
+detailed in Section~\ref{sec:ion_migration}; and the organic layers provide
+intrinsic passivation of the inorganic slab surfaces, reducing
+trap-state densities at the heterojunction interfaces~\cite{Cao2018}.
+The price paid is a modest reduction in charge-carrier mobility relative
+to three-dimensional analogs, since carriers must traverse the
+organic-inorganic boundaries.  Chapter~\ref{ch:2Dperovskite} investigates
+whether surface-passivation strategies can recover sufficient transport
+quality to enable practical detector operation while retaining the
+stability advantages of the 2D architecture.
+
+\subsection{Methylhydrazinium Lead Chloride (MHyPbCl$_3$)}
+
+Methylhydrazinium lead chloride, MHyPbCl$_3$ (MHy$^+$ =
+CH$_3$NH$_2$NH$_2^+$), is a relatively recently reported member of the
+halide perovskite family in which the conventional monovalent cation is
+replaced by the methylhydrazinium ion~\cite{Nowok2021}.  This composition
+is of particular interest for fast-neutron detection because of its
+exceptionally high hydrogen content: the CH$_3$NH$_2$NH$_2^+$ cation
+carries five hydrogen atoms, and the resulting crystallographic hydrogen
+density is approximately $3.79 \times 10^{22}$~H\,cm$^{-3}$~\cite{Panaccione_NIM_2024}.
+This exceeds the hydrogen density of many purpose-built neutron moderator
+and detector materials.  Fast neutrons (energies above $\sim$1~MeV)
+interact primarily with hydrogen nuclei via elastic scattering, transferring
+up to 100\% of their kinetic energy to the recoil proton in a head-on
+collision; those recoil protons then ionize the detector medium in the
+same manner as a directly ionizing particle.  The combination of high
+hydrogen density (for neutron moderation and proton production), moderate
+bandgap ($\sim$3.0~eV, appropriate for room-temperature operation), and
+the semiconducting perovskite framework (for direct electronic readout)
+makes MHyPbCl$_3$ a compelling candidate for a compact direct-conversion
+fast-neutron detector.  Chapter~\ref{ch:MHyPbCl3} presents the synthesis,
+characterization, and fast-neutron response measurements for this material.
+
+%% ------------------------------------------------------------
+\section{Radiation Detection Fundamentals}
+\label{sec:detection_fundamentals}
+%% ------------------------------------------------------------
+
+\subsection{Mechanisms of Ionizing Radiation Detection}
+
+A radiation detector converts the energy deposited by an ionizing particle
+or photon into a measurable quantity — in semiconductor detectors, this
+quantity is an electrical charge pulse whose amplitude is proportional to
+the deposited energy.  The process proceeds in three stages: (1) the
+primary ionizing event, in which the incident radiation transfers energy
+to the detector medium, producing a spatial distribution of electron-hole
+pairs along the particle track or at the absorption site; (2) charge
+transport, in which the liberated carriers drift under the applied bias
+field toward the collection electrodes; and (3) signal induction and
+readout, in which the moving charges induce a current pulse on the
+electrodes that is amplified and digitized~\cite{knoll2010}.
+
+The mean energy required to create one electron-hole pair in a
+semiconductor is given by Klein's empirical rule,
+\begin{equation}
+  W \approx 2.67\,E_{\rm g} + 0.87~\text{eV},
+  \label{eq:klein}
+\end{equation}
+where $E_{\rm g}$ is the bandgap energy~\cite{Klein1968}.  For
+MAPbI$_3$ ($E_{\rm g} \approx 1.55$~eV), this gives $W \approx 5.0$~eV
+per pair; for CsPbBr$_3$ ($E_{\rm g} \approx 2.3$~eV), $W \approx 7.0$~eV
+per pair.  These values compare favorably with conventional semiconductor
+detectors: silicon ($W = 3.6$~eV) and germanium ($W = 2.9$~eV) produce
+more pairs per unit energy, but those materials require cryogenic cooling
+or high-purity growth technologies incompatible with cost-effective
+deployment.  The higher $W$ of perovskites is partially offset by their
+far greater stopping power per unit thickness (Section~\ref{sec:radiation_interaction}),
+so the total charge produced by a given photon energy can be comparable
+to or exceed that in a thinner silicon detector despite the higher pair
+creation energy.
+
+\subsection{Energy Resolution and Pulse Height Analysis}
+
+The ability to resolve closely spaced photon energies — and thereby identify
+specific radionuclides — is quantified by the energy resolution $R$,
+conventionally expressed as the fractional full-width at half-maximum (FWHM)
+of a spectral peak:
+\begin{equation}
+  R = \frac{\Delta E_{\rm FWHM}}{E_0},
+  \label{eq:resolution}
+\end{equation}
+where $E_0$ is the incident photon energy.  In an ideal semiconductor
+detector in which Poisson statistics govern pair production, the minimum
+achievable resolution is set by the Fano limit:
+\begin{equation}
+  \Delta E_{\rm FWHM}^{\rm Fano} = 2.35\,\sqrt{F \cdot W \cdot E_0},
+  \label{eq:fano}
+\end{equation}
+where $F$ is the Fano factor ($F \approx 0.1$--0.2 for most semiconductors)~\cite{knoll2010}.
+In practice, the measured resolution is degraded by incomplete charge
+collection due to carrier trapping, electronic noise from the amplifier chain,
+and dielectric polarization from ion migration (the last factor being
+specific to halide perovskites and discussed in Section~\ref{sec:ion_migration}).
+The benchmark figure commonly cited in the perovskite detector literature is
+the 1.4\% resolution at 662~keV ($^{137}$Cs) achieved by He et al.\ for
+a CsPbBr$_3$ single crystal coupled to a custom application-specific
+integrated circuit (ASIC)~\cite{He_NatPhoton_2021}, which at the time
+of publication was the best room-temperature resolution demonstrated by
+any non-CZT semiconductor detector.
+
+Energy-resolved radiation measurements are performed by connecting the
+detector preamplifier output to a pulse-height analyzer (PHA), which bins
+each charge pulse by its amplitude and accumulates a histogram — the
+pulse-height spectrum — whose peak positions encode incident photon
+energies and whose areas are proportional to the detected activity.
+The shaping time of the amplifier is a critical parameter: it must be
+long enough to integrate the slow hole component of the charge pulse
+(hole mobilities in halide perovskites are typically 5--10$\times$ lower
+than electron mobilities) but short enough to avoid excessive pileup at
+practical count rates.
+
+\subsection{X-Ray Detector Sensitivity}
+
+For applications in medical and industrial X-ray imaging, the relevant
+figure of merit is not energy resolution but sensitivity $S$, defined as
+the charge collected per unit area per unit X-ray exposure:
+\begin{equation}
+  S = \frac{\Delta Q}{A \cdot \Delta X} \quad \left[\mu\text{C}\,\text{Gy}^{-1}\,\text{cm}^{-2}\right],
+  \label{eq:sensitivity}
+\end{equation}
+where $\Delta X$ is the absorbed dose rate.  Sensitivity is controlled by
+the X-ray absorption efficiency (determined by the stopping power and
+detector thickness), the charge collection efficiency (determined by $\mu\tau$
+products and applied field), and the dark current level (which sets the
+minimum detectable signal).  Perovskite thick-film detectors fabricated
+from polycrystalline MAPbI$_3$ or MAPbBr$_3$ have demonstrated sensitivities
+exceeding 4,500~$\mu$C\,Gy$^{-1}$\,cm$^{-2}$ under 8~keV X-rays,
+more than $10^4$ times higher than conventional amorphous selenium
+panels~\cite{Wei2017}.  The high atomic number of the Pb sublattice is
+the primary driver of this extraordinary sensitivity at soft X-ray
+energies, where the photoelectric cross-section scales roughly as $Z^{4.5}$.
+
+\subsection{Neutron Detection and Discrimination}
+
+Neutron detection in semiconductor materials is indirect: neutrons carry
+no charge and interact negligibly with electrons, so they must first
+undergo a nuclear reaction or elastic scattering event that produces a
+charged secondary particle capable of ionizing the detector.  Thermal
+neutrons (energies below $\sim$0.5~eV) are most efficiently captured via
+exothermic reactions such as $^{10}$B(n,$\alpha$)$^7$Li and
+$^6$Li(n,$\alpha$)$^3$H.  Fast neutrons above $\sim$1~MeV interact
+principally through elastic scattering from hydrogen nuclei, producing
+recoil protons with a continuous energy spectrum up to the full neutron
+energy.  The detection efficiency for fast neutrons is proportional to
+the hydrogen areal density in the active medium, making hydrogen-rich
+materials intrinsically advantageous.  The measured $^{1}$H density in
+MHyPbCl$_3$ of $3.79 \times 10^{22}$~cm$^{-3}$ exceeds that of common
+polymer moderator materials and places this perovskite in a unique
+position as a combined moderating and detecting medium for fast
+neutrons~\cite{Panaccione_NIM_2024}.
+
+Discrimination between neutron and gamma signals is accomplished
+by exploiting differences in the ionization density (linear energy
+transfer, LET) of the respective secondary particles.  Recoil protons
+from fast-neutron elastic scattering and alpha particles from thermal
+capture reactions deposit energy far more densely than the Compton
+electrons produced by gamma photons of similar incident energy.  In
+systems with sufficient time resolution, pulse-shape discrimination
+(PSD) can separate the fast and slow scintillation components that
+arise from these different ionization densities; in solid-state detectors,
+differences in carrier extraction dynamics under the high local ionization
+density of heavy charged particles can be exploited in a similar
+manner~\cite{knoll2010}.
+
+%% ------------------------------------------------------------
+\section{Wide Bandgap Semiconductors for Room-Temperature Detection}
+\label{sec:wide_bandgap}
+%% ------------------------------------------------------------
+
+\subsection{The Room-Temperature Constraint}
+
+The operating requirement most often overlooked in academic detector
+comparisons — yet most consequential for deployment in nuclear plants,
+field instruments, and space systems — is that the detector must
+function reliably at room temperature without active cooling.  This
+single constraint eliminates two of the highest-performing semiconductor
+detector technologies: germanium (HPGe) must be operated below 120~K
+to suppress thermally generated leakage current, requiring liquid-nitrogen
+dewars or mechanical cryocoolers that add cost, mass, and failure modes
+incompatible with unattended monitoring~\cite{knoll2010}.  Silicon drift
+detectors, while operable at modest Peltier cooling ($-20$ to
+$-40~^\circ$C), still suffer from displacement damage under high neutron
+fluences that degrade their spectroscopic performance irreversibly.
+
+The root cause of the temperature sensitivity in narrow-gap semiconductors
+is the intrinsic carrier concentration $n_i$, which increases
+exponentially with temperature as:
+\begin{equation}
+  n_i = \sqrt{N_c N_v}\,\exp\!\left(-\frac{E_{\rm g}}{2kT}\right),
+  \label{eq:ni}
+\end{equation}
+where $N_c$ and $N_v$ are the effective density of states in the
+conduction and valence bands, respectively, and $k$ is Boltzmann's
+constant~\cite{Sze2007}.  At room temperature ($T = 300$~K), germanium
+($E_{\rm g} = 0.67$~eV) has $n_i \approx 2.4 \times 10^{13}$~cm$^{-3}$,
+producing a leakage current density many orders of magnitude larger than
+the signal currents from typical radiation fields.  Silicon
+($E_{\rm g} = 1.12$~eV) fares considerably better with
+$n_i \approx 1.5 \times 10^{10}$~cm$^{-3}$, but displacement damage
+from neutron irradiation introduces compensating defects that effectively
+raise the intrinsic carrier density and degrade the depletion voltage
+over time.
+
+For a semiconductor to operate as a room-temperature detector without
+active cooling or impractically high reverse bias, $n_i$ must be
+sufficiently low that the thermal generation current is smaller than the
+smallest radiation-induced signal of interest.  A widely cited rule of
+thumb requires $n_i \lesssim 10^7$~cm$^{-3}$, which for silicon-like
+band structure translates to a minimum bandgap of approximately
+1.5~eV~\cite{Owens2004}.  This threshold defines the wide bandgap
+semiconductor regime relevant to room-temperature radiation detection.
+
+\subsection{Figures of Merit for Wide Bandgap Detector Materials}
+
+The suitability of a wide bandgap semiconductor for radiation detection
+is characterized by several interrelated figures of merit beyond the
+bandgap itself:
+
+\textbf{Resistivity} ($\rho$, $\Omega$\,cm).  High bulk resistivity
+minimizes the dark current $I_{\rm dark} = V/R = VA/(L\rho)$ that flows
+under the applied bias field and sets the noise floor.  For
+spectroscopic applications, resistivities above $10^9$~$\Omega$\,cm
+are typically required; for imaging applications where high flux
+dominates shot noise, values above $10^7$~$\Omega$\,cm may be
+acceptable.  Wide bandgap materials achieve high resistivity by a
+combination of large $E_{\rm g}$ (reducing $n_i$) and the absence of
+shallow donor or acceptor impurities in the bandgap.  CsPbBr$_3$
+single crystals have been measured at $\rho > 10^{10}$~$\Omega$\,cm
+at room temperature~\cite{He_NatPhoton_2021}, exceeding the resistivity
+of commercial CdZnTe by approximately one order of magnitude.
+
+\textbf{Mobility-lifetime product} ($\mu\tau$, cm$^2$\,V$^{-1}$).
+As derived in Section~\ref{sec:hecht}, $\mu\tau$ directly governs
+the mean free path of carriers between generation and trapping events.
+Wide bandgap semiconductors generally have lower carrier mobilities
+than narrow-gap materials (because heavier effective masses accompany
+larger bandgaps in many crystal systems), but the lifetime can be
+extraordinarily long in materials with low defect densities, partially
+compensating.  The target for spectroscopic detectors is
+$\mu_e\tau_e \gtrsim 10^{-3}$~cm$^2$\,V$^{-1}$; for hole collection,
+the equivalent target is often relaxed to $10^{-4}$~cm$^2$\,V$^{-1}$
+when single-polarity collection schemes are employed~\cite{Luke1995}.
+
+\textbf{Effective atomic number} ($Z_{\rm eff}$).  For gamma and X-ray
+detection, $Z_{\rm eff}$ determines the photoelectric stopping power,
+which scales as $Z^{4.5}$.  Wide bandgap semiconductors based on
+heavy elements (Pb, Bi, Hg, Cd, Te) combine the thermal benefits of
+a large bandgap with high stopping power in a way that narrow-gap
+elemental semiconductors cannot achieve.  Silicon ($Z = 14$) requires
+centimeters of active thickness to stop 662~keV photons, while a few
+millimeters of CsPbBr$_3$ ($Z_{\rm eff} = 65.9$) or CdZnTe
+($Z_{\rm eff} = 49.1$) provide equivalent absorption~\cite{Murty1965}.
+
+\textbf{Pair creation energy} ($W$, eV).  As noted in
+Eq.~\ref{eq:klein}, $W$ is approximately proportional to $E_{\rm g}$.
+Wide bandgap materials therefore produce fewer electron-hole pairs per
+unit of deposited energy than narrow-gap ones, increasing the
+statistical (Fano) contribution to the energy resolution.  This is the
+principal penalty paid for room-temperature operability: it must be
+offset by large $\mu\tau$ products that ensure complete charge
+collection, since any additional variance from trapping further
+degrades the resolution beyond the Fano limit.
+
+\subsection{The Wide Bandgap Material Landscape}
+
+Table~\ref{tab:wbg_comparison} contextualizes the halide perovskites
+investigated in this dissertation within the wider landscape of wide
+bandgap semiconductor detector materials.
+
+\begin{table}[htbp]
+\centering
+\caption{Selected properties of wide bandgap semiconductor detector
+         materials at 300~K.  CZT = cadmium zinc telluride
+         Cd$_{0.9}$Zn$_{0.1}$Te. Data compiled
+         from~\cite{Owens2004,He_NatPhoton_2021,Springer_CsPbBr3,knoll2010}.}
+\label{tab:wbg_comparison}
+\startsinglespace
+\begin{tabular}{lcccccc}
+\hline
+Material & $E_{\rm g}$ (eV) & $Z_{\rm eff}$ &
+  $\rho$ ($\Omega$\,cm) & $\mu_e\tau_e$ (cm$^2$\,V$^{-1}$) &
+  $W$ (eV) & Best $R_{662}$ \\
+\hline
+Si          & 1.12 & 14   & $>10^4$   & $>1$                  & 3.6  & $<0.1$\% (cryo) \\
+CdTe        & 1.50 & 49.5 & $10^9$    & $3\times10^{-3}$      & 4.4  & 1.7\% \\
+CZT         & 1.57 & 49.1 & $10^{10}$ & $10^{-2}$             & 4.6  & 0.5\% \\
+GaAs        & 1.42 & 31.6 & $10^7$    & $10^{-5}$             & 4.2  & $\sim$2\% \\
+4H-SiC      & 3.26 & 14   & $>10^{12}$& $10^{-6}$             & 8.0  & $\sim$1\%* \\
+HgI$_2$     & 2.13 & 62.2 & $10^{13}$ & $10^{-4}$             & 4.2  & 0.5\% \\
+CsPbBr$_3$  & 2.30 & 65.9 & $>10^{10}$& $1.3\times10^{-2}$   & 7.0  & 1.4\% \\
+MAPbI$_3$   & 1.55 & 51.4 & $10^8$    & $8\times10^{-3}$      & 5.0  & $\sim$6\% \\
+\hline
+\multicolumn{7}{l}{\footnotesize *For alpha particles; gamma spectroscopy
+  performance is limited by the low $Z_{\rm eff}$.}
+\end{tabular}
+\end{table}
+
+Several observations emerge from this comparison.  CdZnTe has long
+occupied the upper tier of room-temperature gamma spectrometers, combining
+a near-ideal bandgap for thermal leakage suppression, high $Z_{\rm eff}$,
+and a $\mu_e\tau_e$ product sufficient for millimeter-to-centimeter-scale
+crystals — but its dominance rests entirely on the extraordinary effort
+invested in Bridgman crystal growth and post-growth processing that has
+accumulated over three decades.  HgI$_2$ offers the highest $Z_{\rm eff}$
+and resistivity of the conventional materials but suffers from mechanical
+fragility and a phase transition at 127~$^\circ$C that has limited
+commercial uptake.  Silicon carbide (4H-SiC) is exceptional in its
+radiation hardness and thermal tolerance but its low $Z_{\rm eff}$
+confines it to charged-particle and neutron applications where stopping
+power from the heavy-element sublattice is not required~\cite{Owens2004}.
+
+CsPbBr$_3$ occupies a remarkably favorable position in this landscape.
+Its $Z_{\rm eff}$ of 65.9 is the highest of any material in common
+laboratory study, its $\mu_e\tau_e$ is competitive with CdZnTe despite
+far simpler solution-based crystal growth, and its resistivity exceeds
+that of CdZnTe by an order of magnitude.  The 1.4\% energy resolution
+at 662~keV achieved by He et al.\ is already within a factor of three
+of the best CdZnTe single-element detectors, and it was achieved after
+only a few years of focused development~\cite{He_NatPhoton_2021}.  The
+remaining gap is attributable primarily to the ion-migration polarization
+effect (Section~\ref{sec:ion_migration}), which introduces a
+time-dependent component to charge collection efficiency not present in
+purely electronic semiconductors.
+
+\subsection{Why Bandgap Engineering Matters: The Perovskite Advantage}
+
+The halide perovskite family is unique among wide bandgap detector
+candidates in that the bandgap is continuously tunable over the range
+1.2--3.5~eV by compositional substitution at all three crystallographic
+sites, without changing the crystal structure or growth method.  Replacing
+iodide with bromide shifts the bandgap from 1.55~eV (MAPbI$_3$) to
+2.3~eV (MAPbBr$_3$); substituting Pb$^{2+}$ with Sn$^{2+}$ narrows the
+gap to $\sim$1.2~eV; replacing MA$^+$ with the larger FA$^+$ cation
+narrows the gap marginally to $\sim$1.48~eV~\cite{Stoumpos2013}.
+This tunability enables the optimization of three competing
+requirements simultaneously: (1) $E_{\rm g}$ large enough to suppress
+thermal leakage at the maximum operating temperature; (2) $E_{\rm g}$
+small enough to keep $W$ — and therefore the Fano noise — acceptably
+low; and (3) $Z_{\rm eff}$ high enough for efficient photon stopping
+in the energy range of interest.  No other material family offers all
+three degrees of freedom within a single, solution-processable crystal
+system, which is the central motivation for investigating multiple
+perovskite compositions across the chapters that follow.
+
+%% ------------------------------------------------------------
+\section{Radiation Interaction with High-\textit{Z} Semiconductors}
+\label{sec:radiation_interaction}
+%% ------------------------------------------------------------
+
+\subsection{Photon Interactions}
+
+Three mechanisms govern the interaction of gamma and X-ray photons with
+matter: the photoelectric effect, Compton scattering, and pair production.
+Each dominates over a different energy range and scales differently with
+the atomic number of the absorber, making the choice of detector material
+central to the detection efficiency for a given source energy.
+
+The \emph{photoelectric effect} is dominant below approximately 100~keV
+in high-$Z$ materials.  An incident photon is completely absorbed by an
+inner-shell electron, which is ejected with kinetic energy $E_e = h\nu - E_b$,
+where $E_b$ is the binding energy of that shell.  The photoelectric
+cross-section scales strongly with atomic number and inversely with photon
+energy as $\sigma_{\rm pe} \propto Z^{4.5}/E^{3.5}$, so high-$Z$
+semiconductors provide orders-of-magnitude higher photoelectric absorption
+than silicon or germanium for the same detector volume.  The complete
+energy deposition of the photoelectric process produces the full-energy
+peak in the pulse-height spectrum, making it the principal mechanism for
+photon spectroscopy.
+
+\emph{Compton scattering} dominates for photon energies between
+approximately 100~keV and several MeV in heavy materials.  An incident
+photon transfers a fraction of its energy to a loosely bound or free
+electron, with the scattered photon carrying the remainder.  Because
+only partial energy is deposited, Compton events populate a continuum
+below the full-energy peak rather than contributing to it.  The Compton
+cross-section is proportional to $Z$, so high-$Z$ absorbers still offer
+a substantial geometric advantage, but the spectroscopic information is
+contained only in the photopeak fraction.
+
+\emph{Pair production} becomes significant above the threshold energy of
+1.022~MeV and dominates at multi-MeV photon energies.  The photon is
+converted into an electron-positron pair in the Coulomb field of the
+nucleus; the 511-keV annihilation photons from the subsequent positron
+annihilation appear as characteristic escape peaks in the spectrum.
+The pair-production cross-section scales as $Z^2$.
+
+The combined effect of these mechanisms is captured by the mass
+attenuation coefficient $\mu/\rho$, tabulated as a function of energy
+for all elements by the National Institute of Standards and Technology
+(NIST XCOM database).  For a compound material, the effective atomic
+number is calculated as:
+\begin{equation}
+  Z_{\rm eff} = \left(\sum_i w_i Z_i^n\right)^{1/n},
+  \label{eq:Zeff}
+\end{equation}
+where $w_i$ is the weight fraction of element $i$ and the exponent
+$n \approx 3.5$ is chosen to match the photoelectric cross-section
+scaling~\cite{Murty1965}.  Applying this formula to CsPbBr$_3$
+(Cs: $Z = 55$, Pb: $Z = 82$, Br: $Z = 35$; stoichiometric weight fractions
+of 0.229, 0.449, and 0.322, respectively) yields $Z_{\rm eff} \approx 65.9$,
+substantially higher than silicon ($Z_{\rm eff} = 14$), germanium (32),
+or even CdZnTe ($Z_{\rm eff} \approx 49.1$)~\cite{Springer_CsPbBr3}.
+
+\subsection{Charge Transport and the Hecht Equation}
+\label{sec:hecht}
+
+Even if radiation deposits charge in the bulk of a detector, that charge
+must be transported to the collection electrodes without recombination
+or trapping if a proportional signal is to be measured.  The quality of
+charge transport is characterized by the mobility-lifetime product $\mu\tau$
+for electrons and holes separately.  Carrier \emph{mobility} $\mu$
+(cm$^2$\,V$^{-1}$\,s$^{-1}$) quantifies the drift velocity per unit
+electric field; carrier \emph{lifetime} $\tau$ (s) is the mean time before
+a carrier is irreversibly trapped at a deep defect and removed from the
+circuit.  The product $\mu\tau$ has units of cm$^2$\,V$^{-1}$ and
+represents the mean distance a carrier drifts per unit of applied field
+before being trapped; a large $\mu\tau$ indicates that carriers can
+traverse a thick crystal without significant charge loss.
+
+The fractional charge collection for a detector of thickness $L$ under
+applied field $E$ can be derived rigorously for a planar single-carrier
+case.  For a general double-carrier detector with the interaction site
+at depth $x$ from the cathode, the Hecht equation gives:
+\begin{equation}
+  Q(x) = Q_0 \left[
+    \frac{\mu_e \tau_e E}{L}\left(1 - e^{-(L-x)/\mu_e\tau_e E}\right)
+    +
+    \frac{\mu_h \tau_h E}{L}\left(1 - e^{-x/\mu_h\tau_h E}\right)
+  \right],
+  \label{eq:hecht}
+\end{equation}
+where $Q_0 = eN_0$ is the charge generated by the initial ionizing
+event~\cite{Hecht1932}.  For uniform irradiation, averaging
+Eq.~\ref{eq:hecht} over $x$ from 0 to $L$ gives the mean charge
+collection efficiency (CCE), which approaches unity only when both
+$\mu_e\tau_e E/L \gg 1$ and $\mu_h\tau_h E/L \gg 1$.  In practice
+this requires either very high applied fields, very thin detectors,
+or very large $\mu\tau$ products.
+
+Halide perovskites have demonstrated $\mu\tau$ products competitive with
+those of mature compound semiconductors.  Single-crystal MAPbI$_3$
+exhibits $\mu_e\tau_e \approx 8 \times 10^{-3}$~cm$^2$\,V$^{-1}$ and
+$\mu_h\tau_h \approx 3 \times 10^{-3}$~cm$^2$\,V$^{-1}$~\cite{Saidaminov2015},
+values that in a 1-mm-thick crystal at a modest field of 100~V\,cm$^{-1}$
+yield a mean electron drift length of $\sim$8~mm — far exceeding the
+crystal thickness.  CsPbBr$_3$ single crystals have achieved
+$\mu_e\tau_e$ up to $1.34 \times 10^{-2}$~cm$^2$\,V$^{-1}$, supporting
+the 1.4\% energy resolution reported by He et al.~\cite{He_NatPhoton_2021}.
+These values are within a factor of two to three of CdZnTe
+($\mu_e\tau_e \sim 10^{-2}$~cm$^2$\,V$^{-1}$), a material that has
+required decades of crystal growth refinement to achieve its current
+performance levels.
+
+The hole transport is typically the limiting factor in halide perovskites,
+as in most compound semiconductors.  The hole $\mu\tau$ in both MAPbI$_3$
+and CsPbBr$_3$ is typically 5--10$\times$ lower than the electron value,
+leading to a characteristic single-polarity collection signature in which
+events occurring near the cathode (from which electrons must traverse the
+full crystal thickness) are preferentially detected.  Electronic techniques
+such as single-carrier collection (using a Frisch collar or virtual Frisch
+ring) and waveform analysis can mitigate poor hole collection~\cite{Luke1995},
+and perovskite detectors are amenable to these approaches.
+
+%% ------------------------------------------------------------
+\section{Schottky Diode Contacts in Semiconductor Detectors}
+\label{sec:schottky}
+%% ------------------------------------------------------------
+
+\subsection{Metal-Semiconductor Junction Physics}
+
+When a metal is brought into contact with a semiconductor, charge
+redistributes at the interface until the Fermi levels align, creating
+a built-in potential difference and a depletion region in the
+semiconductor.  For a metal in contact with an n-type semiconductor,
+the Schottky barrier height is:
+\begin{equation}
+  \phi_{\rm B} = \phi_m - \chi_s,
+  \label{eq:schottky_barrier}
+\end{equation}
+where $\phi_m$ is the metal work function and $\chi_s$ is the electron
+affinity of the semiconductor~\cite{Sze2007}.  The depletion region
+extends a distance $W$ into the semiconductor:
+\begin{equation}
+  W = \sqrt{\frac{2\varepsilon\varepsilon_0 (V_{\rm bi} - V)}{e N_D}},
+  \label{eq:depletion_width}
+\end{equation}
+where $\varepsilon$ is the static dielectric constant, $V_{\rm bi}$
+is the built-in voltage, $V$ is the applied reverse bias, and $N_D$
+is the donor concentration.  The rectifying current-voltage relationship
+of the Schottky diode follows the thermionic emission model:
+\begin{equation}
+  J = J_0\left(e^{qV/nkT} - 1\right), \quad
+  J_0 = A^{**}T^2\,e^{-q\phi_{\rm B}/kT},
+  \label{eq:IV_schottky}
+\end{equation}
+where $A^{**}$ is the effective Richardson constant and $n$ is the
+ideality factor~\cite{Sze2007}.
+
+In contrast, an \emph{ohmic} contact is formed when the metal work
+function is matched to the Fermi level of the semiconductor such that
+no barrier to majority-carrier flow exists.  Ohmic contacts allow
+free exchange of majority carriers with the external circuit and are
+necessary on the collection side of the detector to avoid field
+distortion near the electrode.
+
+\subsection{Application to Halide Perovskite Detectors}
+
+The asymmetric contact architecture — one ohmic and one Schottky
+electrode — has become the standard configuration for halide perovskite
+radiation detectors because it simultaneously achieves low dark current
+and efficient charge collection~\cite{Wei2016}.  Under reverse bias, the
+Schottky junction is depleted, suppressing majority-carrier injection
+from the blocking contact; minority carriers generated by ionizing
+radiation within the depletion region are swept by the electric field
+toward the appropriate electrode.  Because the dark current is
+thermally limited by the Schottky barrier rather than set by the bulk
+resistivity, even moderate barrier heights of 0.5--0.8~eV can reduce
+the dark current density by several orders of magnitude relative to the
+ohmic-contact geometry.
+
+For MAPbI$_3$-based detectors, gold (Au, $\phi_m = 5.1$~eV) forms a
+near-ohmic contact on the p-type surface, while chromium (Cr,
+$\phi_m = 4.5$~eV), gallium, or indium contacts on the opposite face
+exhibit Schottky character~\cite{Wei2016}.  For CsPbBr$_3$, the typical
+asymmetric pair is a carbon paste or Au ohmic contact on one face and
+a Ga or indium-gallium eutectic Schottky contact on the other.  The
+net result is a device structure functionally analogous to a $p$-$i$-$n$
+junction in which the intrinsic region (the semi-insulating bulk crystal)
+contains the active detector volume, and the contact asymmetry enforces
+unipolar drift under bias~\cite{He_NatPhoton_2021}.
+
+For the 2D perovskite devices studied in Chapter~\ref{ch:2Dperovskite},
+the layered crystal architecture introduces an additional consideration:
+charge transport perpendicular to the organic spacer layers (the
+out-of-plane direction, which is the relevant direction for planar
+detector geometry) is more resistive than in-plane transport, and the
+contact interface with the topmost organic spacer layer must be carefully
+engineered to avoid a secondary barrier that would impede collection.
+Surface passivation using Lewis-base molecules that coordinate to
+surface Pb$^{2+}$ sites can simultaneously reduce trap-state density
+and tune the contact work function alignment.
+
+%% ------------------------------------------------------------
+\section{Ion Migration in Halide Perovskites}
+\label{sec:ion_migration}
+%% ------------------------------------------------------------
+
+\subsection{Origins and Mechanisms}
+
+The same structural softness that enables solution-processable
+crystal growth from precursor salts also makes halide perovskites
+susceptible to ionic transport under applied fields — a property that
+distinguishes them fundamentally from conventional covalent or ionic
+semiconductors such as silicon or CdZnTe.  Density functional theory
+calculations and activation energy measurements converge on halide
+vacancy migration as the dominant ionic conduction mechanism, with
+activation energies of approximately 0.1--0.6~eV depending on the
+halide and A-site cation~\cite{Eames2015}.  For comparison, the
+thermal energy at room temperature ($kT \approx 26$~meV) is
+sufficient to drive significant vacancy hopping across these barriers
+on detector-relevant timescales, particularly under the electric fields
+of 10--1,000~V\,cm$^{-1}$ routinely applied to semiconductor detectors.
+
+The migration pathway for iodide vacancies in MAPbI$_3$ proceeds
+via nearest-neighbor hopping through the faces of the PbI$_6$
+octahedra, with a computed activation barrier of approximately
+0.58~eV~\cite{Eames2015}.  Bromide vacancies in CsPbBr$_3$ have a
+somewhat higher barrier of $\sim$0.74~eV, consistent with the greater
+thermal stability of that compound.  Chloride vacancies, which are the
+operative mobile species in MHyPbCl$_3$, have not been as extensively
+studied computationally, but experimental activation energies inferred
+from temperature-dependent dark current measurements suggest similar
+or slightly higher barriers than for iodide.
+
+\subsection{Consequences for Detector Performance}
+
+Ion migration manifests in detector operation through three interrelated
+phenomena.  First, under sustained bias, mobile ions drift to the
+electrodes and accumulate, establishing an internal dipole that
+\emph{screens} the applied field and reduces the effective field within
+the crystal bulk.  This polarization effect depresses charge collection
+efficiency over time and produces the characteristic dark current spike
+followed by slow decay observed in the current transient of a freshly
+biased perovskite crystal~\cite{He_NatPhoton_2021}.  Second, the
+accumulation of ions at the electrode interfaces modifies the
+contact barrier height, causing the rectification ratio and dark current
+to evolve continuously during operation — a direct threat to the
+baseline stability required in nuclear instrumentation.  Third, if
+the bias polarity is reversed (as during AC-coupled readout or
+impedance spectroscopy measurements), the accumulated ion profiles
+transiently drive the internal field in the opposite direction to the
+intended collection field, producing severe measurement artifacts.
+
+These effects are not merely theoretical concerns: in a systematic study
+of CsPbBr$_3$ single-crystal detectors, Pan et al.\ demonstrated that
+the charge collection efficiency under a fixed field of
+200~V\,cm$^{-1}$ dropped by approximately 30\% over the first
+100~seconds of bias application before reaching a new quasi-equilibrium
+dominated by ionic rather than electronic currents~\cite{Pan2019}.
+The voltage-induced degradation was partially reversible upon removal
+of bias, with recovery occurring on timescales of minutes to hours —
+consistent with thermal relaxation of the accumulated ion
+profiles~\cite{Zhao2019}.
+
+\subsection{Mitigation Strategies}
+
+Several strategies have been demonstrated to suppress or circumvent
+ion-migration instability in perovskite detectors.  \emph{2D spacer layers}
+(the Ruddlesden-Popper architecture) interpose wide-gap organic bilayers
+at regular intervals through the crystal thickness, acting as
+electrostatic barriers to halide vacancy drift while preserving charge
+transport via tunneling or thermally activated hopping~\cite{Tsai2018}.
+\emph{Surface passivation} with Lewis-base ligands such as
+phenethylammonium iodide (PEAI), methylammonium chloride, or
+thiophene-2-carboxylic acid coordinates unsaturated surface Pb$^{2+}$
+sites that would otherwise serve as ion-migration nucleation points and
+electronic trap states~\cite{Cao2018}.  \emph{All-inorganic compositions}
+such as CsPbBr$_3$ exhibit significantly slower ion drift than their
+hybrid organic-inorganic analogs because the rigid Cs$^+$ sublattice
+provides fewer low-energy migration pathways.  Finally,
+\emph{low-temperature operation} reduces the ionic conductivity
+exponentially (Arrhenius behavior) and has been used to virtually
+eliminate polarization artifacts in experimental detector
+characterizations, though at the cost of the room-temperature operability
+that is one of perovskite's primary advantages~\cite{He_NatPhoton_2021}.
+Chapter~\ref{ch:2Dperovskite} investigates the combination of 2D
+architecture with chemical surface passivation as a room-temperature
+solution to the voltage-induced instability problem.
+
+%% ------------------------------------------------------------
+\section{Prior Art in Perovskite Radiation Detectors}
+\label{sec:prior_art}
+%% ------------------------------------------------------------
+
+\subsection{Early Single-Crystal Gamma Detectors}
+
+The first demonstration of halide perovskite single crystals as
+room-temperature radiation detectors appeared in a pair of landmark
+papers in 2016.  Wei et al.\ grew large MAPbI$_3$ single crystals by
+inverse temperature crystallization and contacted them in an asymmetric
+Au/perovskite/Cr geometry; at 662~keV they observed a resolved
+$^{137}$Cs photopeak with an energy resolution of approximately
+6.8\%~\cite{Wei2016}.  While this was inferior to the best CdZnTe
+devices, the demonstration that a solution-processed hybrid perovskite
+could rival polycrystalline CdZnTe — at a fraction of the material cost
+and with far simpler growth conditions — generated immediate and sustained
+interest.  Concurrently, Yakunin et al.\ reported sensitivity values
+exceeding $10^3$~$\mu$C\,Gy$^{-1}$\,cm$^{-2}$ for MAPbI$_3$
+thick-film X-ray detectors, establishing the perovskite
+platform for medical and industrial X-ray imaging~\cite{Yakunin2015}.
+
+\subsection{CsPbBr$_3$ and the Resolution Record}
+
+The shift from hybrid to all-inorganic CsPbBr$_3$ was motivated by
+the thermal and photo-instability of MAPbI$_3$, which loses iodide
+at temperatures above $\sim$85~$^\circ$C and degrades rapidly in
+ambient humidity.  Pan et al.\ demonstrated in 2019 that centimeter-scale
+CsPbBr$_3$ single crystals grown by the Bridgman method exhibit a
+resistivity exceeding $10^9$~$\Omega$\,cm, $\mu_e\tau_e$ products
+above $10^{-2}$~cm$^2$\,V$^{-1}$, and a 662~keV energy resolution of
+approximately 3.9\%~\cite{Pan2019}.  The subsequent integration of
+CsPbBr$_3$ detectors with custom-designed ASICs — rather than
+laboratory charge-sensitive amplifiers — addressed the electronic noise
+limitation and enabled the record 1.4\% resolution at 662~keV reported
+by He et al.\ in 2021~\cite{He_NatPhoton_2021}, subsequently approached
+and extended by other groups employing refined crystal growth and improved
+contact engineering~\cite{NatComm_CsPbBr3_ASIC}.
+
+\subsection{X-Ray Detection and Imaging}
+
+Polycrystalline thick films of MAPbI$_3$, MAPbBr$_3$, and
+CsPbI$_2$Br have been investigated extensively as direct-conversion
+X-ray detector arrays for applications in digital radiography and
+computed tomography.  The high atomic number of the Pb sublattice
+confers exceptional sensitivity at soft X-ray energies
+(below $\sim$30~keV), where the photoelectric cross-section makes
+lead-bearing compounds intrinsically more absorbing than the amorphous
+selenium currently deployed in flat-panel detectors.  Wei et al.\ reported
+a sensitivity of 4,500~$\mu$C\,Gy$^{-1}$\,cm$^{-2}$ for a 2-mm-thick
+solution-processed MAPbI$_3$ film under an 8~keV X-ray beam~\cite{Wei2017},
+and subsequent optimization of film deposition and contact passivation
+has pushed sensitivities above 10$^4$~$\mu$C\,Gy$^{-1}$\,cm$^{-2}$
+in several laboratories.  The principal challenges remaining for
+commercial deployment are long-term operational stability (particularly
+under the high photon fluences of medical imaging), the toxicity of
+lead-bearing materials in a clinical environment, and the uniformity
+of thick-film deposition over large detector areas.
+
+\subsection{Neutron Detection}
+
+Neutron detection by perovskite materials has been demonstrated via
+two complementary approaches: neutron-capture via the incorporation
+of $^{10}$B or $^6$LiI into the perovskite matrix, and direct fast-neutron
+detection via hydrogen-recoil in hydrogen-rich perovskites.  The
+composite approach was demonstrated in this group's own prior work:
+MAPbI$_3$ crystals incorporating hexagonal boron nitride (hBN)
+nanoflakes were shown to exhibit a measurable response to thermal
+neutrons, with the neutron signal distinguished from the ambient gamma
+background by pulse-shape analysis~\cite{Panaccione_NIM_2024}.  The
+MHyPbCl$_3$ results reported in Chapter~\ref{ch:MHyPbCl3} represent
+the first systematic investigation of a perovskite designed from the
+outset for high hydrogen content, aiming to maximize the fast-neutron
+elastic-scatter cross-section in a single-phase semiconducting medium.
+The availability of a structurally well-characterized perovskite with
+both high H density and a bandgap suitable for room-temperature
+electronic detection opens a path toward compact direct-conversion
+fast-neutron detectors that do not require external moderators or
+$^3$He-filled proportional tubes.
+
+\subsection{Mixed-Cation and 2D Detector Architectures}
+
+The instability of single-phase 3D perovskites under sustained bias
+has driven interest in compositionally engineered architectures designed
+to suppress ion migration while retaining the favorable electronic
+properties of the perovskite host.  Two-dimensional Ruddlesden-Popper
+compounds were first applied to radiation detection by Xu et al., who
+demonstrated that PEA$_2$MA$_3$Pb$_4$I$_{13}$ ($n = 4$) single crystals
+exhibited suppressed polarization current compared to 3D MAPbI$_3$
+under identical bias conditions, attributed to the PEA$^+$ barriers
+impeding halide vacancy drift~\cite{Xu2020}.  The compositions studied
+in Chapter~\ref{ch:2Dperovskite} extend this concept to the $n = 3$
+compound PEA$_2$MA$_2$Pb$_3$I$_{10}$, where the additional organic
+layer density provides even stronger suppression of ion migration, and
+investigates the interaction between the 2D architecture and chemical
+surface passivation as a dual strategy for achieving stable, low-dark-current
+detector operation.
+
+%% ------------------------------------------------------------
+\section{Summary}
+%% ------------------------------------------------------------
+
+This chapter has established the conceptual framework necessary to
+interpret the experimental results reported in Chapters~\ref{ch:CsFAPbI}
+through~\ref{ch:MHyPbCl3}.  The ABX$_3$ halide perovskite framework
+accommodates a diverse family of compositions spanning 3D, quasi-2D, and
+layered architectures, with A-site chemistry tunable from inorganic Cs$^+$
+through hybrid organic-inorganic MA$^+$ and FA$^+$ to the
+hydrogen-rich methylhydrazinium cation of MHyPbCl$_3$.  The physics of
+semiconductor radiation detectors connects material properties —
+bandgap, effective atomic number, $\mu\tau$ product — to measurable
+figures of merit such as energy resolution, sensitivity, and neutron
+detection efficiency via the Hecht equation and Klein's pair-creation
+rule.  The Schottky diode contact architecture suppresses dark current
+to levels compatible with radiation counting without sacrificing charge
+collection, provided that ion migration is controlled by compositional
+engineering or surface passivation.  The problem of voltage-induced
+instability driven by halide vacancy migration is identified as the
+central unsolved challenge for room-temperature perovskite detector
+operation, motivating the 2D and passivation strategies pursued in
+the experimental chapters that follow.

@@ -1,1 +1,8 @@
 \vskip 0.55in {\bfseries Table}\hfill {\bfseries Page} \vskip 0.25em\rm 
+\contentsline {table}{\numberline {2.1}{\ignorespaces Selected properties of wide bandgap semiconductor detector materials at 300~K. CZT = cadmium zinc telluride Cd$_{0.9}$Zn$_{0.1}$Te. Data compiled from~\cite {Owens2004,He_NatPhoton_2021,Springer_CsPbBr3,knoll2010}.}}{26}{table.2.1}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Steady-state short-circuit current of the Cs$_{0.1}$FA$_{0.9}$PbI$_3$ module at OSU NRL FBF. Uncertainties are $\pm 1\sigma $ over the measurement interval. ``Gamma filter closed'' and ``gamma filter open'' refer to the polyethylene/lead shielding assembly that preferentially attenuates the reactor gamma flux while transmitting fast neutrons.}}{85}{table.4.1}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Summary of primary RTL blocks in the FFSR design.}}{93}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces CMOD~S7 device configuration and test timeline.}}{97}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Day~1 reactor run upset detection results. $^{*}$FFSR1 count includes 250 \texttt {CNT}-format and $\approx $3\,252 \texttt {CNZ}-format readings (see Section~\ref {subsec:ch6_ffsr1_day1}).}}{109}{table.5.3}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Overnight (out-of-beam) monitoring results.}}{111}{table.5.4}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Day~2 (gamma shutter open) upset detection results.}}{113}{table.5.5}%

@@ -1,4 +1,977 @@
-%% ================================================================
-%%  CHAPTER: Organic Metal Halide Perovskite for Fast Neutron Detection
-%% ================================================================
-\chapter{Testing of an Organic Metal Halide Perovskite for Fast Neutron Detection}
+%% ============================================================
+%%  Chapter 3 — Background: Radiation Effects on Digital
+%%              Electronics and FPGA-Based Instrumentation
+%%  Dissertation: Radiation Responsive Materials for Advanced
+%%  Radiation Detection and Systems
+%% ============================================================
+
+\chapter{Background: Radiation Effects on Digital Electronics and
+         FPGA-Based Instrumentation}
+\label{ch:FPGA_background}
+
+The deployment of field-programmable gate arrays (FPGAs) in nuclear
+instrumentation and control (I\&C) systems represents a convergence of
+two historically separate engineering disciplines: the radiation effects
+community, which has characterized and mitigated the response of
+microelectronics to ionizing radiation primarily in the context of
+space and defense applications, and the nuclear industry, which is
+confronting the simultaneous pressures of fleet aging, digital
+modernization, and cost reduction described in Chapter~\ref{ch:intro}.
+This chapter provides the technical background required to understand
+the FPGA-based monitoring system developed in Chapter~\ref{ch:FPGA_system}.
+It begins with the radiation environments of concern, then develops the
+physical mechanisms by which ionizing particles damage or disturb
+microelectronic devices, surveys the taxonomy of single-event effects
+(SEEs) with emphasis on those most relevant to SRAM-based FPGAs, describes
+the fault-tolerance architectures used to mitigate those effects, and
+concludes with the testing methodologies used to characterize and qualify
+devices for radiation environments.
+
+%% ------------------------------------------------------------
+\section{Radiation Environments for Digital Electronics}
+\label{sec:rad_environments}
+%% ------------------------------------------------------------
+
+Digital electronics encounter ionizing radiation in three principal
+deployment contexts relevant to this work: the near-Earth space
+environment, the nuclear reactor plant environment, and the terrestrial
+cosmic-ray environment at ground level.  Each environment differs in
+particle species, energy spectra, and dose rates, and each imposes
+distinct qualification requirements.
+
+\subsection{The Space Radiation Environment}
+
+The space environment exposes electronics to three primary sources of
+energetic particles.  \emph{Trapped protons and electrons} in the Van
+Allen belts (primarily 1--10~MeV protons in the inner belt, up to
+several hundred MeV in the South Atlantic Anomaly) produce continuous
+total ionizing dose accumulation and displacement damage that
+degrades device performance over mission lifetime~\cite{petersen2011single}.
+\emph{Galactic cosmic rays} (GCRs) are fully ionized nuclei spanning
+the entire periodic table, with energies from tens of MeV/nucleon to
+above 10$^{20}$~eV; they are isotropic, difficult to shield, and
+responsible for the bulk of single-event effects at high
+altitude~\cite{ziegler1996terrestrial}.  \emph{Solar energetic particles}
+(SEPs), produced during coronal mass ejections and solar flares, deliver
+intense but episodic fluences of protons (up to hundreds of MeV) and
+heavy ions that can cause acute upsets far exceeding the GCR
+background~\cite{ecoffet2013inorbit}.
+
+The cumulative radiation dose received by a spacecraft depends strongly
+on orbit, shielding, and mission duration.  Low-Earth orbit (LEO)
+satellites at International Space Station altitude ($\sim$400~km,
+51.6$^\circ$ inclination) accumulate roughly 5--20~krad(Si)/year
+behind 100~mil aluminum shielding, while geostationary (GEO) and
+medium-Earth orbit (MEO) satellites may see 30--100~krad(Si)/year
+due to prolonged residence in the Van Allen
+belts~\cite{schwank2013radiation}.  Qualification standards such
+as MIL-STD-883 and ESA ESCC 22900 require demonstration of margin
+over these mission doses before flight hardware can be approved.
+
+\subsection{The Nuclear Plant Radiation Environment}
+
+Within an operating nuclear power plant, electronics installed in
+or near the reactor building are exposed to a mixed neutron-gamma
+field whose intensity depends strongly on location.  In-core
+instrumentation must withstand integrated fast-neutron fluences
+of $10^{17}$--$10^{19}$~n/cm$^2$ and total gamma doses of
+$10^6$--$10^8$~rad over the reactor lifetime.  Ex-core
+instrumentation in the primary containment sees lower but still
+significant fluences of $10^{13}$--$10^{16}$~n/cm$^2$ and
+gamma doses of $10^4$--$10^6$~rad~\cite{iaea2016design}.  Safety
+I\&C systems in the auxiliary building and control room operate
+at much lower dose rates (typically well below 1~rad/year) but
+must maintain functionality under design-basis accident conditions
+that could spike the local dose rate by several orders of
+magnitude for hours to days~\cite{nrc1997digital}.
+
+The neutron fluence in reactor environments produces displacement
+damage in semiconductor lattices that is qualitatively distinct
+from ionizing dose effects: energetic neutrons displace silicon
+atoms from lattice sites, creating vacancy-interstitial pairs and
+vacancy clusters that act as generation-recombination centers,
+increase leakage current, reduce minority carrier lifetime, and
+degrade transistor gain~\cite{messenger1992effects}.  SRAM-based
+FPGAs, whose configuration memory cells rely on stable stored
+charge, are particularly sensitive to neutron-induced displacement
+damage in the pass transistors that gate cell access.
+
+\subsection{The Terrestrial Cosmic-Ray Environment}
+
+At sea level, the secondary cosmic-ray flux consists primarily of
+muons, with a smaller but device-relevant component of high-energy
+neutrons (``spallation'' neutrons) produced by hadronic showers in
+the upper atmosphere.  The terrestrial fast-neutron flux at sea level
+is approximately $1.3 \times 10^{-2}$~n/cm$^2$/s for neutrons above
+10~MeV, increasing by roughly a factor of three per kilometer of
+altitude~\cite{normand1996single,ziegler1996terrestrial}.  Although
+this flux is orders of magnitude lower than in accelerator or reactor
+environments, it is ubiquitous and non-negligible for high-density
+memories operating in safety-critical ground applications.  The
+JEDEC standard JESD89A quantifies the terrestrial soft-error rate
+environment and defines the reference neutron spectrum at sea level
+against which device qualification measurements are
+normalized~\cite{jedec2006jesd89a}.
+
+%% ------------------------------------------------------------
+\section{Total Ionizing Dose Effects}
+\label{sec:TID}
+%% ------------------------------------------------------------
+
+Total ionizing dose (TID) refers to the cumulative energy deposited
+in a material by ionizing radiation — principally energetic electrons,
+protons, and gamma photons — integrated over the operating lifetime
+of the device.  In metal-oxide-semiconductor (MOS) structures, which
+form the transistor basis of all modern digital FPGAs, the primary
+site of TID damage is the gate oxide and the field oxide used to
+isolate adjacent transistors.
+
+\subsection{Charge Trapping in Gate Oxides}
+
+When ionizing radiation passes through a SiO$_2$ gate oxide, it
+generates electron-hole pairs with a yield proportional to the local
+electric field and the oxide thickness.  Electrons, which have high
+mobility in SiO$_2$ ($\mu_e \approx 20$~cm$^2$/V$\cdot$s), sweep
+out of the oxide rapidly under the applied gate field on nanosecond
+timescales.  Holes, with a mobility orders of magnitude lower,
+undergo a dispersive hopping transport toward the Si/SiO$_2$
+interface, where a fraction become trapped at pre-existing or
+radiation-induced oxide trap sites~\cite{oldham2003total}.  The
+resulting positive oxide trapped charge shifts the transistor
+threshold voltage $V_T$ in the negative direction (for n-channel
+MOSFETs), eventually causing the device to conduct when it should
+be off — a failure mode known as threshold-voltage
+rolloff~\cite{fleetwood2013total}.
+
+In parallel, radiation generates interface trap states at the
+Si/SiO$_2$ boundary by breaking Si-H bonds.  These interface traps
+contribute both a fixed charge and a frequency-dependent
+recombination current that degrades transistor transconductance,
+increases $1/f$ noise, and reduces drive current.  Unlike oxide
+trapped charge, which anneals partially at room temperature,
+interface traps are thermally stable on device-lifetime
+timescales~\cite{oldham2003total}.
+
+\subsection{TID Effects in Modern FPGAs}
+
+The susceptibility of a CMOS process to TID is strongly dependent
+on gate oxide thickness: thinner oxides, which dominate in
+sub-micron nodes, trap fewer holes because the thin-oxide regime
+favors rapid recombination before hole transport can occur.
+A 65-nm process FPGA may tolerate 300--500~krad(Si) before
+functional failure, compared to 30--100~krad(Si) for older
+1-$\mu$m process devices~\cite{schwank2013radiation}.  However,
+the isolation structures (shallow trench isolation, STI) in modern
+processes are relatively thick and remain a TID-sensitive element,
+causing leakage current between adjacent transistors at doses that
+do not yet affect the gate oxides.
+
+For the nuclear instrumentation context, the TID tolerance of
+commercial SRAM FPGAs in the control room or auxiliary building
+is generally adequate without special hardening, as cumulative
+doses over a plant lifetime at those locations are well below the
+few-krad level~\cite{ANS_ICModernization_2025}.  The primary concern
+for FPGAs in nuclear plants is therefore not TID but the stochastic
+single-event effects described in the next section, which occur at
+arbitrarily low dose rates and cannot be mitigated by simply
+limiting exposure time.
+
+%% ------------------------------------------------------------
+\section{Single-Event Effects: Physical Mechanisms}
+\label{sec:SEE_physics}
+%% ------------------------------------------------------------
+
+\subsection{Ion Track Formation and Charge Collection}
+
+A single-event effect (SEE) is a functional or physical disturbance
+in a microelectronic device caused by the passage of a single
+energetic particle.  The mechanism begins with the energy deposition
+of the incident particle along its track through the semiconductor.
+Charged particles — heavy ions, protons, and the recoil nuclei from
+neutron elastic scattering or nuclear reactions — lose energy
+primarily through Coulomb interactions with the semiconductor
+electrons, creating a dense column of electron-hole plasma along
+the track.
+
+The key parameter governing SEE sensitivity is the linear energy
+transfer (LET), defined as the energy deposited per unit path length:
+\begin{equation}
+  \text{LET} = -\frac{1}{\rho}\frac{dE}{dx}
+  \quad \left[\text{MeV}\cdot\text{cm}^2\text{/mg}\right],
+  \label{eq:LET}
+\end{equation}
+where $\rho$ is the material density.  For a silicon target, an LET
+of 1~MeV$\cdot$cm$^2$/mg deposits approximately $1.6 \times 10^{-13}$~J
+per micron of path length, producing roughly 10$^4$ electron-hole
+pairs per micron.  The LET of a given ion depends on its atomic number
+$Z$, mass $A$, and kinetic energy; heavy ions near the middle of the
+periodic table (e.g., Fe, Kr, Xe, Bi) with energies of tens of
+MeV/nucleon achieve the highest LETs, up to
+$\sim$100~MeV$\cdot$cm$^2$/mg in silicon~\cite{petersen2011single}.
+
+Following the primary ionization event, the excess carriers are
+collected at the nearest reverse-biased junction by two mechanisms
+illustrated in Figs.~\ref{fig:funneling_conc} and \ref{fig:funneling_pot}.
+\emph{Drift collection} occurs because the high carrier density
+temporarily collapses the depletion region and extends the electric
+field deep into the substrate — a phenomenon known as
+\emph{funneling} — sweeping charge toward the junction on picosecond
+timescales~\cite{dodd2003basic}.  \emph{Diffusion collection} then
+operates on slower nanosecond timescales as carriers generated
+outside the funnel diffuse through the neutral substrate and are
+eventually collected.  The total collected charge $Q_{\rm coll}$
+is determined by the integral of the current transient at the
+junction and must exceed the critical charge $Q_{\rm crit}$ of
+the struck node to cause a SEE.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{figures/2_1-electron-concent-funneling.pdf}
+  \caption{Simulated electron concentration during the funneling
+           phase following a heavy-ion strike in a reverse-biased
+           n$^+$/p junction.  The dense electron-hole plasma
+           temporarily extends the high-field depletion region
+           deep into the substrate, collecting charge from a
+           volume far larger than the geometric depletion region.}
+  \label{fig:funneling_conc}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{figures/2_1-electrostatic-pot-funneling.pdf}
+  \caption{Electrostatic potential distribution during funneling,
+           showing the field distortion caused by the ion track.
+           The funnel depth scales with LET and substrate doping,
+           reaching several micrometers for high-LET heavy ions
+           in lightly doped substrates~\cite{dodd2003basic}.}
+  \label{fig:funneling_pot}
+\end{figure}
+
+\subsection{The SEE Sensitivity Figure of Merit: Cross-Section}
+
+The probability that a particle causes a SEE is characterized by
+the device SEE cross-section $\sigma$, defined as the number of
+events observed per unit incident particle fluence:
+\begin{equation}
+  \sigma(L) = \frac{N_{\rm events}}{\Phi}
+  \quad \left[\text{cm}^2\text{/device or cm}^2\text{/bit}\right],
+  \label{eq:cross_section}
+\end{equation}
+where $\Phi$ is the fluence in particles/cm$^2$.  The cross-section
+is measured as a function of LET or proton energy and typically
+exhibits a threshold below which no events are observed and a
+plateau at high LET where every ion strike within the sensitive
+volume causes an event.  The threshold LET (LET$_{\rm th}$) and
+the saturation cross-section ($\sigma_{\rm sat}$) together
+characterize the inherent hardness of the device~\cite{petersen1992rate}.
+
+The on-orbit SEE rate is computed by convolving the measured
+cross-section curve with the environment's differential LET
+spectrum, a calculation codified in tools such as CREME96 and
+OMERE~\cite{petersen2013revolution}.  For a device with
+$\sigma_{\rm sat} = 10^{-6}$~cm$^2$/bit and
+LET$_{\rm th} = 3$~MeV$\cdot$cm$^2$/mg in a LEO orbit, the
+predicted upset rate is typically $10^{-5}$--$10^{-3}$~upsets/bit/day,
+meaning a 16-Mbit configuration memory will experience
+roughly 10--1,000~upsets per day without mitigation.
+
+%% ------------------------------------------------------------
+\section{Single-Event Effects Taxonomy}
+\label{sec:SEE_taxonomy}
+%% ------------------------------------------------------------
+
+SEEs span a range of severity from fully recoverable bit flips to
+permanent device destruction.  Fig.~\ref{fig:SEE_taxonomy} presents
+the standard SEE taxonomy tree, which organizes effects by their
+recoverability and the circuit element affected.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/2_1-see-tax-tree.pdf}
+  \caption{Taxonomy of single-event effects in microelectronic
+           devices, organized by recoverability (soft vs.\ hard)
+           and affected circuit element.  Effects in bold are
+           those most critical for SRAM-based FPGA operation in
+           nuclear instrumentation applications.}
+  \label{fig:SEE_taxonomy}
+\end{figure}
+
+\subsection{Single-Event Upset (SEU)}
+
+A single-event upset (SEU) is a non-destructive, recoverable change
+in the logic state of a bistable storage element — a flip-flop,
+SRAM cell, or register — caused by charge collection from a single
+particle strike.  The struck node's voltage is transiently driven
+past the switching threshold of the latch, causing it to adopt the
+opposite state~\cite{dodd2003basic}.  In an SRAM-based FPGA, the
+configuration memory that encodes the user's design is implemented
+as an array of SRAM cells; an SEU in this array changes the
+programmed function of a logic element, routing multiplexer, or
+interconnect switch, potentially altering the circuit's behavior
+in ways that are not immediately apparent without continuous
+monitoring~\cite{quinn2007review}.
+
+The critical charge for SEU in a modern 28-nm SRAM cell is on the
+order of 1--10~fC, achievable by the recoil nucleus from a proton
+nuclear interaction or by a moderate-LET heavy ion~\cite{baumann2005radiation}.
+As process nodes have scaled, $Q_{\rm crit}$ has decreased roughly
+proportionally with feature size, partially offset by reductions in
+node capacitance and improvements in cell drive strength.
+
+\subsection{Multiple Cell Upset (MCU)}
+
+A multiple cell upset (MCU) occurs when a single particle deposits
+sufficient charge to simultaneously flip two or more adjacent
+memory cells.  MCUs are of particular concern because they can
+defeat single-bit error correction codes (SECDED) that are
+effective against isolated SEUs.  The probability of MCU scales
+with LET and is strongly geometry-dependent: cells laid out in
+adjacent rows and columns of the SRAM array are co-vulnerable,
+while cells interleaved across different physical locations are
+not~\cite{black2013mcu}.  In modern planar CMOS processes, MCU
+events can involve tens of cells from a single high-LET heavy-ion
+strike, while proton-induced MCUs typically involve two to four
+cells from the recoil of a proton nuclear
+reaction~\cite{baumann2005radiation}.
+
+\subsection{Single-Event Transient (SET)}
+
+A single-event transient (SET) is a voltage glitch on a
+combinational logic node caused by charge collection at a
+circuit junction.  Unlike an SEU, which corrupts a storage
+element, an SET propagates through combinational logic and
+may or may not be captured by a downstream flip-flop, depending
+on the timing relationship between the transient and the
+clock edge.  Fig.~\ref{fig:SET_diagram} illustrates the
+generation of an SET at an inverter output, and
+Fig.~\ref{fig:SET_FF} shows the conditions under which an SET
+propagating through a logic cone is captured by a flip-flop.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\textwidth]{figures/2_2-SET-Diagram.png}
+  \caption{Generation of a single-event transient (SET) at a
+           CMOS inverter output.  The ion track deposits charge
+           at a reverse-biased drain junction, driving the output
+           voltage transiently toward the supply rail.  Pulse
+           width is determined by the collected charge and the
+           drive strength of adjacent transistors~\cite{ferletcavrois2013set}.}
+  \label{fig:SET_diagram}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.70\textwidth]{figures/2_2-SET-FF-and-Propigation.png}
+  \caption{SET propagation and capture by a flip-flop.  The SET
+           (shaded pulse) traverses the combinational logic cone
+           and arrives at the flip-flop's data input.  It is
+           captured and causes an SEU only if it overlaps with
+           the flip-flop's setup-and-hold window around the
+           clock edge~\cite{ferletcavrois2013set}.}
+  \label{fig:SET_FF}
+\end{figure}
+
+In high-speed digital logic, SET pulse widths of tens to hundreds
+of picoseconds are comparable to clock periods, making SET-induced
+SEUs a dominant error mechanism in modern FPGAs operating above
+100~MHz~\cite{ferletcavrois2013set}.  At the lower clock rates
+typical of nuclear I\&C applications, SET capture probability
+is reduced, but long transients from high-LET events remain
+a concern.
+
+\subsection{Single-Event Functional Interrupt (SEFI)}
+
+A single-event functional interrupt (SEFI) is an SEU in a control
+register, finite state machine, or configuration memory that causes
+a device to enter an erroneous operating mode — resetting itself,
+locking up, or outputting invalid data — that requires a system-level
+reset to clear.  In FPGAs, SEFIs in the configuration controller
+or global control registers can cause a partial or complete loss
+of the user's programmed logic, a far more serious consequence
+than a single flipped bit in the data path~\cite{quinn2007review}.
+SEFI rates are typically much lower than SEU rates per bit
+(because control registers represent a small fraction of total
+bits), but their operational consequence is disproportionately
+severe.
+
+\subsection{Single-Event Latchup (SEL)}
+
+Single-event latchup (SEL) is a potentially destructive condition
+in which a particle strike triggers the parasitic p-n-p-n thyristor
+inherent in bulk CMOS processes, causing a low-impedance path to
+form between the supply rails.  If not cleared by power cycling
+within milliseconds, the resulting current can permanently destroy
+the device through thermal runaway~\cite{sexton2003destructive}.
+SEL susceptibility is strongly suppressed in silicon-on-insulator
+(SOI) processes (which lack the bulk substrate needed for the
+parasitic thyristor) and by epitaxial substrates with heavily
+doped buried layers.  Modern commercial SRAM FPGAs fabricated
+in bulk CMOS are SEL-susceptible and require current-limiting
+power supply protection and power-cycling circuitry in space and
+nuclear applications.
+
+\subsection{Single-Event Burnout (SEB) and Gate Rupture (SEGR)}
+
+Single-event burnout (SEB) and single-event gate rupture (SEGR)
+are catastrophic destructive effects confined primarily to power
+MOSFETs and bipolar transistors operating at high drain-source
+voltages.  SEB occurs when a heavy-ion strike in the epitaxial
+drain region of an OFF-state power MOSFET triggers a parasitic
+n-p-n transistor, causing sustained high-current conduction that
+thermally destroys the device~\cite{sexton2003destructive}.  SEGR
+results from the momentary field enhancement in the gate oxide
+caused by the ion-track plasma, which can exceed the oxide
+breakdown field and permanently rupture the gate dielectric.
+Figs.~\ref{fig:SEB_xsec}, \ref{fig:SEGR_diagram}, and
+\ref{fig:SEGR_onset} illustrate the cross-sectional geometry and
+onset conditions for these effects.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\textwidth]{figures/2_2-SEB-Xsection.pdf}
+  \caption{Cross-sectional schematic of single-event burnout (SEB)
+           in an n-channel power MOSFET.  The heavy-ion track
+           (dashed) deposits charge in the epitaxial drain that
+           forward-biases the parasitic n-p-n transistor base-emitter
+           junction, initiating regenerative feedback and
+           destructive current~\cite{sexton2003destructive}.}
+  \label{fig:SEB_xsec}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\textwidth]{figures/2_2-SEGR-Diagram.pdf}
+  \caption{Single-event gate rupture (SEGR) mechanism.  The
+           transient increase in gate-oxide field caused by the
+           ion-track plasma can locally exceed the intrinsic
+           breakdown field of the SiO$_2$, permanently rupturing
+           the gate dielectric and rendering the transistor
+           non-functional~\cite{sexton2003destructive}.}
+  \label{fig:SEGR_diagram}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\textwidth]{figures/2_2-SEGR-Onset-Xsec.pdf}
+  \caption{Measured SEGR onset $V_{\rm GS}$ as a function of
+           heavy-ion LET for several gate-metal species.  The
+           onset voltage decreases with increasing LET, imposing
+           a derating requirement on operating voltage for power
+           devices in heavy-ion environments~\cite{sexton2003destructive}.}
+  \label{fig:SEGR_onset}
+\end{figure}
+
+SEB and SEGR are not directly applicable to logic-level SRAM FPGAs,
+which operate at supply voltages far below the breakdown thresholds
+of their internal power transistors.  They are, however, relevant
+to the power supply circuitry and gate drivers that support an
+FPGA-based system, and must be considered at the system level in
+any radiation-hardened design.
+
+%% ------------------------------------------------------------
+\section{FPGA Architecture and Radiation Vulnerability}
+\label{sec:FPGA_arch}
+%% ------------------------------------------------------------
+
+\subsection{SRAM-Based FPGA Architecture}
+
+Modern high-density FPGAs are organized as a two-dimensional array
+of configurable logic blocks (CLBs), interconnected by a programmable
+routing fabric and surrounded by dedicated I/O, clock management,
+block RAM, DSP, and hard-IP peripherals.  The entire programmable
+function of the device is encoded in a configuration memory bitstream
+stored in an on-chip SRAM array, which for large devices may contain
+50--500~million configuration bits~\cite{kuon2008fpga}.  The
+configuration SRAM is loaded from external non-volatile storage
+(typically QSPI flash or EEPROM) on power-up and retained in SRAM
+for the duration of operation.
+
+This architecture has a fundamental radiation vulnerability: every
+bit of the configuration SRAM is continuously susceptible to SEU
+throughout device operation.  An SEU in the configuration memory
+can alter the function of a lookup table (LUT), change the routing
+of a signal, enable or disable a flip-flop reset, or modify the
+address decode of a block RAM — depending on which configuration
+bit is struck.  Unlike an SEU in a user-data register, which affects
+only the current computation, a configuration memory SEU silently
+corrupts the device's programmed behavior until it is detected and
+corrected~\cite{kastensmidt2014survey}.
+
+The sensitivity of different FPGA configuration bit types to
+functional corruption varies substantially.  Bits that control
+LUT contents are always functionally significant; bits that control
+unused routing resources may have no effect.  Studies of Xilinx
+Virtex and Kintex FPGAs have found that roughly 15--30\% of
+configuration bits are ``essential'' — their upset causes a
+detectable output error — with the remainder corresponding to
+unused or redundant resources~\cite{quinn2007review,lee2014kintex}.
+This essential bit fraction is critical for predicting the
+functional upset rate from a measured raw upset rate.
+
+\subsection{Radiation Sensitivity Across FPGA Generations}
+
+Quinn et al.\ surveyed the radiation reliability concerns of Xilinx
+FPGAs from the Virtex through Virtex-5 generations, finding that
+each new process node brought reduced $Q_{\rm crit}$ (worsening
+raw SEU sensitivity per bit) but also reduced bit count per logic
+function (improving functional upset rate
+per implemented operation)~\cite{quinn2007review}.  SRAM cell
+cross-sections measured at particle accelerators for 90-nm-class
+devices (Virtex-4/5) are typically in the range of
+$10^{-14}$--$10^{-13}$~cm$^2$/bit at high LET, corresponding
+to functional upset rates of $10^{-3}$--$10^{-2}$ upsets per
+device per day in a representative LEO orbit.  Rakhman et al.\ 
+characterized the SRAM configuration cells of a Xilinx Kintex-7
+FPGA under both heavy-ion and proton irradiation, finding a
+saturation cross-section of approximately $5 \times 10^{-14}$~cm$^2$/bit
+and a proton cross-section of $\sim 10^{-15}$~cm$^2$/bit at
+200~MeV~\cite{rakhman2017sram}.
+
+For nuclear plant environments, the neutron-induced upset rate at
+control-room locations (fast-neutron flux $< 10^3$~n/cm$^2$/s)
+is orders of magnitude lower than in space and may be further
+reduced by modest concrete shielding.  However, design-basis
+accident scenarios that expose I\&C systems to elevated fluences
+over hours to days require that the system either be immune to
+configuration upsets or be capable of detecting and correcting
+them within the plant's safety response time.
+
+%% ------------------------------------------------------------
+\section{Fault-Tolerant Mitigation Techniques}
+\label{sec:mitigation}
+%% ------------------------------------------------------------
+
+\subsection{Triple Modular Redundancy}
+
+The foundational technique for SEU mitigation in digital systems
+is triple modular redundancy (TMR), originally proposed by Lyons
+and Vanderkulk in 1962 for improving the reliability of vacuum-tube
+computers~\cite{lyons1962tmr}.  In TMR, the protected function is
+replicated three times, and a majority voter selects the output of
+the two (or three) agreeing copies.  A single SEU in any one replica
+is masked because the two healthy copies outvote the corrupted one,
+and the voter output remains correct.  The technique requires the
+voter itself to be robust, either because it is implemented in
+radiation-hard technology or because the voter is a simple gate
+whose critical charge greatly exceeds that of the storage elements
+it protects.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/2_5-fault-tolerant-mechanisms.pdf}
+  \caption{Overview of fault-tolerant mechanisms for SRAM-based
+           FPGAs, ranging from single-level flip-flop TMR to
+           full-system architectural redundancy.  Each level
+           adds correction capability at the cost of increased
+           resource utilization~\cite{kastensmidt2014survey}.}
+  \label{fig:fault_tolerant}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.70\textwidth]{figures/2_5-TMR-voter-flowchart.pdf}
+  \caption{Voter logic flowchart for a TMR system.  Each output
+           bit from the three replicas is majority-voted independently;
+           disagreement among replicas can be flagged as a fault
+           indicator without interrupting correct output
+           generation~\cite{lyons1962tmr,johnson2010voter}.}
+  \label{fig:TMR_voter}
+\end{figure}
+
+In FPGA implementations, TMR is applied at multiple granularities.
+\emph{Full TMR} triplicates every logic element, flip-flop, and
+routing resource in the design, providing maximum fault coverage
+at the cost of roughly $3\times$ resource usage and power.
+\emph{Partial TMR} applies triplication only to the most
+safety-critical paths, reducing overhead while protecting against
+the most consequential upsets~\cite{pratt2008partial}.
+\emph{Register-file TMR} protects only the storage elements
+(flip-flops and block RAMs) while leaving combinational logic
+unprotected, trading reduced area for acceptance of transient
+SET-induced errors that are not captured~\cite{sterpone2005tmr}.
+Fig.~\ref{fig:fault_tolerant} illustrates these trade-offs, and
+Fig.~\ref{fig:TMR_voter} shows the voter logic in detail.
+
+The TMR approach is well-established in space applications and
+has been demonstrated to reduce functional upset rates by
+approximately two orders of magnitude in Xilinx Virtex-class
+FPGAs at representative GCR fluences~\cite{wirthlin2015high}.
+For nuclear I\&C applications, Sciber et al.\ demonstrated a
+TMR-protected FPGA-based safety system for a research reactor
+that maintained correct output through simulated configuration
+upsets at a rate 500$\times$ the expected plant environment
+level~\cite{SciDirect_TMR_Nuclear}.
+
+\subsection{Configuration Scrubbing}
+
+TMR corrects the voter output but does not repair the configuration
+memory of the corrupted replica.  After a sufficient number of
+upsets accumulate, two replicas may be simultaneously corrupted,
+defeating majority voting.  Configuration scrubbing addresses
+this by periodically refreshing the FPGA's configuration memory
+from a known-good reference stored in non-volatile
+memory~\cite{berg2008scrubbing}.
+
+In \emph{external scrubbing}, an external processor reads the
+current configuration bitstream from the FPGA, compares it
+bit-by-bit with the golden reference, and writes back corrected
+frames where differences are detected.  This approach can detect
+and correct errors at rates determined by the scrub period,
+which must be short compared to the mean time between double
+upsets in the TMR replicas~\cite{heiner2009scrubbing}.  For a
+device with $10^7$ configuration bits, a bit-upset rate of
+$10^{-3}$~upsets/bit/day, and a required double-upset probability
+below $10^{-6}$ per mission, the required scrub period is
+on the order of seconds — achievable with standard scrubbing
+controllers operating at JTAG bitstream rates~\cite{wirthlin2016scrubbing}.
+
+\emph{Partial reconfiguration scrubbing} uses the FPGA vendor's
+partial reconfiguration infrastructure to overwrite individual
+configuration frames without resetting the entire device,
+allowing scrubbing to proceed concurrently with normal device
+operation~\cite{pratt2008partial}.  Xilinx Virtex/UltraScale
+and Intel Stratix devices both support partial reconfiguration,
+and open-source scrubbing controllers (e.g., the Scrub Engine
+developed at Brigham Young University) implement this
+approach~\cite{wirthlin2016scrubbing}.  Herrera-Alzu and
+L\'{o}pez-Vallejo systematically characterized the scrubber
+performance for Xilinx Virtex-5 FPGAs, demonstrating that
+scrub periods below 50~ms reduced the effective functional
+upset rate below $10^{-6}$ upsets/day at LEO
+conditions~\cite{herreraalzu2013scrubbers}.
+
+\subsection{Combined TMR-Scrubbing and Hybrid Approaches}
+
+For the highest reliability requirements, TMR and scrubbing are
+deployed together: TMR provides instant correction of single
+upsets, while scrubbing prevents the accumulation of uncorrected
+errors that would eventually defeat TMR~\cite{kastensmidt2014survey}.
+The combination reduces the effective uncorrectable upset rate to
+the probability of two upsets occurring within a single scrub
+period before the first is corrected — typically several orders
+of magnitude lower than either technique alone.
+
+Hybrid approaches extend these concepts to the system level.
+Stoddard et al.\ demonstrated a configuration in which an FPGA
+running a spacecraft attitude control algorithm was protected by
+TMR at the register level, partial-reconfiguration scrubbing at
+the configuration level, and watchdog-timer reset at the system
+level, achieving an estimated mean time between failures of
+$> 10^5$~hours in a GEO radiation environment~\cite{stoddard2017hybrid}.
+The architecture developed in Chapter~\ref{ch:FPGA_system} for
+nuclear plant monitoring adopts a similar layered approach, with
+TMR protecting the safety logic, periodic configuration scrubbing
+maintaining the configuration integrity, and a redundant
+processor monitoring the voter-disagreement signal to detect any
+uncorrected upset before it propagates to a safety output.
+
+\subsection{Error Detection and Correction in Block RAMs}
+
+Block RAMs (BRAMs) in FPGAs store application data — not
+configuration bits — and are equally susceptible to SEUs.
+Xilinx and Intel FPGAs provide optional built-in single-error
+correction, double-error detection (SECDED) Hamming codes for
+BRAM data, which correct single-bit upsets transparently and
+flag double-bit upsets as uncorrectable~\cite{morgan2007comparison}.
+For nuclear applications where the BRAM stores measurement data
+or plant state variables, SECDED with periodic scrubbing provides
+an acceptable level of protection, while dual-port BRAM with
+cross-checking between two separate memory arrays provides an
+additional layer of protection against MCU events that span
+multiple bits within the same Hamming word.
+
+%% ------------------------------------------------------------
+\section{COTS FPGAs in Nuclear and Radiation-Critical Applications}
+\label{sec:COTS_nuclear}
+%% ------------------------------------------------------------
+
+\subsection{The Cost-Performance Trade-off}
+
+Purpose-built radiation-hardened FPGAs — such as the Microchip
+RTG4 (130-nm flash-based, inherently SEU-immune configuration)
+and the AMD/Xilinx XQRKU060 (16-nm FinFET, rad-hard by design) —
+provide guaranteed TID tolerance exceeding 300~krad(Si) and
+quantified SEL immunity, but at unit prices of \$50,000--\$500,000
+and with logic densities one to two generations behind commercial
+equivalents~\cite{Microchip_RTG4,AMD_XQRKU060}.  For nuclear
+plant I\&C modernization programs that may require hundreds of
+processing nodes, this cost premium is prohibitive.
+
+Commercial off-the-shelf (COTS) FPGAs from the Xilinx 7-series,
+UltraScale, and Intel Cyclone/Arria families offer $50$--$100\times$
+lower cost per gate, higher logic density, and access to modern
+soft-IP ecosystems, at the cost of no radiation-hardness guarantee
+from the manufacturer~\cite{BISResearch_RadHardFPGA}.  The
+engineering question is therefore not whether COTS FPGAs are
+radiation-tolerant, but whether their radiation response — combined
+with appropriate mitigation — can be characterized to a level of
+assurance sufficient for the safety classification of the
+application.
+
+\subsection{Demonstrated COTS FPGA Performance in Radiation Environments}
+
+Several accelerator and nuclear programs have demonstrated that
+COTS FPGAs with TMR and scrubbing can meet stringent reliability
+requirements at radiation levels consistent with nuclear plant
+I\&C.  Lee et al.\ irradiated a Xilinx Kintex-7 FPGA (28-nm)
+with protons at TRIUMF and with neutrons at Los Alamos National
+Laboratory's Weapons Neutron Research facility, measuring a total
+accumulated dose of 300~krad(Si) with no functional failure,
+and recording zero configuration upsets attributable to TID
+at that dose level~\cite{lee2014kintex}.  Wirthlin et al.\
+demonstrated a Leon3 soft-core processor implemented on a
+Kintex-7 FPGA that maintained correct program execution through
+$3 \times 10^{10}$~n/cm$^2$ of 14-MeV neutron irradiation
+with TMR+scrubbing active, corresponding to a ground-level
+exposure equivalent of several decades of control-room
+operation~\cite{wirthlin2016leon3}.
+
+The CERN high-energy physics community has deployed COTS FPGAs
+extensively in the LHC detector electronics, where annual doses
+in some locations reach tens of krad and the SEE environment
+from secondary shower particles is comparable to LEO.
+Systematic characterization programs at CERN show that 28-nm
+Kintex-7 and UltraScale devices exhibit no destructive effects
+(SEL, SEB, SEGR) at bias voltages within datasheet ratings at
+LET up to 62~MeV$\cdot$cm$^2$/mg, and that TMR+scrubbing
+reduces functional upset rates below the $10^{-9}$/hour target
+imposed by LHC safety systems~\cite{CERN_FPGA_Rad}.
+
+Pignol reviewed the use of COTS components in safety-critical
+space avionics and concluded that the combination of
+architectural mitigation (TMR, watchdog), physical mitigation
+(shielding, latchup current limiters), and comprehensive testing
+is sufficient to achieve failure-in-time rates competitive with
+purpose-built rad-hard parts, at substantially lower
+cost~\cite{pignol2010cots}.  The same conclusion drives the
+DOE GEMINA program, which targets AI/ML-enabled COTS digital
+systems for advanced reactor I\&C~\cite{DOE_GEMINA}, and the
+ANS-recommended roadmap for I\&C modernization at the existing
+LWR fleet~\cite{ANS_ICModernization_2025}.
+
+\subsection{Regulatory Pathway for COTS FPGAs in Nuclear Plants}
+
+The NRC's regulatory framework for digital I\&C in nuclear plants
+(10~CFR~50 Appendix~A, GDC~21--25; Regulatory Guide~1.152;
+NUREG/CR-6263) does not prohibit COTS devices but requires that
+the licensee demonstrate that the device meets the qualification
+requirements for its safety classification, including radiation
+qualification per IEEE~Std~7-4.3.2 and post-accident monitoring
+per RG~1.97~\cite{nrc1997digital}.  The key qualification
+documentation for an FPGA-based safety function includes: (1)
+a radiation characterization data package demonstrating TID
+tolerance, SEL immunity, and SEU cross-section measurement; (2)
+a functional upset rate prediction for the plant-specific
+radiation environment; (3) a mitigation architecture description
+showing that the functional upset rate with TMR+scrubbing meets
+the specified single failure criterion; and (4) a test program
+demonstrating correct operation under the combined effects of
+irradiation and functional loading~\cite{iaea2016design,natacad2018testing}.
+
+%% ------------------------------------------------------------
+\section{Testing Methodologies for FPGA Radiation Qualification}
+\label{sec:testing}
+%% ------------------------------------------------------------
+
+The qualification of FPGAs for radiation environments requires
+experimental measurement of both TID and SEE parameters, since
+analytical prediction from process parameters alone is not
+sufficiently accurate for safety-relevant applications.
+Fig.~\ref{fig:testing_approaches} illustrates the principal
+testing approaches and their relationship to the environment
+being simulated.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/2_6-testing-approaches.pdf}
+  \caption{Summary of testing approaches for radiation hardness
+           assurance of digital electronics, organized by
+           radiation source, simulated environment, and
+           measured effect.  Each approach has characteristic
+           advantages and limitations regarding
+           representativeness, cost, and achievable
+           fluence~\cite{schwank2013radiation,coronetti2021systemlevel}.}
+  \label{fig:testing_approaches}
+\end{figure}
+
+\subsection{Heavy-Ion Testing}
+
+Heavy-ion irradiation at particle accelerators is the primary
+technique for measuring SEE cross-sections as a function of LET
+and for identifying the SEL, SEB, and SEGR thresholds of a device.
+Facilities commonly used for FPGA radiation testing include the
+Brookhaven National Laboratory Tandem Van de Graaff (LET range
+1--100~MeV$\cdot$cm$^2$/mg), the Lawrence Berkeley National
+Laboratory 88-Inch Cyclotron (LET up to 85~MeV$\cdot$cm$^2$/mg),
+the Texas A\&M K500 Cyclotron, and the GANIL facility in
+Caen, France~\cite{natacad2018testing}.
+
+During a heavy-ion test, the device under test (DUT) is mounted
+in a vacuum chamber, biased and clocked at normal operating
+conditions, and exposed to a uniform beam of a selected heavy
+ion species at controlled LET and fluence.  For FPGA testing,
+two complementary readout strategies are used: \emph{static
+testing}, in which the device is irradiated with configuration
+memory pre-loaded and then readback to count configuration bit
+flips, and \emph{dynamic testing}, in which the FPGA executes
+a test design that monitors its own outputs for errors in
+real time~\cite{quinn2007review}.  Dynamic testing captures
+both configuration upsets and user-register upsets but is limited
+in the depth of design validation per test run; static testing
+provides complete configuration memory coverage but misses
+upsets in the user logic flip-flops.
+
+\subsection{Proton Testing}
+
+Proton irradiation at energies of 50--200~MeV provides a
+practical and cost-effective alternative to heavy-ion testing
+for devices whose SEE cross-section vs. LET curve is required
+through the proton-relevant range, and for devices intended for
+use in proton-dominated environments (trapped proton belts,
+low-altitude orbits).  Protons cause SEEs primarily through
+nuclear elastic scattering (which produces silicon or oxygen
+recoil nuclei with typical LET of 5--15~MeV$\cdot$cm$^2$/mg)
+and through non-elastic nuclear reactions (which produce heavy
+recoil fragments with higher LET)~\cite{petersen1992rate}.
+The resulting SEU cross-section is lower than the heavy-ion
+saturation cross-section by one to two orders of magnitude,
+but the high proton fluences available at accelerators like
+TRIUMF (Vancouver), IUCF (Bloomington), and the Paul Scherrer
+Institute (Villigen) allow statistically meaningful
+measurements~\cite{schwank2013radiation}.
+
+Proton testing also accumulates significant TID during the SEE
+test (at 100~MeV, 10$^{11}$~p/cm$^2$ corresponds to
+$\sim$1~krad(Si)), which must be accounted for in test planning
+to avoid confusing TID degradation with SEE events.
+
+\subsection{Neutron Testing}
+
+Neutron testing is the most directly relevant modality for
+nuclear plant applications and for ground-level
+qualification~\cite{stirk2023comparison}.  The upset mechanisms
+for neutrons above $\sim$10~MeV are similar to protons —
+nuclear elastic scattering producing silicon recoil nuclei
+plus non-elastic spallation reactions producing heavier
+fragments — but the neutron's lack of charge means it produces
+no ionization along its own track and the DUT need not be
+operated in vacuum.  This simplifies the experimental
+setup considerably.
+
+Several neutron irradiation facilities are available for
+FPGA testing.  The Los Alamos Neutron Science Center (LANSCE)
+ICE House provides a quasi-monoenergetic neutron spectrum
+peaked at 800~MeV that is often used as a reference for
+atmospheric cosmic-ray testing~\cite{wirthlin2016leon3}.  The
+Indiana University Cyclotron Facility (IUCF) produced
+monoenergetic 200-MeV neutrons, now primarily replaced by
+the Triangle Universities Nuclear Laboratory (TUNL) and the
+nTOF facility at CERN for intermediate energies.  For reactor
+neutron environments, fission reactor irradiation facilities
+such as the MIT reactor's fission converter
+beam~\cite{harling2006fission} and the
+Ohio State University Research Reactor (OSURR) provide
+thermal-to-fast neutron spectra representative of ex-core
+I\&C locations.
+
+The standard approach for neutron SEE testing of FPGAs follows
+the JEDEC JESD89A protocol: the device is irradiated with a
+known neutron fluence at the test facility's reference spectrum,
+and the measured upset count is scaled to the terrestrial
+sea-level equivalent fluence using the spectral overlap
+integral~\cite{jedec2006jesd89a}.  Stirk et al.\
+compared three neutron testing approaches (monoenergetic,
+white-spectrum, and reactor) for a complex system-on-chip
+and found that the accelerator white-spectrum test at LANSCE
+gave the closest agreement with reactor exposure results,
+while monoenergetic beam tests required more careful spectral
+correction~\cite{stirk2023comparison}.
+
+\subsection{Total Ionizing Dose Testing}
+
+TID testing is performed by exposing the device to a
+controlled dose from a $^{60}$Co gamma source or an X-ray
+irradiator at a specified dose rate, with the device biased
+in a representative operating condition.  The JEDEC/MIL-STD-883
+Method 1019 protocol specifies the irradiation conditions,
+readout intervals, and post-irradiation anneal procedure
+required for military and space qualification~\cite{schwank2013radiation}.
+
+A critical subtlety in TID testing is dose-rate dependence:
+many MOS devices exhibit enhanced low-dose-rate sensitivity
+(ELDRS), in which the damage at low dose rates ($<$0.1~rad(Si)/s)
+exceeds that at high dose rates (1--100~rad(Si)/s) for the
+same total dose~\cite{fleetwood2013total}.  ELDRS occurs in
+bipolar transistors and certain MOS linear circuits but is
+less pronounced in digital CMOS; it is nonetheless a
+qualification concern for reactor I\&C systems that accumulate
+dose over decades at rates of millirad per hour rather than
+the rad-per-second rates used in accelerated laboratory tests.
+The MIL-STD-883 Method 1019 elevated-temperature anneal
+procedure is designed to provide a conservative bound on
+ELDRS without requiring multi-year low-dose-rate
+exposures~\cite{shaneyfelt2008qualification}.
+
+\subsection{Ground-Level and Accelerated System Testing}
+
+For applications where the primary concern is the
+terrestrial cosmic-ray neutron environment, system-level
+testing at the actual deployment site or at a representative
+high-altitude location provides the most directly applicable
+qualification data~\cite{coronetti2021systemlevel}.  However,
+at sea-level neutron flux ($\sim 10^{-2}$~n/cm$^2$/s above
+10~MeV), accumulating $10^{10}$~n/cm$^2$ — a fluence corresponding
+to several decades of ground-level exposure — would require
+$\sim 3 \times 10^{10}$~seconds, making direct ground-level
+testing impractical for qualification purposes.  Accelerated
+testing at mountain-top observatories (e.g., Mauna Kea,
+5~km altitude, flux $\sim 10\times$ sea level) or accelerator
+facilities bridging this gap.
+
+Adell et al.\ and Artola et al.\ developed simulation frameworks
+using GEANT4 to predict ground-level neutron upset rates from
+device-level cross-section measurements, validating the approach
+against measured field failure data from commercial
+servers~\cite{adell2008assessing,artola2021benchmarks}.  The
+GEANT4 Monte Carlo toolkit~\cite{agostinelli2003geant4}, which
+models hadronic and electromagnetic interactions from eV to TeV
+energies, has become the standard simulation infrastructure for
+predicting SEE rates in complex radiation environments including
+both atmospheric and reactor neutron spectra.
+
+%% ------------------------------------------------------------
+\section{Summary}
+%% ------------------------------------------------------------
+
+This chapter has established the physical and engineering framework
+for the FPGA-based nuclear instrumentation system developed in
+Chapter~\ref{ch:FPGA_system}.  The three radiation environments
+of concern — space, nuclear plant, and terrestrial cosmic-ray —
+each impose distinct TID and SEE demands on digital electronics.
+TID damage in MOS gate oxides accumulates throughout device
+operation and degrades transistor performance at doses that,
+for control-room I\&C in nuclear plants, remain well within the
+tolerance of modern CMOS processes.  The more consequential
+threat is stochastic single-event effects, which occur at
+arbitrarily low dose rates: SEUs corrupt FPGA configuration
+memory silently and persistently, SEFIs can interrupt device
+operation, and SELs can destroy devices if power cycling is not
+promptly applied.
+
+Triple modular redundancy, applied at the register and routing
+level within the FPGA fabric, corrects single upsets
+instantaneously without interrupting the safety function;
+periodic configuration scrubbing prevents upset accumulation
+that would eventually defeat TMR.  The combination of these
+two techniques reduces the uncorrectable upset probability to
+levels that can be demonstrated to meet the single-failure
+criterion of nuclear safety standards.  COTS FPGAs from the
+28-nm and 16-nm Kintex-7 and UltraScale families have been
+qualified for radiation environments substantially more
+demanding than nuclear plant I\&C through heavy-ion, proton,
+and neutron testing at national accelerator facilities, and
+the regulatory pathway for their use in safety-related
+applications is established in IAEA SSG-39 and NRC
+Regulatory Guide 1.152.  The following chapter implements
+and experimentally validates these principles in a digital
+plant monitoring system built on a COTS Kintex-7 FPGA.

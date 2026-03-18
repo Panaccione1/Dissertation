@@ -1,21 +1,139 @@
 ~\hfill {{\bfseries Page}}
-\contentsline {front}{{Abstract}}{ii}{}%
-\contentsline {front}{{Dedication}}{iv}{}%
-\contentsline {front}{{Acknowledgments}}{v}{}%
-\contentsline {front}{{Vita}}{vi}{}%
-\contentsline {front}{{List of Tables}}{viii}{}%
-\contentsline {front}{List of Figures}{ix}{}%
-\contentsline {chapter}{\numberline {1.}Introduction}{1}{}%
-\contentsline {section}{\numberline {1.1}Nuclear Power and the Global Energy Imperative}{2}{}%
-\contentsline {section}{\numberline {1.2}The Regulatory Foundation for Radiation Monitoring}{3}{}%
-\contentsline {section}{\numberline {1.3}Limitations of Current Radiation Detector Technologies}{5}{}%
-\contentsline {section}{\numberline {1.4}The Economics of Nuclear Instrumentation}{8}{}%
-\contentsline {section}{\numberline {1.5}The Gap: An Integrated Materials-to-Systems Approach}{11}{}%
-\contentsline {section}{\numberline {1.6}Research Objectives and Dissertation Organization}{13}{}%
-\contentsline {chapter}{\numberline {2.}Background and Prior Work}{15}{}%
-\contentsline {chapter}{\numberline {3.}Testing of an Organic Metal Halide Perovskite for Fast Neutron Detection}{16}{}%
-\contentsline {chapter}{\numberline {4.}Contributions and Future Work}{17}{}%
-\contentsline {part}{Appendices}{18}{}%
-\contentsline {chapter}{\numberline {A.}The Data on Cows}{18}{}%
-\contentsline {chapter}{\numberline {B.}Important commands defined in {\tt osudissert96}}{19}{}%
-\contentsline {front}{{Bibliography}}{21}{}%
+\contentsline {front}{{Abstract}}{ii}{chapter*.1}%
+\contentsline {front}{{Dedication}}{iv}{section*.2}%
+\contentsline {front}{{Acknowledgments}}{v}{chapter*.3}%
+\contentsline {front}{{Vita}}{vi}{chapter*.4}%
+\contentsline {front}{{List of Tables}}{xii}{chapter*.6}%
+\contentsline {front}{List of Figures}{xiii}{chapter*.7}%
+\contentsline {chapter}{\numberline {1.}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Nuclear Power and the Global Decarbonization Context}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}The Regulatory Foundation for Radiation Monitoring}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Limitations of Current Radiation Detector Technologies}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}The Economics of Nuclear Instrumentation}{8}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Research Objectives and Dissertation Organization}{11}{section.1.5}%
+\contentsline {chapter}{\numberline {2.}Background: Halide Perovskite Semiconductors for Radiation Detection}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}The Perovskite Crystal Structure and Material Families}{14}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}The ABX$_3$ Archetype}{14}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Three-Dimensional Structures}{15}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Two-Dimensional Ruddlesden-Popper Structures}{17}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Methylhydrazinium Lead Chloride (MHyPbCl$_3$)}{18}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Radiation Detection Fundamentals}{19}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Mechanisms of Ionizing Radiation Detection}{19}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Energy Resolution and Pulse Height Analysis}{20}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}X-Ray Detector Sensitivity}{21}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Neutron Detection and Discrimination}{22}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}Wide Bandgap Semiconductors for Room-Temperature Detection}{23}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}The Room-Temperature Constraint}{23}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Figures of Merit for Wide Bandgap Detector Materials}{24}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}The Wide Bandgap Material Landscape}{26}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Why Bandgap Engineering Matters: The Perovskite Advantage}{27}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Radiation Interaction with High-\textit {Z} Semiconductors}{28}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Photon Interactions}{28}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Charge Transport and the Hecht Equation}{30}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Schottky Diode Contacts in Semiconductor Detectors}{31}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Metal-Semiconductor Junction Physics}{31}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Application to Halide Perovskite Detectors}{32}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.6}Ion Migration in Halide Perovskites}{33}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Origins and Mechanisms}{33}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Consequences for Detector Performance}{34}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Mitigation Strategies}{35}{subsection.2.6.3}%
+\contentsline {section}{\numberline {2.7}Prior Art in Perovskite Radiation Detectors}{36}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Early Single-Crystal Gamma Detectors}{36}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}CsPbBr$_3$ and the Resolution Record}{37}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}X-Ray Detection and Imaging}{37}{subsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.7.4}Neutron Detection}{38}{subsection.2.7.4}%
+\contentsline {subsection}{\numberline {2.7.5}Mixed-Cation and 2D Detector Architectures}{39}{subsection.2.7.5}%
+\contentsline {section}{\numberline {2.8}Summary}{39}{section.2.8}%
+\contentsline {chapter}{\numberline {3.}Background: Radiation Effects on Digital Electronics and FPGA-Based Instrumentation}{41}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Radiation Environments for Digital Electronics}{42}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}The Space Radiation Environment}{42}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}The Nuclear Plant Radiation Environment}{43}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}The Terrestrial Cosmic-Ray Environment}{44}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Total Ionizing Dose Effects}{44}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Charge Trapping in Gate Oxides}{44}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}TID Effects in Modern FPGAs}{45}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Single-Event Effects: Physical Mechanisms}{46}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Ion Track Formation and Charge Collection}{46}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}The SEE Sensitivity Figure of Merit: Cross-Section}{47}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Single-Event Effects Taxonomy}{48}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Single-Event Upset (SEU)}{50}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Multiple Cell Upset (MCU)}{50}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Single-Event Transient (SET)}{51}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Single-Event Functional Interrupt (SEFI)}{53}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Single-Event Latchup (SEL)}{53}{subsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.4.6}Single-Event Burnout (SEB) and Gate Rupture (SEGR)}{54}{subsection.3.4.6}%
+\contentsline {section}{\numberline {3.5}FPGA Architecture and Radiation Vulnerability}{56}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}SRAM-Based FPGA Architecture}{56}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Radiation Sensitivity Across FPGA Generations}{57}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}Fault-Tolerant Mitigation Techniques}{58}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Triple Modular Redundancy}{58}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Configuration Scrubbing}{61}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Combined TMR-Scrubbing and Hybrid Approaches}{62}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}Error Detection and Correction in Block RAMs}{63}{subsection.3.6.4}%
+\contentsline {section}{\numberline {3.7}COTS FPGAs in Nuclear and Radiation-Critical Applications}{63}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}The Cost-Performance Trade-off}{63}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Demonstrated COTS FPGA Performance in Radiation Environments}{64}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Regulatory Pathway for COTS FPGAs in Nuclear Plants}{65}{subsection.3.7.3}%
+\contentsline {section}{\numberline {3.8}Testing Methodologies for FPGA Radiation Qualification}{66}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Heavy-Ion Testing}{67}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Proton Testing}{67}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.8.3}Neutron Testing}{68}{subsection.3.8.3}%
+\contentsline {subsection}{\numberline {3.8.4}Total Ionizing Dose Testing}{69}{subsection.3.8.4}%
+\contentsline {subsection}{\numberline {3.8.5}Ground-Level and Accelerated System Testing}{70}{subsection.3.8.5}%
+\contentsline {section}{\numberline {3.9}Summary}{71}{section.3.9}%
+\contentsline {chapter}{\numberline {4.}Cs$_{0.1}$FA$_{0.9}$PbI$_3$ Perovskite Solar Cells as Ionizing Radiation Monitors}{73}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Device Fabrication and Photovoltaic Performance}{74}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Temporal Photoresponse Characterization}{75}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}DC Transient Response}{76}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Pulsed Laser Response}{77}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}AC Grid Simulation}{78}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}X-Ray Response}{78}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Gamma-Ray Response}{80}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Measurement Setup and Dose Rate Calibration}{80}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Cesium-137 Irradiation}{81}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Cobalt-60 Irradiation}{83}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Neutron Response}{83}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Steady-State Reactor Measurements}{85}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Chopped-Beam Transient Measurements}{86}{subsection.4.5.2}%
+\contentsline {section}{\numberline {4.6}Summary}{86}{section.4.6}%
+\contentsline {chapter}{\numberline {5.}Digital Electronics Verification Methods for Radiation Environments}{88}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Introduction}{88}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Radiation Effects in FPGAs}{89}{section.5.2}%
+\contentsline {section}{\numberline {5.3}FPGA Verification Challenges in Nuclear Systems}{90}{section.5.3}%
+\contentsline {section}{\numberline {5.4}FFSR RTL Architecture}{91}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}System-Level Overview}{91}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Module Descriptions}{92}{subsection.5.4.2}%
+\contentsline {subsubsection}{top\_selftest\_100mhz\_dbg}{92}{section*.8}%
+\contentsline {subsubsection}{ff\_scanfarm and ff\_scanfarm\_sig}{94}{section*.9}%
+\contentsline {subsubsection}{scan\_chain Primitive}{94}{section*.10}%
+\contentsline {subsection}{\numberline {5.4.3}Core Algorithms}{94}{subsection.5.4.3}%
+\contentsline {subsubsection}{Shift-Register State Update}{94}{section*.11}%
+\contentsline {subsubsection}{Optional Upset Injection for Verification}{95}{section*.12}%
+\contentsline {subsubsection}{Signature Computation and Mismatch Detection}{95}{section*.13}%
+\contentsline {subsubsection}{Sticky Error Memory}{96}{section*.14}%
+\contentsline {subsubsection}{PRBS31 Recurrence}{96}{section*.15}%
+\contentsline {subsubsection}{UART Frame Formation}{96}{section*.16}%
+\contentsline {section}{\numberline {5.5}Test Configuration}{97}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Devices Under Test}{97}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Radiation Environment}{98}{subsection.5.5.2}%
+\contentsline {section}{\numberline {5.6}Experimental Results}{108}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Baseline Test (January~26, Out of Beam)}{108}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Day~1 Reactor Run (January~27)}{108}{subsection.5.6.2}%
+\contentsline {subsubsection}{Upset Count Results}{108}{section*.17}%
+\contentsline {subsubsection}{PSU Current Monitoring---Day~1}{109}{section*.18}%
+\contentsline {subsubsection}{FFSR1 UART Format Change---Candidate Configuration Memory SEU}{109}{section*.19}%
+\contentsline {subsection}{\numberline {5.6.3}Overnight Monitoring (January~27--28)}{111}{subsection.5.6.3}%
+\contentsline {subsection}{\numberline {5.6.4}Day~2 Reactor Run (January~28)}{113}{subsection.5.6.4}%
+\contentsline {subsubsection}{FFSR3 and FFSR4 Early Dropouts}{113}{section*.20}%
+\contentsline {subsubsection}{PSU Current Monitoring---Day~2}{114}{section*.21}%
+\contentsline {subsubsection}{FFSR1 End-of-Run Burst Event and Confirmed DMR Upset}{115}{section*.22}%
+\contentsline {section}{\numberline {5.7}Discussion}{117}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}SEU Sensitivity of the DMR Design}{117}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Configuration Memory Vulnerability}{118}{subsection.5.7.2}%
+\contentsline {subsection}{\numberline {5.7.3}TID Effects in PSU Current Data}{118}{subsection.5.7.3}%
+\contentsline {subsection}{\numberline {5.7.4}Implications for FPGA Radiation Hardening}{119}{subsection.5.7.4}%
+\contentsline {section}{\numberline {5.8}Summary}{119}{section.5.8}%
+\contentsline {part}{Appendices}{121}{appendix.A}%
+\contentsline {chapter}{\numberline {A.}The Data on Cows}{121}{section*.23}%
+\contentsline {chapter}{\numberline {B.}Important commands defined in {\tt osudissert96}}{122}{appendix.B}%
+\contentsline {front}{{Bibliography}}{124}{appendix*.24}%

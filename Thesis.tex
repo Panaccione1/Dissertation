@@ -6,6 +6,15 @@
 % comma-separated list, e.g. \documentclass[ms,osudraft]{osudissert96}
 %
 \usepackage{graphicx}
+\usepackage{url}          % fixes all \url{} errors in Thesis.bbl
+\usepackage[T1]{fontenc}  % fixes \k{} accent in ch3
+\usepackage{upgreek}      % fixes \upmu in ch3
+\usepackage{hyperref}
+\usepackage{amsmath}       % \text{}, \lesssim, \gtrsim, etc.
+\usepackage{amssymb}       % \lesssim, \gtrsim
+\usepackage{lineno}
+\usepackage{booktabs}
+\linenumbers
 %
 % Everything between the \documentclass and the \begin{document} is
 % called the preamble of the document. Everything between the
@@ -158,7 +167,8 @@
 \include{ch1.intro}     % tell them what you are going to tell them 
 \include{ch2.problem}   % describe the problem statement
 \include{ch3.PerFn}    % what is your solution
-\include{ch4.end}       % conclusion stuff
+\include{ch4.solarcells}       % conclusion stuff
+\include{ch6}
 
 
 %
@@ -186,7 +196,3 @@
 \bibliography{bibfile}
 
 \end{document}
-
-
-
-
