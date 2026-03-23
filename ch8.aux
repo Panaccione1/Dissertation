@@ -1,0 +1,171 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {chapter}{\numberline {8.}Methods and Algorithms of the Fixed-Point Thermal Control Benchmark}{187}{chapter.8}\protected@file@percent }
+\newlabel{chap:fpga_benchmark}{{8}{187}{Methods and Algorithms of the Fixed-Point Thermal Control Benchmark}{chapter.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Introduction}{187}{section.8.1}\protected@file@percent }
+\newlabel{sec:bench_intro}{{8.1}{187}{Introduction}{section.8.1}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}System-Level Methodology}{188}{section.8.2}\protected@file@percent }
+\newlabel{sec:bench_system}{{8.2}{188}{System-Level Methodology}{section.8.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8.1}{\ignorespaces Implementation snapshot---key parameters of the fixed-point thermal control benchmark as configured in the present irradiation experiments.}}{189}{table.8.1}\protected@file@percent }
+\newlabel{tab:bench_snapshot}{{8.1}{189}{Implementation snapshot---key parameters of the fixed-point thermal control benchmark as configured in the present irradiation experiments}{table.8.1}{}}
+\def\@LN@column{1}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Numerical Representation and Sampling Structure}{190}{section.8.3}\protected@file@percent }
+\newlabel{sec:bench_numrep}{{8.3}{190}{Numerical Representation and Sampling Structure}{section.8.3}{}}
+\newlabel{eq:q15_scaling}{{8.1}{190}{Numerical Representation and Sampling Structure}{equation.8.1}{}}
+\def\@LN@column{1}
+\newlabel{eq:q15_mul}{{8.2}{191}{Numerical Representation and Sampling Structure}{equation.8.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.4}Input Stimulus and Run/Restart Control}{191}{section.8.4}\protected@file@percent }
+\newlabel{sec:bench_stimulus}{{8.4}{191}{Input Stimulus and Run/Restart Control}{section.8.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4.1}Button-Controlled Run Logic}{191}{subsection.8.4.1}\protected@file@percent }
+\newlabel{ssec:bench_button}{{8.4.1}{191}{Button-Controlled Run Logic}{subsection.8.4.1}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4.2}Stimulus Generator}{192}{subsection.8.4.2}\protected@file@percent }
+\newlabel{ssec:bench_stim_gen}{{8.4.2}{192}{Stimulus Generator}{subsection.8.4.2}{}}
+\newlabel{eq:r_tgt}{{8.3}{192}{Stimulus Generator}{equation.8.3}{}}
+\newlabel{eq:Q_disturbance}{{8.4}{192}{Stimulus Generator}{equation.8.4}{}}
+\newlabel{eq:slew_law}{{8.5}{192}{Stimulus Generator}{equation.8.5}{}}
+\def\@LN@column{1}
+\@writefile{lot}{\contentsline {table}{\numberline {8.2}{\ignorespaces Piecewise input schedule implemented by the stimulus generator. Each interval exercises a different combination of reference and disturbance conditions.}}{193}{table.8.2}\protected@file@percent }
+\newlabel{tab:bench_stimulus}{{8.2}{193}{Piecewise input schedule implemented by the stimulus generator. Each interval exercises a different combination of reference and disturbance conditions}{table.8.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.5}Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{193}{section.8.5}\protected@file@percent }
+\newlabel{sec:bench_controller}{{8.5}{193}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{section.8.5}{}}
+\def\@LN@column{1}
+\newlabel{eq:error}{{8.6}{194}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{equation.8.6}{}}
+\newlabel{eq:dy}{{8.7}{194}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{equation.8.7}{}}
+\newlabel{eq:dy_filter}{{8.8}{194}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{equation.8.8}{}}
+\newlabel{eq:u_pre}{{8.9}{194}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{equation.8.9}{}}
+\newlabel{eq:u_sat}{{8.10}{194}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{equation.8.10}{}}
+\newlabel{eq:antiwindup}{{8.11}{194}{Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{equation.8.11}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.6}Actuator Dynamics and Nonlinear Valve Mapping}{195}{section.8.6}\protected@file@percent }
+\newlabel{sec:bench_actuator}{{8.6}{195}{Actuator Dynamics and Nonlinear Valve Mapping}{section.8.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.6.1}First-Order Actuator with Slew Limiting}{195}{subsection.8.6.1}\protected@file@percent }
+\newlabel{ssec:bench_act_fo}{{8.6.1}{195}{First-Order Actuator with Slew Limiting}{subsection.8.6.1}{}}
+\newlabel{eq:valve_fo}{{8.12}{195}{First-Order Actuator with Slew Limiting}{equation.8.12}{}}
+\newlabel{eq:valve_slew}{{8.13}{195}{First-Order Actuator with Slew Limiting}{equation.8.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.6.2}Equal-Percentage Valve Characteristic}{195}{subsection.8.6.2}\protected@file@percent }
+\newlabel{ssec:bench_valve_lut}{{8.6.2}{195}{Equal-Percentage Valve Characteristic}{subsection.8.6.2}{}}
+\def\@LN@column{1}
+\newlabel{eq:equal_pct}{{8.14}{196}{Equal-Percentage Valve Characteristic}{equation.8.14}{}}
+\newlabel{eq:phi_pow}{{8.15}{196}{Equal-Percentage Valve Characteristic}{equation.8.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.6.3}Coefficient Builder}{196}{subsection.8.6.3}\protected@file@percent }
+\newlabel{ssec:bench_coeff}{{8.6.3}{196}{Coefficient Builder}{subsection.8.6.3}{}}
+\newlabel{eq:mdot}{{8.16}{196}{Coefficient Builder}{equation.8.16}{}}
+\newlabel{eq:mdot_pow}{{8.17}{196}{Coefficient Builder}{equation.8.17}{}}
+\newlabel{eq:mcp}{{8.18}{196}{Coefficient Builder}{equation.8.18}{}}
+\newlabel{eq:hA}{{8.19}{196}{Coefficient Builder}{equation.8.19}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.7}Two-Node Thermal Plant}{197}{section.8.7}\protected@file@percent }
+\newlabel{sec:bench_plant}{{8.7}{197}{Two-Node Thermal Plant}{section.8.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.7.1}Two-Node Forward-Euler Integration}{197}{subsection.8.7.1}\protected@file@percent }
+\newlabel{ssec:bench_plant_euler}{{8.7.1}{197}{Two-Node Forward-Euler Integration}{subsection.8.7.1}{}}
+\newlabel{eq:Tf}{{8.20}{197}{Two-Node Forward-Euler Integration}{equation.8.20}{}}
+\newlabel{eq:Tc}{{8.21}{197}{Two-Node Forward-Euler Integration}{equation.8.21}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.7.2}Outlet Transport Lag}{198}{subsection.8.7.2}\protected@file@percent }
+\newlabel{ssec:bench_transport_lag}{{8.7.2}{198}{Outlet Transport Lag}{subsection.8.7.2}{}}
+\newlabel{eq:transport_lag}{{8.22}{198}{Outlet Transport Lag}{equation.8.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.8}Quantized Measurement Path}{198}{section.8.8}\protected@file@percent }
+\newlabel{sec:bench_meas}{{8.8}{198}{Quantized Measurement Path}{section.8.8}{}}
+\newlabel{eq:quant_counts}{{8.23}{198}{Quantized Measurement Path}{equation.8.23}{}}
+\newlabel{eq:quant_q15}{{8.24}{198}{Quantized Measurement Path}{equation.8.24}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.9}Redundancy, Fault Detection, and Telemetry}{199}{section.8.9}\protected@file@percent }
+\newlabel{sec:bench_dmr}{{8.9}{199}{Redundancy, Fault Detection, and Telemetry}{section.8.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.9.1}Dual-Modular Redundancy}{199}{subsection.8.9.1}\protected@file@percent }
+\newlabel{ssec:bench_dmr_logic}{{8.9.1}{199}{Dual-Modular Redundancy}{subsection.8.9.1}{}}
+\newlabel{eq:dmr_mismatch}{{8.25}{199}{Dual-Modular Redundancy}{equation.8.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.9.2}Saturation Activity Monitor}{199}{subsection.8.9.2}\protected@file@percent }
+\newlabel{ssec:bench_sat_mon}{{8.9.2}{199}{Saturation Activity Monitor}{subsection.8.9.2}{}}
+\newlabel{eq:sat_flag}{{8.26}{199}{Saturation Activity Monitor}{equation.8.26}{}}
+\def\@LN@column{1}
+\newlabel{eq:sat_ema}{{8.27}{200}{Saturation Activity Monitor}{equation.8.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.9.3}UART Logging Method}{200}{subsection.8.9.3}\protected@file@percent }
+\newlabel{ssec:bench_uart}{{8.9.3}{200}{UART Logging Method}{subsection.8.9.3}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.10}Timing and Module-to-Method Mapping}{201}{section.8.10}\protected@file@percent }
+\newlabel{sec:bench_timing}{{8.10}{201}{Timing and Module-to-Method Mapping}{section.8.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.11}Neutron Irradiation Experiment Setup}{201}{section.8.11}\protected@file@percent }
+\newlabel{sec:bench_neutron}{{8.11}{201}{Neutron Irradiation Experiment Setup}{section.8.11}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.12}Experimental Observations and Discussion}{202}{section.8.12}\protected@file@percent }
+\newlabel{sec:bench_observations}{{8.12}{202}{Experimental Observations and Discussion}{section.8.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.12.1}ROM Stimulus Integrity}{202}{subsection.8.12.1}\protected@file@percent }
+\newlabel{ssec:bench_obs_rom}{{8.12.1}{202}{ROM Stimulus Integrity}{subsection.8.12.1}{}}
+\def\@LN@column{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.1}{\ignorespaces Setpoint $r$ overlay. Run~1 (blue) and Run~2 (red) track identically for the first ${\sim }10{,}000$\,s. Run~1 exhibits corrupted setpoint values after $t = 10{,}000$\,s, temporally distinct from the plant-state decay onset at $t \approx 2{,}500$\,s.}}{203}{figure.8.1}\protected@file@percent }
+\newlabel{fig:bench_r_overlay}{{8.1}{203}{Setpoint $r$ overlay. Run~1 (blue) and Run~2 (red) track identically for the first ${\sim }10{,}000$\,s. Run~1 exhibits corrupted setpoint values after $t = 10{,}000$\,s, temporally distinct from the plant-state decay onset at $t \approx 2{,}500$\,s}{figure.8.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.12.2}Plant-State Decay}{203}{subsection.8.12.2}\protected@file@percent }
+\newlabel{ssec:bench_obs_decay}{{8.12.2}{203}{Plant-State Decay}{subsection.8.12.2}{}}
+\def\@LN@column{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.2}{\ignorespaces Fuel temperature $T_f$ overlay. Run~1 (blue) begins a smooth decay near $t = 2{,}500$\,s, reaching the zero clamp by $t \approx 5{,}000$\,s. Run~2 (red) maintains stable periodic operation.}}{204}{figure.8.2}\protected@file@percent }
+\newlabel{fig:bench_Tf_overlay}{{8.2}{204}{Fuel temperature $T_f$ overlay. Run~1 (blue) begins a smooth decay near $t = 2{,}500$\,s, reaching the zero clamp by $t \approx 5{,}000$\,s. Run~2 (red) maintains stable periodic operation}{figure.8.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.3}{\ignorespaces Coolant temperature $T_c$ overlay. Same decay morphology as $T_f$ with a slight lag, consistent with the thermal coupling between the two plant nodes.}}{205}{figure.8.3}\protected@file@percent }
+\newlabel{fig:bench_Tc_overlay}{{8.3}{205}{Coolant temperature $T_c$ overlay. Same decay morphology as $T_f$ with a slight lag, consistent with the thermal coupling between the two plant nodes}{figure.8.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.4}{\ignorespaces Outlet temperature $y$ overlay. The outlet tracks the coolant temperature decay through the first-order transport lag.}}{205}{figure.8.4}\protected@file@percent }
+\newlabel{fig:bench_y_overlay}{{8.4}{205}{Outlet temperature $y$ overlay. The outlet tracks the coolant temperature decay through the first-order transport lag}{figure.8.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.5}{\ignorespaces Fuel temperature difference (Run~1 $-$ Run~2). The smooth onset near $t = 2{,}000$\,s saturates at approximately $-0.72$. The difference statistics are $|\max | = 7.54 \times 10^{-1}$, $\mu = -4.68 \times 10^{-1}$, $\sigma = 3.21 \times 10^{-1}$.}}{206}{figure.8.5}\protected@file@percent }
+\newlabel{fig:bench_Tf_diff}{{8.5}{206}{Fuel temperature difference (Run~1 $-$ Run~2). The smooth onset near $t = 2{,}000$\,s saturates at approximately $-0.72$. The difference statistics are $|\max | = 7.54 \times 10^{-1}$, $\mu = -4.68 \times 10^{-1}$, $\sigma = 3.21 \times 10^{-1}$}{figure.8.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.6}{\ignorespaces Coolant temperature difference (Run~1 $-$ Run~2). Same morphology as the fuel temperature difference, saturating at approximately $-0.62$.}}{206}{figure.8.6}\protected@file@percent }
+\newlabel{fig:bench_Tc_diff}{{8.6}{206}{Coolant temperature difference (Run~1 $-$ Run~2). Same morphology as the fuel temperature difference, saturating at approximately $-0.62$}{figure.8.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.7}{\ignorespaces Error signal $e = r - y_m$ overlay. Run~1 error grows monotonically as plant temperatures collapse, reaching $e \approx 0.60$ (the setpoint value) once $y_m$ reaches zero.}}{207}{figure.8.7}\protected@file@percent }
+\newlabel{fig:bench_e_overlay}{{8.7}{207}{Error signal $e = r - y_m$ overlay. Run~1 error grows monotonically as plant temperatures collapse, reaching $e \approx 0.60$ (the setpoint value) once $y_m$ reaches zero}{figure.8.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.8}{\ignorespaces Valve position $v$ overlay. Run~1 (blue) valve collapses to near-zero after the plant-state failure. Run~2 (red) exhibits the expected periodic actuation pattern driven by the ROM stimulus cycle.}}{207}{figure.8.8}\protected@file@percent }
+\newlabel{fig:bench_v_overlay}{{8.8}{207}{Valve position $v$ overlay. Run~1 (blue) valve collapses to near-zero after the plant-state failure. Run~2 (red) exhibits the expected periodic actuation pattern driven by the ROM stimulus cycle}{figure.8.8}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.12.3}DMR Response}{208}{subsection.8.12.3}\protected@file@percent }
+\newlabel{ssec:bench_obs_dmr}{{8.12.3}{208}{DMR Response}{subsection.8.12.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.12.4}Discussion of Failure Mechanism}{208}{subsection.8.12.4}\protected@file@percent }
+\newlabel{ssec:bench_obs_discussion}{{8.12.4}{208}{Discussion of Failure Mechanism}{subsection.8.12.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Exclusion of Firmware-Induced Numerical Drift}{208}{section*.44}\protected@file@percent }
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsubsection}{Exclusion of BRAM Data Corruption}{209}{section*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Consistency with Configuration Memory SEU}{209}{section*.46}\protected@file@percent }
+\newlabel{sssec:bench_cram}{{8.12.4}{209}{Consistency with Configuration Memory SEU}{section*.46}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsubsection}{Implications for DMR Effectiveness}{210}{section*.47}\protected@file@percent }
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.13}Relevance to Radiation-Effects Objectives}{211}{section.8.13}\protected@file@percent }
+\newlabel{sec:bench_relevance}{{8.13}{211}{Relevance to Radiation-Effects Objectives}{section.8.13}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {section}{\numberline {8.14}Chapter Summary}{212}{section.8.14}\protected@file@percent }
+\newlabel{sec:bench_summary}{{8.14}{212}{Chapter Summary}{section.8.14}{}}
+\def\@LN@column{1}
+\@writefile{lot}{\contentsline {table}{\numberline {8.3}{\ignorespaces Mapping between RTL modules and the mathematical methods they implement.}}{214}{table.8.3}\protected@file@percent }
+\newlabel{tab:bench_modules}{{8.3}{214}{Mapping between RTL modules and the mathematical methods they implement}{table.8.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8.4}{\ignorespaces Current top-level benchmark parameters extracted from the RTL implementation.}}{215}{table.8.4}\protected@file@percent }
+\newlabel{tab:bench_params}{{8.4}{215}{Current top-level benchmark parameters extracted from the RTL implementation}{table.8.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8.5}{\ignorespaces Summary of neutron beam facility parameters used in the fixed-point thermal control benchmark experiment. All values are identical to those reported in the FFSR irradiation campaign (Chapter~\ref {chap:ffsr}).}}{216}{table.8.5}\protected@file@percent }
+\newlabel{tab:bench_neutron}{{8.5}{216}{Summary of neutron beam facility parameters used in the fixed-point thermal control benchmark experiment. All values are identical to those reported in the FFSR irradiation campaign (Chapter~\ref {chap:ffsr})}{table.8.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8.6}{\ignorespaces Observed failure characteristics of the PID thermal control benchmark and their consistency with a CRAM SEU mechanism.}}{217}{table.8.6}\protected@file@percent }
+\newlabel{tab:bench_cram_evidence}{{8.6}{217}{Observed failure characteristics of the PID thermal control benchmark and their consistency with a CRAM SEU mechanism}{table.8.6}{}}
+\@setckpt{ch8}{
+\setcounter{page}{218}
+\setcounter{equation}{27}
+\setcounter{enumi}{3}
+\setcounter{enumii}{0}
+\setcounter{enumiii}{0}
+\setcounter{enumiv}{0}
+\setcounter{footnote}{0}
+\setcounter{mpfootnote}{0}
+\setcounter{part}{0}
+\setcounter{chapter}{8}
+\setcounter{section}{14}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
+\setcounter{paragraph}{0}
+\setcounter{subparagraph}{0}
+\setcounter{figure}{8}
+\setcounter{table}{6}
+\setcounter{disspage}{0}
+\setcounter{section@level}{1}
+\setcounter{Item}{13}
+\setcounter{Hfootnote}{0}
+\setcounter{bookmark@seq@number}{197}
+\setcounter{parentequation}{0}
+\setcounter{linenumber}{4325}
+\setcounter{LN@truepage}{242}
+}

@@ -63,6 +63,17 @@ M.~J. Berger, J.~H. Hubbell, S.~M. Seltzer, J.~Chang, J.~S. Coursey,
 \newblock National Institute of Standards and Technology, Gaithersburg, MD.
   \url{https://www.nist.gov/pml/xcom-photon-cross-sections-database}.
 
+\bibitem{Birri2021Dissertation}
+Anthony Birri.
+\newblock {\em The Development of an Optical Fiber Based Gamma Thermometer}.
+\newblock PhD thesis, The Ohio State University, 2021.
+
+\bibitem{Birri2020IEEE}
+Anthony Birri, Christian~M. Petrie, and Thomas~E. Blue.
+\newblock Analytic thermal model of an optical fiber based gamma thermometer
+  and its application in a university research reactor.
+\newblock {\em IEEE Sensors Journal}, 20(13):7060--7068, 2020.
+
 \bibitem{BISResearch_RadHardFPGA}
 {BIS Research}.
 \newblock Radiation-hardened {FPGA} market: Global and regional analysis,
@@ -74,6 +85,12 @@ J.~D. Black, P.~E. Dodd, and K.~M. Warren.
 \newblock Physics of multiple-node charge collection and impacts on
   single-event characterization and soft error rate prediction.
 \newblock {\em IEEE Transactions on Nuclear Science}, 60(3):1836--1851, 2013.
+
+\bibitem{SimReport2023}
+Thomas~E. Blue, Anthony Birri, and Wyatt Panaccione.
+\newblock Simulation response report for optical fiber-based gamma thermometer
+  and optical fiber-based neutron dosimeter.
+\newblock Technical report, The Ohio State University, December 2023.
 
 \bibitem{Boldyreva2020gammarad}
 Aleksandra~G. Boldyreva et~al.
@@ -424,6 +441,12 @@ Alan Owens and A.~Peacock.
 \newblock Comprehensive reference for wide bandgap detector materials and
   figures of merit.
 
+\bibitem{Palmer2018}
+Robert~K. Palmer and Thomas~E. Blue.
+\newblock Modulation transfer function for distributed temperature measurements
+  using an optical fiber sensor system.
+\newblock {\em IEEE Sensors}, 18(5):1911--1918, 2018.
+
 \bibitem{Pan2019}
 Weiqiang Pan, Haifeng Wu, Jiajun Luo, Zilong Deng, Cong Ge, Chen Chen, Xianwei
   Jiang, Wei-Jie Yin, Gengzhao Niu, Lianjun Zhu, Liyan Yin, Yanling Zhou,
@@ -623,6 +646,13 @@ H.~L. Wells.
 \newblock Über die {C}äsium- und {K}alium-{B}leihaloidsalze.
 \newblock {\em Zeitschrift f{\"u}r anorganische Chemie}, 3:195--210, 1893.
 \newblock Historical reference for the perovskite ABX$_3$ mineral structure.
+
+\bibitem{LunaDOE2024}
+Chris Westcott.
+\newblock Phase {I} final report: Optical fiber based distributed radiation
+  detection.
+\newblock Technical report, Luna Innovations Incorporated, April 2024.
+\newblock DOE Award Number DE-SC0023946.
 
 \bibitem{BWRX300_Wiki}
 {Wikipedia}.

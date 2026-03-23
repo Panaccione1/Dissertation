@@ -14,7 +14,15 @@ A level-1 auxiliary file: ch3.PerFn.aux
 Reallocating 'name_of_file' (item size: 1) to 19 items.
 A level-1 auxiliary file: ch4.solarcells.aux
 Reallocating 'name_of_file' (item size: 1) to 8 items.
+A level-1 auxiliary file: ch5.aux
+Reallocating 'name_of_file' (item size: 1) to 8 items.
 A level-1 auxiliary file: ch6.aux
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+A level-1 auxiliary file: ch7.aux
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+A level-1 auxiliary file: ch8.aux
+Reallocating 'name_of_file' (item size: 1) to 8 items.
+A level-1 auxiliary file: ch9.aux
 Reallocating 'name_of_file' (item size: 1) to 9 items.
 A level-1 auxiliary file: app1.aux
 Reallocating 'name_of_file' (item size: 1) to 9 items.
@@ -23,44 +31,53 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Reallocating 'name_of_file' (item size: 1) to 8 items.
 Database file #1: bibfile.bib
-You've used 113 entries,
+Warning--I didn't find a database entry for "Tsai2022ionmig"
+Warning--I didn't find a database entry for "Hofstadter1949"
+Warning--I didn't find a database entry for "He2019CsPbBr"
+Warning--I didn't find a database entry for "Yuan2016ionmig"
+Warning--I didn't find a database entry for "Verbinski1968"
+Warning--I didn't find a database entry for "ENDF8"
+Warning--I didn't find a database entry for "He1997CZT"
+Warning--I didn't find a database entry for "Panaccione2024"
+You've used 118 entries,
             2118 wiz_defined-function locations,
-            1134 strings with 25050 characters,
-and the built_in function-call counts, 37836 in all, are:
-= -- 3710
-> -- 2009
+            1183 strings with 26193 characters,
+and the built_in function-call counts, 39240 in all, are:
+= -- 3856
+> -- 2072
 < -- 10
-+ -- 812
-- -- 688
-* -- 2680
-:= -- 6492
-add.period$ -- 362
-call.type$ -- 113
-change.case$ -- 666
++ -- 838
+- -- 708
+* -- 2777
+:= -- 6746
+add.period$ -- 378
+call.type$ -- 118
+change.case$ -- 692
 chr.to.int$ -- 0
-cite$ -- 113
-duplicate$ -- 1210
-empty$ -- 2821
-format.name$ -- 688
-if$ -- 7697
+cite$ -- 118
+duplicate$ -- 1257
+empty$ -- 2923
+format.name$ -- 708
+if$ -- 7976
 int.to.chr$ -- 0
-int.to.str$ -- 113
-missing$ -- 91
-newline$ -- 586
-num.names$ -- 228
-pop$ -- 692
+int.to.str$ -- 118
+missing$ -- 93
+newline$ -- 612
+num.names$ -- 238
+pop$ -- 709
 preamble$ -- 1
-purify$ -- 553
+purify$ -- 573
 quote$ -- 0
-skip$ -- 844
+skip$ -- 875
 stack$ -- 0
-substring$ -- 2324
-swap$ -- 167
+substring$ -- 2412
+swap$ -- 170
 text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 432
+type$ -- 452
 warning$ -- 0
-while$ -- 360
-width$ -- 116
-write$ -- 1248
+while$ -- 374
+width$ -- 121
+write$ -- 1305
+(There were 8 warnings)
