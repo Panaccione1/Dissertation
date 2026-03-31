@@ -27,7 +27,7 @@ feedback control, emulated physical plant dynamics, nonlinear actuator
 mapping, and dual-modular redundancy (DMR) within a single synthesizable
 Verilog design.  Because the two benchmarks share the same neutron
 irradiation facility and beam configuration, the experimental
-infrastructure described in Chapter~\ref{chap:ffsr} applies directly
+infrastructure described in Chapter~\ref{ch:digital_electronics} applies directly
 here, and the present chapter focuses exclusively on the design methods,
 algorithms, and implementation choices that distinguish this benchmark.
 
@@ -60,7 +60,7 @@ Section~\ref{sec:bench_summary} concludes with a chapter summary.
 
 \begin{table}[h!]
   \centering
-  \caption{Implementation snapshot---key parameters of the fixed-point
+  \caption{Implementation snapshot, key parameters of the fixed-point
            thermal control benchmark as configured in the present
            irradiation experiments.}
   \label{tab:bench_snapshot}
@@ -121,7 +121,7 @@ jitter.  Second, the use of bounded fixed-point states and saturating
 arithmetic prevents uncontrolled numeric growth during upset conditions.
 Third, the benchmark simultaneously exercises arithmetic pipelines,
 state registers, lookup tables, comparators, counters, and serial
-communication logic---all categories of FPGA resource that can respond
+communication logic, all categories of FPGA resource that can respond
 differently to configuration upsets or transient single-event effects.
 Finally, the explicit run gating, exact DMR comparison, and
 deterministic restart behaviour make it well suited to repeatable
@@ -178,7 +178,7 @@ Because \texttt{tick\_1k} is taken directly from the stimulus-valid
 pulse, the controller, plant, DMR wrapper, and UART logger all advance
 only when the benchmark is in run mode.  The control chain is pipelined
 over several 100\,MHz cycles so that the algorithmic latency from tick
-assertion to updated measured output is approximately 70\,ns---negligible
+assertion to updated measured output is approximately 70\,ns, negligible
 relative to the 1\,ms control period.
 
 % ============================================================
@@ -236,10 +236,10 @@ to prevent discontinuous command changes.  It is updated every 10\,ms by
 a bounded increment $\Delta r$.  The slew law implemented in RTL is
 
 \begin{equation}
-  r[k+1] \;=\; \mathrm{sat}\!\Bigl\{
-    r[k] + \mathrm{clip}\bigl(r_{\mathrm{tgt}}[k] - r[k],\;
-    -\Delta r,\; +\Delta r\bigr)
-  \Bigr\} \,,
+  r[k+1] \;=\; \mathrm{sat}\!\left\{
+    r[k] + \mathrm{clip}\left(r_{\mathrm{tgt}}[k] - r[k],\;
+    -\Delta r,\; +\Delta r\right)
+  \right\} \,,
   \label{eq:slew_law}
 \end{equation}
 
@@ -252,8 +252,7 @@ change.  Table~\ref{tab:bench_stimulus} summarizes the piecewise schedule.
 \begin{table}[h!]
   \centering
   \caption{Piecewise input schedule implemented by the stimulus
-           generator.  Each interval exercises a different combination
-           of reference and disturbance conditions.}
+           generator.}
   \label{tab:bench_stimulus}
   \renewcommand{\arraystretch}{1.25}
   \begin{tabular}{@{} l c c p{5.5cm} @{}}
@@ -311,21 +310,21 @@ change, and the integral accumulator:
 The physical command is bounded to the allowable actuator range:
 
 \begin{equation}
-  u[k] \;=\; \mathrm{sat}\!\bigl(u_{\mathrm{pre}}[k],\;
-    U_{\min},\; U_{\max}\bigr) \,.
+  u[k] \;=\; \mathrm{sat}\!\left(u_{\mathrm{pre}}[k],\;
+    U_{\min},\; U_{\max}\right) \,.
   \label{eq:u_sat}
 \end{equation}
 
-To prevent integrator windup during saturation---a condition of
+To prevent integrator windup during saturation, a condition of
 particular importance in radiation testing where prolonged actuator
-saturation following an upset could mask recovery dynamics---the RTL
+saturation following an upset could mask recovery dynamics, the RTL
 includes a back-calculation anti-windup correction.  The integral state
 update is
 
 \begin{equation}
   I_{\mathrm{int}}[k+1] \;=\; I_{\mathrm{int}}[k]
     \;-\; K_i\,e[k]
-    \;+\; K_t\bigl(u[k] - u_{\mathrm{pre}}[k]\bigr) \,.
+    \;+\; K_t\left(u[k] - u_{\mathrm{pre}}[k]\right) \,.
   \label{eq:antiwindup}
 \end{equation}
 
@@ -362,10 +361,10 @@ clamp to $[0,1]$ are also applied.  With $\Delta v_{\max}$ denoting the
 maximum admissible change per sample:
 
 \begin{equation}
-  v[k] \;=\; \mathrm{clamp}_{[0,1]}\!\Bigl\{
-    \mathrm{clip}\bigl(v_{\mathrm{pred}}[k],\;
-    v[k-1]-\Delta v_{\max},\; v[k-1]+\Delta v_{\max}\bigr)
-  \Bigr\} \,.
+  v[k] \;=\; \mathrm{clamp}_{[0,1]}\!\left\{
+    \mathrm{clip}\left(v_{\mathrm{pred}}[k],\;
+    v[k-1]-\Delta v_{\max},\; v[k-1]+\Delta v_{\max}\right)
+  \right\} \,.
   \label{eq:valve_slew}
 \end{equation}
 
@@ -388,7 +387,7 @@ exponent $n = 0.6$:
 A second exported table stores a nonlinear power of this flow quantity:
 
 \begin{equation}
-  \varphi_{\mathrm{pow}}(v) \;=\; \bigl[\varphi(v)\bigr]^n \,.
+  \varphi_{\mathrm{pow}}(v) \;=\; \left[\varphi(v)\right]^n \,.
   \label{eq:phi_pow}
 \end{equation}
 
@@ -408,8 +407,8 @@ $\varepsilon_{\mathrm{pow}}$ prevent the effective mass-flow and
 heat-transfer terms from collapsing to zero:
 
 \begin{align}
-  \dot{m}_{\mathrm{rel}}[k]     &= \max\!\bigl(\varphi[k],\; \varepsilon\bigr) \,, \label{eq:mdot} \\
-  \dot{m}_{\mathrm{rel,pow}}[k] &= \max\!\bigl(\varphi_{\mathrm{pow}}[k],\; \varepsilon_{\mathrm{pow}}\bigr) \,, \label{eq:mdot_pow} \\
+  \dot{m}_{\mathrm{rel}}[k]     &= \max\!\left(\varphi[k],\; \varepsilon\right) \,, \label{eq:mdot} \\
+  \dot{m}_{\mathrm{rel,pow}}[k] &= \max\!\left(\varphi_{\mathrm{pow}}[k],\; \varepsilon_{\mathrm{pow}}\right) \,, \label{eq:mdot_pow} \\
   \mathrm{mcp}[k]  &= \mathrm{mcp}_0 + k_m\,\dot{m}_{\mathrm{rel}}[k] \,, \label{eq:mcp} \\
   \mathrm{hA}[k]   &= \mathrm{hA}_0  + k_h\,\dot{m}_{\mathrm{rel,pow}}[k] \,. \label{eq:hA}
 \end{align}
@@ -434,13 +433,22 @@ $T_f$ and a coolant node temperature $T_c$.  The state equations are
 discretized with forward-Euler integration, with $T_s/C_f$ and
 $T_s/C_c$ supplied as precomputed coefficients:
 
-\begin{align}
-  T_f[k+1] &= T_f[k] + \frac{T_s}{C_f}\Bigl(
-    Q[k] - \mathrm{hA}[k]\bigl(T_f[k]-T_c[k]\bigr)\Bigr) \,, \label{eq:Tf} \\
-  T_c[k+1] &= T_c[k] + \frac{T_s}{C_c}\Bigl(
-    \mathrm{hA}[k]\bigl(T_f[k]-T_c[k]\bigr)
-    - \mathrm{mcp}[k]\bigl(T_c[k]-T_{\mathrm{in}}[k]\bigr)\Bigr) \,. \label{eq:Tc}
-\end{align}
+\begin{equation}
+  T_f[k+1] = T_f[k] + \frac{T_s}{C_f}\left(
+    Q[k] - \mathrm{hA}[k]\left(T_f[k]-T_c[k]
+\right)
+\right) \, ,
+  \label{eq:Tf}
+\end{equation}
+\begin{equation}
+  T_c[k+1] = T_c[k] + \frac{T_s}{C_c}\left(
+    \mathrm{hA}[k]\left(T_f[k]-T_c[k]
+\right)
+    - \mathrm{mcp}[k]\left(T_c[k]-T_{\mathrm{in}}[k]
+\right)
+\right) \, .
+  \label{eq:Tc}
+\end{equation}
 
 Several implementation choices are noteworthy from a radiation-testing
 perspective.  First, internal state is stored in Q1.30 accumulators,
@@ -479,7 +487,7 @@ conversion and optional transport latency.  For an $N$-bit ADC, the
 input $y$ is clamped to $[0,1]$, optionally dithered, and quantized:
 
 \begin{align}
-  c[k]    &= \mathrm{round}\!\bigl(y[k]\cdot(2^N - 1)\bigr) \,, \label{eq:quant_counts} \\
+  c[k]    &= \mathrm{round}\!\left(y[k]\cdot(2^N - 1)\right) \,, \label{eq:quant_counts} \\
   y_m[k]  &= c[k]\cdot 2^{15-N} \,. \label{eq:quant_q15}
 \end{align}
 
@@ -551,8 +559,8 @@ activity is computed as
 \end{equation}
 
 Although \texttt{sat\_monitor.v} is not instantiated in the current
-top-level path---the logger receives the direct saturation flag and the
-$\texttt{sat\_ema\_q15}$ input is tied to zero---the block formalizes
+top-level path, the logger receives the direct saturation flag and the
+$\texttt{sat\_ema\_q15}$ input is tied to zero, the block formalizes
 how saturation activity could be compressed into a single bounded
 diagnostic state in future experiments where sustained actuator
 saturation following a large upset is an expected outcome.
@@ -572,7 +580,7 @@ node temperatures, tracking error, controller saturation flag, the
 tied-off saturation EMA field, and the DMR mismatch status.  This record
 structure provides a complete state history of the closed-loop system
 and is the primary data source for the radiation-effects analysis
-presented in Chapter~\ref{chap:bench_results}.
+presented in Section~\ref{sec:bench_observations}.
 
 % ============================================================
 \section{Timing and Module-to-Method Mapping}
@@ -695,19 +703,17 @@ set extracted from the current top-level RTL.
 The neutron irradiation experiment used to evaluate the fixed-point
 thermal control benchmark was conducted at the same facility and under
 the same beam configuration as the FFSR experiments described in
-Chapter~\ref{chap:ffsr}.  A full description of the Ohio State
+Chapter~\ref{ch:digital_electronics}.  A full description of the Ohio State
 University Research Reactor (OSURR) fast neutron beam facility,
 including its collimation geometry, shutter arrangements, and beam
-characterization, is provided in Chapter~\ref{chap:ffsr} and is not
+characterization, is provided in Chapter~\ref{ch:digital_electronics} and is not
 repeated here.  Table~\ref{tab:bench_neutron} summarizes the key beam
 parameters for reference.
 
 \begin{table}[h!]
   \centering
   \caption{Summary of neutron beam facility parameters used in the
-           fixed-point thermal control benchmark experiment.  All values
-           are identical to those reported in the FFSR irradiation
-           campaign (Chapter~\ref{chap:ffsr}).}
+           fixed-point thermal control benchmark experiment.}
   \label{tab:bench_neutron}
   \renewcommand{\arraystretch}{1.25}
   \begin{tabular}{@{} p{5.5cm} p{5.5cm} p{2.5cm} @{}}
@@ -718,7 +724,7 @@ parameters for reference.
       & OSURR fast neutron beam
       & \\
     Reactor power
-      & 450\,kW$_{\mathrm{th}}$ (full power)
+      & 450\,kW$_{\mathrm{th}}$ (rated full power); operated at ${\approx}$400\,kW during both runs
       & \\
     Fast neutron flux (shutter open, no Cd)
       & ${\approx}1.5\times10^{7}$\,cm$^{-2}$s$^{-1}$
@@ -746,11 +752,9 @@ verify nominal telemetry output.  The UART telemetry stream was logged
 continuously throughout each irradiation interval.  The DMR mismatch
 counter and sticky flag fields in the telemetry record served as the
 primary real-time indicators of radiation-induced functional divergence.
-A comparative analysis of two telemetry runs---one exhibiting
+A comparative analysis of two telemetry runs, one exhibiting
 radiation-induced degradation and one serving as a nominal
-baseline---is presented in Section~\ref{sec:bench_observations}.
-Additional statistical analyses and cross-run comparisons are provided in
-Chapter~\ref{chap:bench_results}.
+baseline, is presented in Section~\ref{sec:bench_observations}.
 
 % ============================================================
 \section{Experimental Observations and Discussion}
@@ -760,7 +764,7 @@ Chapter~\ref{chap:bench_results}.
 Two UART telemetry acquisitions from the irradiation campaign were
 selected for detailed comparison.  Run~1 (beginning at 07:21:56 on
 Day~2) was acquired after approximately 19~hours of cumulative device
-operation---4~hours of irradiation on Day~1 plus 15~hours of overnight
+operation, 4~hours of irradiation on Day~1 plus 15~hours of overnight
 standby without reactor flux.  Run~2 (beginning at 11:42:24) was
 acquired under nominal conditions and serves as the reference baseline.
 Both runs executed the same deterministic ROM stimulus cycle.  Time
@@ -791,11 +795,7 @@ overlay for both runs.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/01_r_overlay.jpg}
-  \caption{Setpoint $r$ overlay.  Run~1 (blue) and Run~2 (red) track
-           identically for the first ${\sim}10{,}000$\,s.  Run~1
-           exhibits corrupted setpoint values after $t = 10{,}000$\,s,
-           temporally distinct from the plant-state decay onset at
-           $t \approx 2{,}500$\,s.}
+  \caption{Setpoint $r$ overlay for Run~1 (blue) and Run~2 (red).}
   \label{fig:bench_r_overlay}
 \end{figure}
 
@@ -818,28 +818,24 @@ overlay plots for $T_f$, $T_c$, and~$y$.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/08_Tf_overlay.jpg}
-  \caption{Fuel temperature $T_f$ overlay.  Run~1 (blue) begins a smooth
-           decay near $t = 2{,}500$\,s, reaching the zero clamp by
-           $t \approx 5{,}000$\,s.  Run~2 (red) maintains stable
-           periodic operation.}
+  \caption{Fuel temperature $T_f$ overlay for Run~1 (blue) and
+           Run~2 (red).}
   \label{fig:bench_Tf_overlay}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/09_Tc_overlay.jpg}
-  \caption{Coolant temperature $T_c$ overlay.  Same decay morphology as
-           $T_f$ with a slight lag, consistent with the thermal coupling
-           between the two plant nodes.}
+  \caption{Coolant temperature $T_c$ overlay for Run~1 (blue) and
+           Run~2 (red).}
   \label{fig:bench_Tc_overlay}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/04_y_overlay.jpg}
-  \caption{Outlet temperature $y$ overlay.  The outlet tracks the
-           coolant temperature decay through the first-order transport
-           lag.}
+  \caption{Outlet temperature $y$ overlay for Run~1 (blue) and
+           Run~2 (red).}
   \label{fig:bench_y_overlay}
 \end{figure}
 
@@ -854,21 +850,14 @@ Figures~\ref{fig:bench_Tf_diff}--\ref{fig:bench_Tc_diff}.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/18_Tf_diff.jpg}
-  \caption{Fuel temperature difference (Run~1 $-$ Run~2).  The smooth
-           onset near $t = 2{,}000$\,s saturates at approximately
-           $-0.72$.  The difference statistics are
-           $|\max| = 7.54 \times 10^{-1}$,
-           $\mu = -4.68 \times 10^{-1}$,
-           $\sigma = 3.21 \times 10^{-1}$.}
+  \caption{Fuel temperature difference (Run~1 $-$ Run~2).}
   \label{fig:bench_Tf_diff}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/19_Tc_diff.jpg}
-  \caption{Coolant temperature difference (Run~1 $-$ Run~2).  Same
-           morphology as the fuel temperature difference, saturating at
-           approximately $-0.62$.}
+  \caption{Coolant temperature difference (Run~1 $-$ Run~2).}
   \label{fig:bench_Tc_diff}
 \end{figure}
 
@@ -876,27 +865,23 @@ As the plant temperatures decay, the error signal ($e = r - y_m$) grows
 from near-zero to approximately 0.57--0.60
 (Figure~\ref{fig:bench_e_overlay}), the controller output~$u$
 saturates at its limits, and the valve position~$v$ collapses to
-near-zero (Figure~\ref{fig:bench_v_overlay})---all expected consequences
+near-zero (Figure~\ref{fig:bench_v_overlay}), all expected consequences
 of the plant state approaching zero while the setpoint remains at its
 nominal value.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/10_e_overlay.jpg}
-  \caption{Error signal $e = r - y_m$ overlay.  Run~1 error grows
-           monotonically as plant temperatures collapse, reaching
-           $e \approx 0.60$ (the setpoint value) once $y_m$ reaches
-           zero.}
+  \caption{Error signal $e = r - y_m$ overlay for Run~1 (blue) and
+           Run~2 (red).}
   \label{fig:bench_e_overlay}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ch8/07_v_overlay.jpg}
-  \caption{Valve position $v$ overlay.  Run~1 (blue) valve collapses to
-           near-zero after the plant-state failure.  Run~2 (red) exhibits
-           the expected periodic actuation pattern driven by the ROM
-           stimulus cycle.}
+  \caption{Valve position $v$ overlay for Run~1 (blue) and
+           Run~2 (red).}
   \label{fig:bench_v_overlay}
 \end{figure}
 
@@ -937,9 +922,9 @@ drift is therefore excluded as a causal mechanism.
 
 \subsubsection{Exclusion of BRAM Data Corruption}
 
-A single-event upset in a BRAM cell---for example, a corrupted entry in
+A single-event upset in a BRAM cell, for example, a corrupted entry in
 the \texttt{phi\_q15} or \texttt{pow\_q15} lookup table, or a corrupted
-ROM stimulus value---would affect only one of the two DMR chains, because
+ROM stimulus value, would affect only one of the two DMR chains, because
 BRAM instances are physically separate per chain.  The resulting output
 divergence would be detected by the DMR comparators.  No such detection
 occurred, excluding single-chain BRAM corruption as the failure
@@ -1037,10 +1022,10 @@ overnight standby period and into Day~2 Run~1 is consistent with the
 volatile SRAM nature of the Spartan-7 configuration store: CRAM upsets
 persist until the device is reconfigured or the affected configuration
 frame is scrubbed.  This mirrors the persistent UART format change
-observed on FFSR1 (Chapter~\ref{chap:ffsr},
+observed on FFSR1 (Chapter~\ref{ch:digital_electronics},
 Section~\ref{subsec:ch6_disc_cfg}), and together these two independent
-observations---one from a shift-register test structure, one from a
-closed-loop control system---establish that configuration memory SEUs are
+observations, one from a shift-register test structure, one from a
+closed-loop control system, establish that configuration memory SEUs are
 a primary concern for SRAM-based FPGAs at the fluence levels encountered
 in this campaign.
 
@@ -1067,7 +1052,7 @@ only that it performs closed-loop control, but that it does so in a form
 that is highly amenable to radiation-effects study.  The design
 simultaneously exercises arithmetic pipelines, persistent state
 registers, lookup tables, comparators, counters, and serial
-communication logic---all categories of FPGA resource that can respond
+communication logic, all categories of FPGA resource that can respond
 differently to configuration upsets or transient single-event effects.
 At the same time, the benchmark remains analytically tractable: each
 module corresponds to a clear mathematical operation, and the overall
@@ -1124,10 +1109,10 @@ restart, and 100\,Hz UART telemetry complete the design.
 
 The neutron irradiation experiment was conducted at the OSURR fast
 neutron beam facility under the same beam configuration used for the
-FFSR experiments in Chapter~\ref{chap:ffsr}.  Comparative analysis of
-two telemetry acquisitions---one exhibiting radiation-induced degradation
+FFSR experiments in Chapter~\ref{ch:digital_electronics}.  Comparative analysis of
+two telemetry acquisitions, one exhibiting radiation-induced degradation
 (Run~1, acquired after 19~hours of cumulative operation including Day~1
-irradiation) and one serving as a nominal baseline (Run~2)---revealed a
+irradiation) and one serving as a nominal baseline (Run~2), revealed a
 smooth exponential decay of all plant state variables to zero over
 approximately 2\,500~s, with zero DMR mismatch detection throughout.
 Bit-exact 48-hour closed-loop simulation confirmed that the decay cannot

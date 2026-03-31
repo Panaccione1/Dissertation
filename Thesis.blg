@@ -23,25 +23,20 @@ Reallocating 'name_of_file' (item size: 1) to 8 items.
 A level-1 auxiliary file: ch8.aux
 Reallocating 'name_of_file' (item size: 1) to 8 items.
 A level-1 auxiliary file: ch9.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
-A level-1 auxiliary file: app1.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
-A level-1 auxiliary file: app2.aux
 Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Reallocating 'name_of_file' (item size: 1) to 8 items.
 Database file #1: bibfile.bib
-Warning--I didn't find a database entry for "Tsai2022ionmig"
 Warning--I didn't find a database entry for "Hofstadter1949"
-Warning--I didn't find a database entry for "He2019CsPbBr"
+Warning--I didn't find a database entry for "Zhang2024alpha"
+Warning--I didn't find a database entry for "Tsai2022ionmig"
 Warning--I didn't find a database entry for "Yuan2016ionmig"
-Warning--I didn't find a database entry for "Verbinski1968"
-Warning--I didn't find a database entry for "ENDF8"
+Warning--I didn't find a database entry for "He2019CsPbBr"
 Warning--I didn't find a database entry for "He1997CZT"
 Warning--I didn't find a database entry for "Panaccione2024"
 You've used 118 entries,
             2118 wiz_defined-function locations,
-            1183 strings with 26193 characters,
+            1179 strings with 26169 characters,
 and the built_in function-call counts, 39240 in all, are:
 = -- 3856
 > -- 2072
@@ -80,4 +75,4 @@ warning$ -- 0
 while$ -- 374
 width$ -- 121
 write$ -- 1305
-(There were 8 warnings)
+(There were 7 warnings)

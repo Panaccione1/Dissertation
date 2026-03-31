@@ -15,15 +15,18 @@
 This dissertation has investigated radiation-responsive materials,
 detector devices, alternative sensing concepts, and radiation-tolerant
 digital electronics for advanced radiation detection and monitoring.
-The research was organized around three complementary objectives:
-(1)~characterizing the radiation response of halide perovskite
-materials across multiple compositions and radiation types,
-(2)~developing and demonstrating perovskite-based detection devices
-for specific nuclear monitoring applications, and (3)~implementing
-and validating radiation-tolerant FPGA-based digital instrumentation
-systems for operation in nuclear environments.  A fourth, ancillary
-objective addressed thermal radiation sensing concepts as an
-alternative pathway for nuclear environment monitoring.  The following
+The research was organized around four complementary research thrusts
+aligned with a materials-to-systems hierarchy:
+(1)~characterizing the radiation response of photovoltaic-architecture
+halide perovskite solar cells as current-mode radiation monitors,
+(2)~developing and demonstrating perovskite semiconductor radiation
+detectors for direct-conversion operation across X-ray, gamma, and
+fast-neutron modalities,
+(3)~investigating thermal radiation sensing concepts as an alternative,
+non-electronic monitoring pathway for nuclear environments, and
+(4)~implementing and validating radiation-tolerant FPGA-based digital
+instrumentation through two complementary benchmarks tested under fast
+neutron irradiation.  The following
 sections consolidate the principal findings, discuss their
 implications for nuclear monitoring systems, and identify directions
 for future research.
@@ -83,7 +86,7 @@ treatment demonstrated that this moisture-accelerated instability can
 be effectively mitigated: the fluorinated barrier layer raised the
 breakdown voltage from $-10$~V to $-16$~V at 40\% relative humidity
 and enabled X-ray sensitivities approaching
-$\sim$1000~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$ at 4~V bias,
+$\sim$1000~$\mu$C\,(Gy$_{\mathrm{air}}$\,cm$^2$)$^{-1}$ at 4~V bias,
 among the highest reported for polycrystalline perovskite detectors of
 comparable thickness.
 
@@ -96,7 +99,7 @@ unstable leakage current (315--710~nA) prevented resolution of the
 operating leakage ($5 \pm 2.5$~nA maximum), sustained stable
 high-voltage operation for over five hours, and produced spectral
 features attributable to both $^{137}$Cs and $^{57}$Co in a joint
-acquisition at 1600~V bias---representing a proof-of-concept
+acquisition at 1600~V bias, representing a proof-of-concept
 demonstration of gamma spectroscopy in a solution-grown halide
 perovskite crystal.  The MAPbBr$_3$ device failed to produce
 functional Schottky contacts under the deposition conditions used,
@@ -120,9 +123,9 @@ sufficient statistics for quantitative efficiency analysis.
 
 Across all three detection modes, ion migration under applied electric
 fields emerged as the central performance-limiting mechanism.  The
-correlation of device instability with ambient humidity---confirmed by
+correlation of device instability with ambient humidity, confirmed by
 vacuum tests on MAPbI$_3$-hBN and by the systematic
-humidity-dependence study on 2D perovskite detectors---identifies
+humidity-dependence study on 2D perovskite detectors, identifies
 surface passivation, such as the 5F-PEAI treatment, as the most
 promising near-term strategy for extending the operational stability
 of perovskite radiation detectors.
@@ -133,8 +136,8 @@ of perovskite radiation detectors.
 Chapter~\ref{ch:thermal_sensing} presented the simulation and analysis
 work performed in support of the Optical Fiber-Based Gamma Thermometer
 (OFBGT) and the Optical Fiber-Based Neutron Dosimeter (OFBND).  Two
-modeling approaches---a simplified Python model and an iterative MATLAB
-model with temperature-dependent thermal conductivities---yielded
+modeling approaches, a simplified Python model and an iterative MATLAB
+model with temperature-dependent thermal conductivities, yielded
 consistent predictions, forecasting a maximum temperature differential
 of approximately 27--30$\,^{\circ}$C for the OFBGT in the CIF and
 155--159$\,^{\circ}$C for the OFBND in the AIF of the OSURR.
@@ -192,9 +195,9 @@ both DMR chains, demonstrating a fundamental limitation of dual
 modular redundancy when both redundant chains share common FPGA
 configuration memory.
 
-Together, these two independent observations---one from a
+Together, these two independent observations, one from a
 shift-register test structure and one from a closed-loop control
-system---establish that configuration memory SEUs are a primary
+system, establish that configuration memory SEUs are a primary
 concern for SRAM-based FPGAs at the fluence levels encountered in
 nuclear instrumentation environments, and that effective mitigation
 requires configuration memory scrubbing, triple modular redundancy
@@ -216,7 +219,7 @@ measurable electrical responses to X-rays, gamma rays, and fast
 neutrons across a range of device architectures.  The
 current-mode photovoltaic approach and the direct-conversion
 semiconductor approach represent complementary detection
-philosophies---the former offering large-area, zero-bias sensing
+philosophies, the former offering large-area, zero-bias sensing
 suitable for integrated dose monitoring and prompt detonation
 forensics, and the latter offering the possibility of pulse-by-pulse
 energy spectroscopy at the cost of applied high voltage and the
@@ -249,10 +252,10 @@ ICAP/PCAP readback, and periodic functional self-testing for any
 FPGA-based instrumentation deployed in a sustained radiation
 environment.
 
-Fourth, the hierarchy investigated in this dissertation---from
+Fourth, the hierarchy investigated in this dissertation, from
 radiation-responsive materials through detector devices, alternative
 sensing approaches, and digital electronics
-instrumentation---reflects the functional layers that must be
+instrumentation, reflects the functional layers that must be
 addressed in any complete radiation monitoring system.  The results
 demonstrate that no single technology addresses all requirements:
 perovskite detectors offer material sensitivity but face ion migration
@@ -322,8 +325,8 @@ post-detonation forensics.
 The OFBGT results highlight the critical importance of including
 radiative heat transfer in design-stage simulations.  Future
 iterations of the sensor should incorporate radiative corrections
-from the outset and explore design modifications---such as reduced
-gas-gap dimensions or alternative fill gases---to increase the
+from the outset and explore design modifications, such as reduced
+gas-gap dimensions or alternative fill gases, to increase the
 temperature differential above the operational threshold.  The OFBND
 concept remains to be validated experimentally, and fabrication and
 in-reactor testing of the borosilicate glass thermal mass should be
@@ -331,8 +334,8 @@ prioritized as a near-term objective.
 
 \subsection{FPGA-Based Instrumentation}
 
-The DMR blind spot identified in this work---configuration memory
-upsets that corrupt both redundant chains identically---motivates the
+The DMR blind spot identified in this work, configuration memory
+upsets that corrupt both redundant chains identically, motivates the
 development and irradiation testing of a TMR implementation with
 explicit physical placement constraints ensuring that each voter group
 occupies distinct configuration frames.  Integration of ICAP-based
@@ -354,7 +357,7 @@ with radiation-tolerant FPGA-based readout electronics into a single
 prototype monitoring system would represent a natural convergence of
 the materials, device, and electronics work streams pursued in this
 dissertation.  Such a prototype would provide a platform for
-evaluating system-level performance metrics---including detection
+evaluating system-level performance metrics, including detection
 sensitivity, energy resolution, long-term stability, and radiation
-tolerance of the complete signal chain---under realistic nuclear
+tolerance of the complete signal chain, under realistic nuclear
 environment conditions.

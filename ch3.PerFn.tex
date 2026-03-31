@@ -1,5 +1,5 @@
 %% ============================================================
-%%  Chapter 3 — Background: Radiation Effects on Digital
+%%  Chapter 3, Background: Radiation Effects on Digital
 %%              Electronics and FPGA-Based Instrumentation
 %%  Dissertation: Radiation Responsive Materials for Advanced
 %%  Radiation Detection and Systems
@@ -16,9 +16,9 @@ community, which has characterized and mitigated the response of
 microelectronics to ionizing radiation primarily in the context of
 space and defense applications, and the nuclear industry, which is
 confronting the simultaneous pressures of fleet aging, digital
-modernization, and cost reduction described in Chapter~\ref{ch:intro}.
+modernization, and cost reduction described in Chapter~1.
 This chapter provides the technical background required to understand
-the FPGA-based monitoring system developed in Chapter~\ref{ch:FPGA_system}.
+the FPGA-based monitoring systems developed in Chapters~\ref{ch:digital_electronics} and~\ref{chap:fpga_benchmark}.
 It begins with the radiation environments of concern, then develops the
 physical mechanisms by which ionizing particles damage or disturb
 microelectronic devices, surveys the taxonomy of single-event effects
@@ -119,8 +119,8 @@ normalized~\cite{jedec2006jesd89a}.
 %% ------------------------------------------------------------
 
 Total ionizing dose (TID) refers to the cumulative energy deposited
-in a material by ionizing radiation — principally energetic electrons,
-protons, and gamma photons — integrated over the operating lifetime
+in a material by ionizing radiation, principally energetic electrons,
+protons, and gamma photons, integrated over the operating lifetime
 of the device.  In metal-oxide-semiconductor (MOS) structures, which
 form the transistor basis of all modern digital FPGAs, the primary
 site of TID damage is the gate oxide and the field oxide used to
@@ -140,7 +140,7 @@ radiation-induced oxide trap sites~\cite{oldham2003total}.  The
 resulting positive oxide trapped charge shifts the transistor
 threshold voltage $V_T$ in the negative direction (for n-channel
 MOSFETs), eventually causing the device to conduct when it should
-be off — a failure mode known as threshold-voltage
+be off, a failure mode known as threshold-voltage
 rolloff~\cite{fleetwood2013total}.
 
 In parallel, radiation generates interface trap states at the
@@ -187,8 +187,8 @@ A single-event effect (SEE) is a functional or physical disturbance
 in a microelectronic device caused by the passage of a single
 energetic particle.  The mechanism begins with the energy deposition
 of the incident particle along its track through the semiconductor.
-Charged particles — heavy ions, protons, and the recoil nuclei from
-neutron elastic scattering or nuclear reactions — lose energy
+Charged particles, heavy ions, protons, and the recoil nuclei from
+neutron elastic scattering or nuclear reactions, lose energy
 primarily through Coulomb interactions with the semiconductor
 electrons, creating a dense column of electron-hole plasma along
 the track.
@@ -214,14 +214,14 @@ collected at the nearest reverse-biased junction by two mechanisms
 illustrated in Figs.~\ref{fig:funneling_conc} and \ref{fig:funneling_pot}.
 \emph{Drift collection} occurs because the high carrier density
 temporarily collapses the depletion region and extends the electric
-field deep into the substrate — a phenomenon known as
-\emph{funneling} — sweeping charge toward the junction on picosecond
+field deep into the substrate, a phenomenon known as
+\emph{funneling}, sweeping charge toward the junction on picosecond
 timescales~\cite{dodd2003basic}.  \emph{Diffusion collection} then
 operates on slower nanosecond timescales as carriers generated
 outside the funnel diffuse through the neutral substrate and are
-eventually collected.  The total collected charge $Q_{\rm coll}$
+eventually collected.  The total collected charge $Q_{\mathrm{coll}}$
 is determined by the integral of the current transient at the
-junction and must exceed the critical charge $Q_{\rm crit}$ of
+junction and must exceed the critical charge $Q_{\mathrm{crit}}$ of
 the struck node to cause a SEE.
 
 \begin{figure}[htbp]
@@ -229,10 +229,7 @@ the struck node to cause a SEE.
   \includegraphics[width=0.6\textwidth]{figures/2_1-electron-concent-funneling.pdf}
   \caption{Simulated electron concentration during the funneling
            phase following a heavy-ion strike in a reverse-biased
-           n$^+$/p junction.  The dense electron-hole plasma
-           temporarily extends the high-field depletion region
-           deep into the substrate, collecting charge from a
-           volume far larger than the geometric depletion region.}
+           n$^+$/p junction.}
   \label{fig:funneling_conc}
 \end{figure}
 
@@ -240,10 +237,8 @@ the struck node to cause a SEE.
   \centering
   \includegraphics[width=0.6\textwidth]{figures/2_1-electrostatic-pot-funneling.pdf}
   \caption{Electrostatic potential distribution during funneling,
-           showing the field distortion caused by the ion track.
-           The funnel depth scales with LET and substrate doping,
-           reaching several micrometers for high-LET heavy ions
-           in lightly doped substrates~\cite{dodd2003basic}.}
+           showing the field distortion caused by the ion
+           track~\cite{dodd2003basic}.}
   \label{fig:funneling_pot}
 \end{figure}
 
@@ -253,7 +248,7 @@ The probability that a particle causes a SEE is characterized by
 the device SEE cross-section $\sigma$, defined as the number of
 events observed per unit incident particle fluence:
 \begin{equation}
-  \sigma(L) = \frac{N_{\rm events}}{\Phi}
+  \sigma(L) = \frac{N_{\mathrm{events}}}{\Phi}
   \quad \left[\text{cm}^2\text{/device or cm}^2\text{/bit}\right],
   \label{eq:cross_section}
 \end{equation}
@@ -261,16 +256,16 @@ where $\Phi$ is the fluence in particles/cm$^2$.  The cross-section
 is measured as a function of LET or proton energy and typically
 exhibits a threshold below which no events are observed and a
 plateau at high LET where every ion strike within the sensitive
-volume causes an event.  The threshold LET (LET$_{\rm th}$) and
-the saturation cross-section ($\sigma_{\rm sat}$) together
+volume causes an event.  The threshold LET (LET$_{\mathrm{th}}$) and
+the saturation cross-section ($\sigma_{\mathrm{sat}}$) together
 characterize the inherent hardness of the device~\cite{petersen1992rate}.
 
 The on-orbit SEE rate is computed by convolving the measured
 cross-section curve with the environment's differential LET
 spectrum, a calculation codified in tools such as CREME96 and
 OMERE~\cite{petersen2013revolution}.  For a device with
-$\sigma_{\rm sat} = 10^{-6}$~cm$^2$/bit and
-LET$_{\rm th} = 3$~MeV$\cdot$cm$^2$/mg in a LEO orbit, the
+$\sigma_{\mathrm{sat}} = 10^{-6}$~cm$^2$/bit and
+LET$_{\mathrm{th}} = 3$~MeV$\cdot$cm$^2$/mg in a LEO orbit, the
 predicted upset rate is typically $10^{-5}$--$10^{-3}$~upsets/bit/day,
 meaning a 16-Mbit configuration memory will experience
 roughly 10--1,000~upsets per day without mitigation.
@@ -290,17 +285,16 @@ recoverability and the circuit element affected.
   \includegraphics[width=0.85\textwidth]{figures/2_1-see-tax-tree.pdf}
   \caption{Taxonomy of single-event effects in microelectronic
            devices, organized by recoverability (soft vs.\ hard)
-           and affected circuit element.  Effects in bold are
-           those most critical for SRAM-based FPGA operation in
-           nuclear instrumentation applications.}
+           and affected circuit element.  Effects most relevant
+           to SRAM-based FPGA operation are shown in bold.}
   \label{fig:SEE_taxonomy}
 \end{figure}
 
 \subsection{Single-Event Upset (SEU)}
 
 A single-event upset (SEU) is a non-destructive, recoverable change
-in the logic state of a bistable storage element — a flip-flop,
-SRAM cell, or register — caused by charge collection from a single
+in the logic state of a bistable storage element, a flip-flop,
+SRAM cell, or register, caused by charge collection from a single
 particle strike.  The struck node's voltage is transiently driven
 past the switching threshold of the latch, causing it to adopt the
 opposite state~\cite{dodd2003basic}.  In an SRAM-based FPGA, the
@@ -314,7 +308,7 @@ monitoring~\cite{quinn2007review}.
 The critical charge for SEU in a modern 28-nm SRAM cell is on the
 order of 1--10~fC, achievable by the recoil nucleus from a proton
 nuclear interaction or by a moderate-LET heavy ion~\cite{baumann2005radiation}.
-As process nodes have scaled, $Q_{\rm crit}$ has decreased roughly
+As process nodes have scaled, $Q_{\mathrm{crit}}$ has decreased roughly
 proportionally with feature size, partially offset by reductions in
 node capacitance and improvements in cell drive strength.
 
@@ -351,23 +345,19 @@ propagating through a logic cone is captured by a flip-flop.
   \centering
   \includegraphics[width=0.65\textwidth]{figures/2_2-SET-Diagram.png}
   \caption{Generation of a single-event transient (SET) at a
-           CMOS inverter output.  The ion track deposits charge
-           at a reverse-biased drain junction, driving the output
-           voltage transiently toward the supply rail.  Pulse
-           width is determined by the collected charge and the
-           drive strength of adjacent transistors~\cite{ferletcavrois2013set}.}
+           CMOS inverter output, showing ion-track charge
+           deposition at a reverse-biased drain
+           junction~\cite{ferletcavrois2013set}.}
   \label{fig:SET_diagram}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.70\textwidth]{figures/2_2-SET-FF-and-Propigation.png}
-  \caption{SET propagation and capture by a flip-flop.  The SET
-           (shaded pulse) traverses the combinational logic cone
-           and arrives at the flip-flop's data input.  It is
-           captured and causes an SEU only if it overlaps with
-           the flip-flop's setup-and-hold window around the
-           clock edge~\cite{ferletcavrois2013set}.}
+  \caption{SET propagation through a combinational logic cone
+           and arrival at a flip-flop data input, showing the
+           timing relationship with the clock
+           edge~\cite{ferletcavrois2013set}.}
   \label{fig:SET_FF}
 \end{figure}
 
@@ -383,8 +373,8 @@ a concern.
 
 A single-event functional interrupt (SEFI) is an SEU in a control
 register, finite state machine, or configuration memory that causes
-a device to enter an erroneous operating mode — resetting itself,
-locking up, or outputting invalid data — that requires a system-level
+a device to enter an erroneous operating mode, resetting itself,
+locking up, or outputting invalid data, that requires a system-level
 reset to clear.  In FPGAs, SEFIs in the configuration controller
 or global control registers can cause a partial or complete loss
 of the user's programmed logic, a far more serious consequence
@@ -430,34 +420,28 @@ onset conditions for these effects.
   \centering
   \includegraphics[width=0.65\textwidth]{figures/2_2-SEB-Xsection.pdf}
   \caption{Cross-sectional schematic of single-event burnout (SEB)
-           in an n-channel power MOSFET.  The heavy-ion track
-           (dashed) deposits charge in the epitaxial drain that
-           forward-biases the parasitic n-p-n transistor base-emitter
-           junction, initiating regenerative feedback and
-           destructive current~\cite{sexton2003destructive}.}
+           in an n-channel power MOSFET, showing the heavy-ion
+           track (dashed), epitaxial drain, and parasitic n-p-n
+           transistor~\cite{sexton2003destructive}.}
   \label{fig:SEB_xsec}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.65\textwidth]{figures/2_2-SEGR-Diagram.pdf}
-  \caption{Single-event gate rupture (SEGR) mechanism.  The
-           transient increase in gate-oxide field caused by the
-           ion-track plasma can locally exceed the intrinsic
-           breakdown field of the SiO$_2$, permanently rupturing
-           the gate dielectric and rendering the transistor
-           non-functional~\cite{sexton2003destructive}.}
+  \caption{Schematic of the single-event gate rupture (SEGR)
+           mechanism, showing the ion-track plasma and
+           gate-oxide field
+           region~\cite{sexton2003destructive}.}
   \label{fig:SEGR_diagram}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.65\textwidth]{figures/2_2-SEGR-Onset-Xsec.pdf}
-  \caption{Measured SEGR onset $V_{\rm GS}$ as a function of
-           heavy-ion LET for several gate-metal species.  The
-           onset voltage decreases with increasing LET, imposing
-           a derating requirement on operating voltage for power
-           devices in heavy-ion environments~\cite{sexton2003destructive}.}
+  \caption{Measured SEGR onset $V_{\mathrm{GS}}$ as a function of
+           heavy-ion LET for several gate-metal
+           species~\cite{sexton2003destructive}.}
   \label{fig:SEGR_onset}
 \end{figure}
 
@@ -491,7 +475,7 @@ bit of the configuration SRAM is continuously susceptible to SEU
 throughout device operation.  An SEU in the configuration memory
 can alter the function of a lookup table (LUT), change the routing
 of a signal, enable or disable a flip-flop reset, or modify the
-address decode of a block RAM — depending on which configuration
+address decode of a block RAM, depending on which configuration
 bit is struck.  Unlike an SEU in a user-data register, which affects
 only the current computation, a configuration memory SEU silently
 corrupts the device's programmed behavior until it is detected and
@@ -502,8 +486,8 @@ functional corruption varies substantially.  Bits that control
 LUT contents are always functionally significant; bits that control
 unused routing resources may have no effect.  Studies of Xilinx
 Virtex and Kintex FPGAs have found that roughly 15--30\% of
-configuration bits are ``essential'' — their upset causes a
-detectable output error — with the remainder corresponding to
+configuration bits are ``essential'', their upset causes a
+detectable output error, with the remainder corresponding to
 unused or redundant resources~\cite{quinn2007review,lee2014kintex}.
 This essential bit fraction is critical for predicting the
 functional upset rate from a measured raw upset rate.
@@ -512,7 +496,7 @@ functional upset rate from a measured raw upset rate.
 
 Quinn et al.\ surveyed the radiation reliability concerns of Xilinx
 FPGAs from the Virtex through Virtex-5 generations, finding that
-each new process node brought reduced $Q_{\rm crit}$ (worsening
+each new process node brought reduced $Q_{\mathrm{crit}}$ (worsening
 raw SEU sensitivity per bit) but also reduced bit count per logic
 function (improving functional upset rate
 per implemented operation)~\cite{quinn2007review}.  SRAM cell
@@ -561,20 +545,17 @@ it protects.
   \includegraphics[width=0.75\textwidth]{figures/2_5-fault-tolerant-mechanisms.pdf}
   \caption{Overview of fault-tolerant mechanisms for SRAM-based
            FPGAs, ranging from single-level flip-flop TMR to
-           full-system architectural redundancy.  Each level
-           adds correction capability at the cost of increased
-           resource utilization~\cite{kastensmidt2014survey}.}
+           full-system architectural
+           redundancy~\cite{kastensmidt2014survey}.}
   \label{fig:fault_tolerant}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.70\textwidth]{figures/2_5-TMR-voter-flowchart.pdf}
-  \caption{Voter logic flowchart for a TMR system.  Each output
-           bit from the three replicas is majority-voted independently;
-           disagreement among replicas can be flagged as a fault
-           indicator without interrupting correct output
-           generation~\cite{lyons1962tmr,johnson2010voter}.}
+  \caption{Voter logic flowchart for a TMR system, showing
+           majority voting across three independent
+           replicas~\cite{lyons1962tmr,johnson2010voter}.}
   \label{fig:TMR_voter}
 \end{figure}
 
@@ -622,7 +603,7 @@ upsets in the TMR replicas~\cite{heiner2009scrubbing}.  For a
 device with $10^7$ configuration bits, a bit-upset rate of
 $10^{-3}$~upsets/bit/day, and a required double-upset probability
 below $10^{-6}$ per mission, the required scrub period is
-on the order of seconds — achievable with standard scrubbing
+on the order of seconds, achievable with standard scrubbing
 controllers operating at JTAG bitstream rates~\cite{wirthlin2016scrubbing}.
 
 \emph{Partial reconfiguration scrubbing} uses the FPGA vendor's
@@ -648,7 +629,7 @@ upsets, while scrubbing prevents the accumulation of uncorrected
 errors that would eventually defeat TMR~\cite{kastensmidt2014survey}.
 The combination reduces the effective uncorrectable upset rate to
 the probability of two upsets occurring within a single scrub
-period before the first is corrected — typically several orders
+period before the first is corrected, typically several orders
 of magnitude lower than either technique alone.
 
 Hybrid approaches extend these concepts to the system level.
@@ -658,7 +639,7 @@ TMR at the register level, partial-reconfiguration scrubbing at
 the configuration level, and watchdog-timer reset at the system
 level, achieving an estimated mean time between failures of
 $> 10^5$~hours in a GEO radiation environment~\cite{stoddard2017hybrid}.
-The architecture developed in Chapter~\ref{ch:FPGA_system} for
+The architecture developed in Chapters~\ref{ch:digital_electronics} and~\ref{chap:fpga_benchmark} for
 nuclear plant monitoring adopts a similar layered approach, with
 TMR protecting the safety logic, periodic configuration scrubbing
 maintaining the configuration integrity, and a redundant
@@ -667,8 +648,8 @@ uncorrected upset before it propagates to a safety output.
 
 \subsection{Error Detection and Correction in Block RAMs}
 
-Block RAMs (BRAMs) in FPGAs store application data — not
-configuration bits — and are equally susceptible to SEUs.
+Block RAMs (BRAMs) in FPGAs store application data, not
+configuration bits, and are equally susceptible to SEUs.
 Xilinx and Intel FPGAs provide optional built-in single-error
 correction, double-error detection (SECDED) Hamming codes for
 BRAM data, which correct single-bit upsets transparently and
@@ -687,9 +668,9 @@ multiple bits within the same Hamming word.
 
 \subsection{The Cost-Performance Trade-off}
 
-Purpose-built radiation-hardened FPGAs — such as the Microchip
+Purpose-built radiation-hardened FPGAs, such as the Microchip
 RTG4 (130-nm flash-based, inherently SEU-immune configuration)
-and the AMD/Xilinx XQRKU060 (16-nm FinFET, rad-hard by design) —
+and the AMD/Xilinx XQRKU060 (16-nm FinFET, rad-hard by design),
 provide guaranteed TID tolerance exceeding 300~krad(Si) and
 quantified SEL immunity, but at unit prices of \$50,000--\$500,000
 and with logic densities one to two generations behind commercial
@@ -703,8 +684,8 @@ lower cost per gate, higher logic density, and access to modern
 soft-IP ecosystems, at the cost of no radiation-hardness guarantee
 from the manufacturer~\cite{BISResearch_RadHardFPGA}.  The
 engineering question is therefore not whether COTS FPGAs are
-radiation-tolerant, but whether their radiation response — combined
-with appropriate mitigation — can be characterized to a level of
+radiation-tolerant, but whether their radiation response, combined
+with appropriate mitigation, can be characterized to a level of
 assurance sufficient for the safety classification of the
 application.
 
@@ -787,10 +768,7 @@ being simulated.
   \caption{Summary of testing approaches for radiation hardness
            assurance of digital electronics, organized by
            radiation source, simulated environment, and
-           measured effect.  Each approach has characteristic
-           advantages and limitations regarding
-           representativeness, cost, and achievable
-           fluence~\cite{schwank2013radiation,coronetti2021systemlevel}.}
+           measured effect~\cite{schwank2013radiation,coronetti2021systemlevel}.}
   \label{fig:testing_approaches}
 \end{figure}
 
@@ -850,10 +828,10 @@ to avoid confusing TID degradation with SEE events.
 Neutron testing is the most directly relevant modality for
 nuclear plant applications and for ground-level
 qualification~\cite{stirk2023comparison}.  The upset mechanisms
-for neutrons above $\sim$10~MeV are similar to protons —
+for neutrons above $\sim$10~MeV are similar to protons,
 nuclear elastic scattering producing silicon recoil nuclei
 plus non-elastic spallation reactions producing heavier
-fragments — but the neutron's lack of charge means it produces
+fragments, but the neutron's lack of charge means it produces
 no ionization along its own track and the DUT need not be
 operated in vacuum.  This simplifies the experimental
 setup considerably.
@@ -920,8 +898,8 @@ testing at the actual deployment site or at a representative
 high-altitude location provides the most directly applicable
 qualification data~\cite{coronetti2021systemlevel}.  However,
 at sea-level neutron flux ($\sim 10^{-2}$~n/cm$^2$/s above
-10~MeV), accumulating $10^{10}$~n/cm$^2$ — a fluence corresponding
-to several decades of ground-level exposure — would require
+10~MeV), accumulating $10^{10}$~n/cm$^2$, a fluence corresponding
+to several decades of ground-level exposure, would require
 $\sim 3 \times 10^{10}$~seconds, making direct ground-level
 testing impractical for qualification purposes.  Accelerated
 testing at mountain-top observatories (e.g., Mauna Kea,
@@ -940,13 +918,58 @@ predicting SEE rates in complex radiation environments including
 both atmospheric and reactor neutron spectra.
 
 %% ------------------------------------------------------------
+\section{FPGA Verification Challenges in Nuclear Beam Environments}
+\label{sec:verification_challenges}
+%% ------------------------------------------------------------
+
+Beyond the physics of radiation damage, the experimental
+characterization of FPGA upset susceptibility at nuclear beam
+facilities presents several practical constraints that inform the
+design of in-beam test instruments such as those developed in
+Chapters~\ref{ch:digital_electronics} and~\ref{chap:fpga_benchmark}.
+
+\textbf{State-volume coverage.}  An SEE cross-section measurement
+requires observing a statistically significant number of events.  The
+cross-section for a single memory cell is of order $10^{-14}$ to
+$10^{-12}$~cm$^2$, so at a flux of $10^5$--$10^7$~n/cm$^2$/s a single
+cell would require impractically long exposures to accumulate even one
+event on average.  Maximising the monitored state population is
+therefore essential.
+
+\textbf{Observability without intrusion.}  Reading every flip-flop
+off-chip individually during irradiation is infeasible for large state
+populations and introduces additional wiring susceptible to radiation
+and noise.  A compact on-chip checker that compresses the health of
+the state array into a small digital flag is preferable.
+
+\textbf{Configuration vs.\ data upsets.}  Any experimental design must
+be capable of distinguishing a user-data upset from a configuration
+memory upset.  The two mechanisms require different mitigation
+strategies: data-path redundancy (DMR/TMR) addresses the former, while
+periodic configuration scrubbing addresses the latter.
+
+\textbf{Telemetry reliability.}  The UART or other communication
+channel used to export results is itself implemented in FPGA resources
+and therefore subject to the same configuration upsets.  A robust
+transmitter design reduces the risk that the observability channel
+itself is corrupted during an experiment.
+
+These constraints motivate the specific design choices made in the
+FFSR shift-register test structure (Chapter~\ref{ch:digital_electronics})
+and the fixed-point thermal control benchmark
+(Chapter~\ref{chap:fpga_benchmark}), both of which employ on-chip
+redundancy comparison, compact telemetry encoding, and large monitored
+state populations to maximize the probability of detecting
+radiation-induced errors within the available beam time.
+
+%% ------------------------------------------------------------
 \section{Summary}
 %% ------------------------------------------------------------
 
 This chapter has established the physical and engineering framework
-for the FPGA-based nuclear instrumentation system developed in
-Chapter~\ref{ch:FPGA_system}.  The three radiation environments
-of concern — space, nuclear plant, and terrestrial cosmic-ray —
+for the FPGA-based nuclear instrumentation systems developed in
+Chapters~\ref{ch:digital_electronics} and~\ref{chap:fpga_benchmark}.  The three radiation environments
+of concern, space, nuclear plant, and terrestrial cosmic-ray,
 each impose distinct TID and SEE demands on digital electronics.
 TID damage in MOS gate oxides accumulates throughout device
 operation and degrades transistor performance at doses that,
@@ -972,6 +995,13 @@ demanding than nuclear plant I\&C through heavy-ion, proton,
 and neutron testing at national accelerator facilities, and
 the regulatory pathway for their use in safety-related
 applications is established in IAEA SSG-39 and NRC
-Regulatory Guide 1.152.  The following chapter implements
-and experimentally validates these principles in a digital
-plant monitoring system built on a COTS Kintex-7 FPGA.
+Regulatory Guide 1.152.  The dissertation now turns to the
+perovskite materials and device investigations
+(Chapters~\ref{ch:CsFAPbI}--\ref{ch:perovskite_detectors}) and
+thermal sensing concepts (Chapter~\ref{ch:thermal_sensing}) before
+returning to experimentally validate these FPGA principles:
+Chapter~\ref{ch:digital_electronics} presents the Flip-Flop Shift
+Register (FFSR) verification structure tested under fast neutron
+irradiation, and Chapter~\ref{chap:fpga_benchmark} extends that
+campaign with a computationally richer fixed-point thermal control
+benchmark.
