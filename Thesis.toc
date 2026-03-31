@@ -29,7 +29,7 @@
 \contentsline {subsection}{\numberline {2.3.4}Why Bandgap Engineering Matters: The Perovskite Advantage}{27}{subsection.2.3.4}%
 \contentsline {section}{\numberline {2.4}Radiation Interaction with High-\textit {Z} Semiconductors}{28}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Photon Interactions}{28}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Charge Transport and the Hecht Equation}{30}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.2}Charge Transport and the Hecht Equation}{29}{subsection.2.4.2}%
 \contentsline {section}{\numberline {2.5}Schottky Diode Contacts in Semiconductor Detectors}{31}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Metal-Semiconductor Junction Physics}{31}{subsection.2.5.1}%
 \contentsline {subsection}{\numberline {2.5.2}Application to Halide Perovskite Detectors}{32}{subsection.2.5.2}%
@@ -39,10 +39,10 @@
 \contentsline {subsection}{\numberline {2.6.3}Mitigation Strategies}{35}{subsection.2.6.3}%
 \contentsline {section}{\numberline {2.7}Prior Art in Perovskite Radiation Detectors}{36}{section.2.7}%
 \contentsline {subsection}{\numberline {2.7.1}Early Single-Crystal Gamma Detectors}{36}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}CsPbBr$_3$ and the Resolution Record}{37}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.2}CsPbBr$_3$ and the Resolution Record}{36}{subsection.2.7.2}%
 \contentsline {subsection}{\numberline {2.7.3}X-Ray Detection and Imaging}{37}{subsection.2.7.3}%
 \contentsline {subsection}{\numberline {2.7.4}Neutron Detection}{38}{subsection.2.7.4}%
-\contentsline {subsection}{\numberline {2.7.5}Mixed-Cation and 2D Detector Architectures}{39}{subsection.2.7.5}%
+\contentsline {subsection}{\numberline {2.7.5}Mixed-Cation and 2D Detector Architectures}{38}{subsection.2.7.5}%
 \contentsline {section}{\numberline {2.8}Summary}{39}{section.2.8}%
 \contentsline {chapter}{\numberline {3.}Background: Radiation Effects on Digital Electronics and FPGA-Based Instrumentation}{41}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Radiation Environments for Digital Electronics}{42}{section.3.1}%
@@ -54,17 +54,17 @@
 \contentsline {subsection}{\numberline {3.2.2}TID Effects in Modern FPGAs}{45}{subsection.3.2.2}%
 \contentsline {section}{\numberline {3.3}Single-Event Effects: Physical Mechanisms}{46}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Ion Track Formation and Charge Collection}{46}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}The SEE Sensitivity Figure of Merit: Cross-Section}{47}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Single-Event Effects Taxonomy}{48}{section.3.4}%
+\contentsline {subsection}{\numberline {3.3.2}The SEE Sensitivity Figure of Merit: Cross-Section}{48}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Single-Event Effects Taxonomy}{49}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Single-Event Upset (SEU)}{50}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Multiple Cell Upset (MCU)}{50}{subsection.3.4.2}%
 \contentsline {subsection}{\numberline {3.4.3}Single-Event Transient (SET)}{51}{subsection.3.4.3}%
 \contentsline {subsection}{\numberline {3.4.4}Single-Event Functional Interrupt (SEFI)}{53}{subsection.3.4.4}%
 \contentsline {subsection}{\numberline {3.4.5}Single-Event Latchup (SEL)}{53}{subsection.3.4.5}%
 \contentsline {subsection}{\numberline {3.4.6}Single-Event Burnout (SEB) and Gate Rupture (SEGR)}{54}{subsection.3.4.6}%
-\contentsline {section}{\numberline {3.5}FPGA Architecture and Radiation Vulnerability}{56}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}SRAM-Based FPGA Architecture}{56}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Radiation Sensitivity Across FPGA Generations}{57}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.5}FPGA Architecture and Radiation Vulnerability}{54}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}SRAM-Based FPGA Architecture}{54}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Radiation Sensitivity Across FPGA Generations}{58}{subsection.3.5.2}%
 \contentsline {section}{\numberline {3.6}Fault-Tolerant Mitigation Techniques}{58}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Triple Modular Redundancy}{58}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Configuration Scrubbing}{61}{subsection.3.6.2}%
@@ -75,181 +75,173 @@
 \contentsline {subsection}{\numberline {3.7.2}Demonstrated COTS FPGA Performance in Radiation Environments}{64}{subsection.3.7.2}%
 \contentsline {subsection}{\numberline {3.7.3}Regulatory Pathway for COTS FPGAs in Nuclear Plants}{65}{subsection.3.7.3}%
 \contentsline {section}{\numberline {3.8}Testing Methodologies for FPGA Radiation Qualification}{66}{section.3.8}%
-\contentsline {subsection}{\numberline {3.8.1}Heavy-Ion Testing}{67}{subsection.3.8.1}%
-\contentsline {subsection}{\numberline {3.8.2}Proton Testing}{67}{subsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.8.1}Heavy-Ion Testing}{66}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Proton Testing}{68}{subsection.3.8.2}%
 \contentsline {subsection}{\numberline {3.8.3}Neutron Testing}{68}{subsection.3.8.3}%
-\contentsline {subsection}{\numberline {3.8.4}Total Ionizing Dose Testing}{69}{subsection.3.8.4}%
+\contentsline {subsection}{\numberline {3.8.4}Total Ionizing Dose Testing}{70}{subsection.3.8.4}%
 \contentsline {subsection}{\numberline {3.8.5}Ground-Level and Accelerated System Testing}{70}{subsection.3.8.5}%
-\contentsline {section}{\numberline {3.9}Summary}{71}{section.3.9}%
-\contentsline {chapter}{\numberline {4.}Cs$_{0.1}$FA$_{0.9}$PbI$_3$ Perovskite Solar Cells as Ionizing Radiation Monitors}{73}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Device Fabrication and Photovoltaic Performance}{74}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Temporal Photoresponse Characterization}{75}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}DC Transient Response}{76}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Pulsed Laser Response}{77}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}AC Grid Simulation}{78}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}X-Ray Response}{78}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Gamma-Ray Response}{80}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Measurement Setup and Dose Rate Calibration}{80}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Cesium-137 Irradiation}{81}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Cobalt-60 Irradiation}{83}{subsection.4.4.3}%
-\contentsline {section}{\numberline {4.5}Neutron Response}{83}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Steady-State Reactor Measurements}{85}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Chopped-Beam Transient Measurements}{86}{subsection.4.5.2}%
-\contentsline {section}{\numberline {4.6}Summary}{86}{section.4.6}%
-\contentsline {chapter}{\numberline {5.}Perovskite Semiconductor Radiation Detectors}{88}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Perovskite Semiconductor Detector Principles}{90}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Materials, Crystal Growth, and Device Fabrication}{92}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Perovskite Crystal Systems}{92}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Crystal Growth Procedures}{93}{subsection.5.2.2}%
-\contentsline {subsubsection}{MHyPbCl$_3$ Synthesis}{93}{section*.8}%
-\contentsline {subsubsection}{Bromide Perovskite Crystals}{94}{section*.9}%
-\contentsline {subsection}{\numberline {5.2.3}Contact Architecture and Deposition}{94}{subsection.5.2.3}%
-\contentsline {subsubsection}{MHyPbCl$_3$ Ohmic Contact Device}{94}{section*.10}%
-\contentsline {subsubsection}{Bromide Perovskite Schottky Devices}{95}{section*.11}%
-\contentsline {section}{\numberline {5.3}Electrical Characterisation}{96}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Resistivity and Dark Current Stability}{96}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Mobility-Lifetime Product}{97}{subsection.5.3.2}%
-\contentsline {section}{\numberline {5.4}Polycrystalline X-Ray Detection}{98}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}MAPbI$_3$-hBN X-Ray Detector}{98}{subsection.5.4.1}%
-\contentsline {subsubsection}{Experimental Setup and Dosimetry Calibration}{98}{section*.12}%
-\contentsline {subsubsection}{X-Ray Sensitivity Results}{99}{section*.13}%
-\contentsline {subsubsection}{Vacuum Testing and Humidity Effects}{101}{section*.14}%
-\contentsline {subsubsection}{Charge Trapping and Sensitivity Degradation}{103}{section*.15}%
-\contentsline {subsubsection}{Discussion}{104}{section*.16}%
-\contentsline {subsection}{\numberline {5.4.2}2D Perovskite Detector with 5F-PEAI Surface Treatment}{104}{subsection.5.4.2}%
-\contentsline {subsubsection}{Device Structure and Material Characterisation}{105}{section*.17}%
-\contentsline {subsubsection}{Humidity-Dependent Instability}{105}{section*.18}%
-\contentsline {subsubsection}{5F-PEAI Surface Treatment and Results}{106}{section*.19}%
-\contentsline {subsubsection}{X-Ray Detection Performance}{107}{section*.20}%
-\contentsline {subsubsection}{Mechanistic Understanding}{108}{section*.21}%
-\contentsline {subsubsection}{Discussion}{110}{section*.22}%
-\contentsline {section}{\numberline {5.5}Single-Crystal Gamma-Ray Detection}{110}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Experimental Setup and Acquisition Chain}{111}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}CsPbBr$_3$}{112}{subsection.5.5.2}%
-\contentsline {subsubsection}{Characterisation}{112}{section*.23}%
-\contentsline {subsubsection}{Results}{112}{section*.24}%
-\contentsline {subsubsection}{Discussion}{114}{section*.25}%
-\contentsline {subsection}{\numberline {5.5.3}FAPbBr$_3$}{115}{subsection.5.5.3}%
-\contentsline {subsubsection}{Characterisation}{115}{section*.26}%
-\contentsline {subsubsection}{Results}{115}{section*.27}%
-\contentsline {subsubsection}{Discussion}{116}{section*.28}%
-\contentsline {subsection}{\numberline {5.5.4}MAPbBr$_3$ Fabrication Challenges}{117}{subsection.5.5.4}%
-\contentsline {section}{\numberline {5.6}MHyPbCl$_3$ Fast Neutron Detection}{118}{section.5.6}%
-\contentsline {subsection}{\numberline {5.6.1}Motivation and Material Selection}{118}{subsection.5.6.1}%
-\contentsline {subsection}{\numberline {5.6.2}Beam Facility and Experimental Characterisation}{119}{subsection.5.6.2}%
-\contentsline {subsection}{\numberline {5.6.3}Results}{122}{subsection.5.6.3}%
-\contentsline {subsection}{\numberline {5.6.4}Discussion: Neutron-Gamma Discrimination and Detection Efficiency}{124}{subsection.5.6.4}%
-\contentsline {section}{\numberline {5.7}Ion Migration and Device Stability}{126}{section.5.7}%
-\contentsline {subsection}{\numberline {5.7.1}Contact Degradation at Elevated Bias}{127}{subsection.5.7.1}%
-\contentsline {subsection}{\numberline {5.7.2}Ion Migration Consequences for Spectroscopy}{128}{subsection.5.7.2}%
-\contentsline {subsection}{\numberline {5.7.3}Mitigation Strategies}{129}{subsection.5.7.3}%
-\contentsline {section}{\numberline {5.8}Summary}{131}{section.5.8}%
-\contentsline {chapter}{\numberline {6.}Thermal Radiation Sensing Concepts for Nuclear Systems}{134}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Introduction}{134}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Gamma Heating and the Gamma Thermometer Principle}{135}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Optical Frequency Domain Reflectometry}{136}{subsection.6.2.1}%
-\contentsline {section}{\numberline {6.3}Optical Fiber-Based Gamma Thermometer Design}{136}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Cross-Sectional Geometry}{136}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Axial Layout}{137}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Optical Fiber-Based Neutron Dosimeter Concept}{138}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Simulation Methodology}{140}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Analytical Thermal Model}{140}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}Modulation Transfer Function}{141}{subsection.6.5.2}%
-\contentsline {subsection}{\numberline {6.5.3}Computational Implementation}{141}{subsection.6.5.3}%
-\contentsline {section}{\numberline {6.6}Sensor Design Parameters}{142}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Simulation Results}{144}{section.6.7}%
-\contentsline {subsection}{\numberline {6.7.1}Predicted Temperature Differential}{144}{subsection.6.7.1}%
-\contentsline {subsection}{\numberline {6.7.2}Temperature Distributions}{145}{subsection.6.7.2}%
-\contentsline {subsection}{\numberline {6.7.3}Modulation Transfer Function Results}{146}{subsection.6.7.3}%
-\contentsline {section}{\numberline {6.8}Experimental Testing and Discussion of the OFBGT}{147}{section.6.8}%
-\contentsline {subsection}{\numberline {6.8.1}Reactor Testing Campaign}{147}{subsection.6.8.1}%
-\contentsline {subsection}{\numberline {6.8.2}Discrepancy Between Predicted and Measured $\Delta T$}{147}{subsection.6.8.2}%
-\contentsline {section}{\numberline {6.9}Status of the OFBND}{149}{section.6.9}%
-\contentsline {section}{\numberline {6.10}Summary}{150}{section.6.10}%
-\contentsline {chapter}{\numberline {7.}Digital Electronics Verification Methods for Radiation Environments}{152}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Introduction}{152}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Radiation Effects in FPGAs}{153}{section.7.2}%
-\contentsline {section}{\numberline {7.3}FPGA Verification Challenges in Nuclear Systems}{154}{section.7.3}%
-\contentsline {section}{\numberline {7.4}FFSR RTL Architecture}{155}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}System-Level Overview}{155}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}Module Descriptions}{156}{subsection.7.4.2}%
-\contentsline {subsubsection}{top\_selftest\_100mhz\_dbg}{156}{section*.29}%
-\contentsline {subsubsection}{ff\_scanfarm and ff\_scanfarm\_sig}{158}{section*.30}%
-\contentsline {subsubsection}{scan\_chain Primitive}{158}{section*.31}%
-\contentsline {subsection}{\numberline {7.4.3}Core Algorithms}{158}{subsection.7.4.3}%
-\contentsline {subsubsection}{Shift-Register State Update}{158}{section*.32}%
-\contentsline {subsubsection}{Optional Upset Injection for Verification}{159}{section*.33}%
-\contentsline {subsubsection}{Signature Computation and Mismatch Detection}{159}{section*.34}%
-\contentsline {subsubsection}{Sticky Error Memory}{160}{section*.35}%
-\contentsline {subsubsection}{PRBS31 Recurrence}{160}{section*.36}%
-\contentsline {subsubsection}{UART Frame Formation}{160}{section*.37}%
-\contentsline {section}{\numberline {7.5}Test Configuration}{161}{section.7.5}%
-\contentsline {subsection}{\numberline {7.5.1}Devices Under Test}{161}{subsection.7.5.1}%
-\contentsline {subsection}{\numberline {7.5.2}Radiation Environment}{162}{subsection.7.5.2}%
-\contentsline {section}{\numberline {7.6}Experimental Results}{170}{section.7.6}%
-\contentsline {subsection}{\numberline {7.6.1}Baseline Test (January~26, Out of Beam)}{170}{subsection.7.6.1}%
-\contentsline {subsection}{\numberline {7.6.2}Day~1 Reactor Run (January~27)}{174}{subsection.7.6.2}%
-\contentsline {subsubsection}{Upset Count Results}{174}{section*.38}%
-\contentsline {subsubsection}{PSU Current Monitoring---Day~1}{175}{section*.39}%
-\contentsline {subsubsection}{FFSR1 UART Format Change---Candidate Configuration Memory SEU}{175}{section*.40}%
-\contentsline {subsection}{\numberline {7.6.3}Overnight Monitoring (January~27--28)}{177}{subsection.7.6.3}%
-\contentsline {subsection}{\numberline {7.6.4}Day~2 Reactor Run (January~28)}{178}{subsection.7.6.4}%
-\contentsline {subsubsection}{FFSR3 and FFSR4 Early Dropouts}{179}{section*.41}%
-\contentsline {subsubsection}{PSU Current Monitoring---Day~2}{180}{section*.42}%
-\contentsline {subsubsection}{FFSR1 End-of-Run Burst Event and Confirmed DMR Upset}{182}{section*.43}%
-\contentsline {section}{\numberline {7.7}Discussion}{183}{section.7.7}%
-\contentsline {subsection}{\numberline {7.7.1}SEU Sensitivity of the DMR Design}{183}{subsection.7.7.1}%
-\contentsline {subsection}{\numberline {7.7.2}Configuration Memory Vulnerability}{183}{subsection.7.7.2}%
-\contentsline {subsection}{\numberline {7.7.3}TID Effects in PSU Current Data}{184}{subsection.7.7.3}%
-\contentsline {subsection}{\numberline {7.7.4}Implications for FPGA Radiation Hardening}{184}{subsection.7.7.4}%
-\contentsline {section}{\numberline {7.8}Summary}{185}{section.7.8}%
-\contentsline {chapter}{\numberline {8.}Methods and Algorithms of the Fixed-Point Thermal Control Benchmark}{187}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Introduction}{187}{section.8.1}%
-\contentsline {section}{\numberline {8.2}System-Level Methodology}{188}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Numerical Representation and Sampling Structure}{190}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Input Stimulus and Run/Restart Control}{191}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Button-Controlled Run Logic}{191}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}Stimulus Generator}{192}{subsection.8.4.2}%
-\contentsline {section}{\numberline {8.5}Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{193}{section.8.5}%
-\contentsline {section}{\numberline {8.6}Actuator Dynamics and Nonlinear Valve Mapping}{195}{section.8.6}%
-\contentsline {subsection}{\numberline {8.6.1}First-Order Actuator with Slew Limiting}{195}{subsection.8.6.1}%
-\contentsline {subsection}{\numberline {8.6.2}Equal-Percentage Valve Characteristic}{195}{subsection.8.6.2}%
-\contentsline {subsection}{\numberline {8.6.3}Coefficient Builder}{196}{subsection.8.6.3}%
-\contentsline {section}{\numberline {8.7}Two-Node Thermal Plant}{197}{section.8.7}%
-\contentsline {subsection}{\numberline {8.7.1}Two-Node Forward-Euler Integration}{197}{subsection.8.7.1}%
-\contentsline {subsection}{\numberline {8.7.2}Outlet Transport Lag}{198}{subsection.8.7.2}%
-\contentsline {section}{\numberline {8.8}Quantized Measurement Path}{198}{section.8.8}%
-\contentsline {section}{\numberline {8.9}Redundancy, Fault Detection, and Telemetry}{199}{section.8.9}%
-\contentsline {subsection}{\numberline {8.9.1}Dual-Modular Redundancy}{199}{subsection.8.9.1}%
-\contentsline {subsection}{\numberline {8.9.2}Saturation Activity Monitor}{199}{subsection.8.9.2}%
-\contentsline {subsection}{\numberline {8.9.3}UART Logging Method}{200}{subsection.8.9.3}%
-\contentsline {section}{\numberline {8.10}Timing and Module-to-Method Mapping}{201}{section.8.10}%
-\contentsline {section}{\numberline {8.11}Neutron Irradiation Experiment Setup}{201}{section.8.11}%
-\contentsline {section}{\numberline {8.12}Experimental Observations and Discussion}{202}{section.8.12}%
-\contentsline {subsection}{\numberline {8.12.1}ROM Stimulus Integrity}{202}{subsection.8.12.1}%
-\contentsline {subsection}{\numberline {8.12.2}Plant-State Decay}{203}{subsection.8.12.2}%
-\contentsline {subsection}{\numberline {8.12.3}DMR Response}{208}{subsection.8.12.3}%
-\contentsline {subsection}{\numberline {8.12.4}Discussion of Failure Mechanism}{208}{subsection.8.12.4}%
-\contentsline {subsubsection}{Exclusion of Firmware-Induced Numerical Drift}{208}{section*.44}%
-\contentsline {subsubsection}{Exclusion of BRAM Data Corruption}{209}{section*.45}%
-\contentsline {subsubsection}{Consistency with Configuration Memory SEU}{209}{section*.46}%
-\contentsline {subsubsection}{Implications for DMR Effectiveness}{210}{section*.47}%
-\contentsline {section}{\numberline {8.13}Relevance to Radiation-Effects Objectives}{211}{section.8.13}%
-\contentsline {section}{\numberline {8.14}Chapter Summary}{212}{section.8.14}%
-\contentsline {chapter}{\numberline {9.}Conclusions and Future Work}{218}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Summary of Research Contributions}{218}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Key Findings}{219}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Perovskite Solar Cells as Current-Mode Radiation Monitors}{219}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}Perovskite Semiconductor Radiation Detectors}{220}{subsection.9.2.2}%
-\contentsline {subsection}{\numberline {9.2.3}Thermal Radiation Sensing Concepts}{221}{subsection.9.2.3}%
-\contentsline {subsection}{\numberline {9.2.4}Digital Electronics Verification for Radiation Environments}{222}{subsection.9.2.4}%
-\contentsline {section}{\numberline {9.3}Implications for Nuclear Monitoring Systems}{224}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Future Research Directions}{226}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}Perovskite Materials and Devices}{226}{subsection.9.4.1}%
-\contentsline {subsection}{\numberline {9.4.2}Thermal Radiation Sensing}{227}{subsection.9.4.2}%
-\contentsline {subsection}{\numberline {9.4.3}FPGA-Based Instrumentation}{227}{subsection.9.4.3}%
-\contentsline {subsection}{\numberline {9.4.4}System Integration}{228}{subsection.9.4.4}%
-\contentsline {part}{Appendices}{229}{appendix.A}%
-\contentsline {chapter}{\numberline {A.}The Data on Cows}{229}{section*.48}%
-\contentsline {chapter}{\numberline {B.}Important commands defined in {\tt osudissert96}}{230}{appendix.B}%
-\contentsline {front}{{Bibliography}}{232}{appendix*.49}%
+\contentsline {section}{\numberline {3.9}FPGA Verification Challenges in Nuclear Beam Environments}{71}{section.3.9}%
+\contentsline {section}{\numberline {3.10}Summary}{72}{section.3.10}%
+\contentsline {chapter}{\numberline {4.}Cs$_{0.1}$FA$_{0.9}$PbI$_3$ Perovskite Solar Cells as Ionizing Radiation Monitors}{74}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Device Fabrication and Photovoltaic Performance}{75}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Temporal Photoresponse Characterization}{76}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}DC Transient Response}{77}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Pulsed Laser Response}{78}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}AC Grid Simulation}{79}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}X-Ray Response}{79}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Gamma-Ray Response}{81}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Measurement Setup and Dose Rate Calibration}{81}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Cesium-137 Irradiation}{82}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Cobalt-60 Irradiation}{84}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Neutron Response}{84}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}OSURR Fast Neutron Beam Facility}{85}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Steady-State Reactor Measurements}{87}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Chopped-Beam Transient Measurements}{89}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Summary}{89}{section.4.6}%
+\contentsline {chapter}{\numberline {5.}Perovskite Semiconductor Radiation Detectors}{91}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Direct-Conversion Detector Principles}{92}{section.5.1}%
+\contentsline {section}{\numberline {5.2}MAPbI$_3$-hBN X-Ray Detector}{94}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Material and Device Fabrication}{94}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Electrical Characterisation}{95}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}X-Ray Sensitivity Measurements}{96}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Vacuum Testing and Humidity Effects}{98}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Alpha Spectroscopy Under Vacuum}{98}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Charge Trapping and Sensitivity Degradation}{101}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Discussion}{102}{subsection.5.2.7}%
+\contentsline {section}{\numberline {5.3}2D Perovskite (PEA$_2$MA$_2$Pb$_3$I$_{10}$) X-Ray Detector with 5F-PEAI Surface Treatment}{102}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Device Structure and Material Characterisation}{102}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Humidity-Dependent Instability}{103}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}5F-PEAI Surface Treatment and Results}{103}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}X-Ray Detection Performance}{104}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}Discussion}{104}{subsection.5.3.5}%
+\contentsline {section}{\numberline {5.4}CsPbBr$_3$ Gamma-Ray Detector}{104}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Crystal Preparation and Contact Fabrication}{105}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Gamma Spectroscopy Setup}{108}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Electrical Characterisation}{108}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Gamma Spectroscopy Results}{108}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Discussion}{109}{subsection.5.4.5}%
+\contentsline {section}{\numberline {5.5}FAPbBr$_3$ Gamma-Ray Detector}{110}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Crystal Preparation and Contact Fabrication}{110}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Electrical Characterisation}{110}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Gamma Spectroscopy Results}{111}{subsection.5.5.3}%
+\contentsline {subsection}{\numberline {5.5.4}Discussion}{112}{subsection.5.5.4}%
+\contentsline {section}{\numberline {5.6}MAPbBr$_3$ Gamma-Ray Detector}{113}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Crystal Preparation}{114}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Ion Migration Pulses and the Low-$\mu \tau $ Spectral Background}{115}{subsection.5.6.2}%
+\contentsline {section}{\numberline {5.7}MHyPbCl$_3$ Fast Neutron Detector}{117}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Motivation and Material Selection}{117}{subsection.5.7.1}%
+\contentsline {subsection}{\numberline {5.7.2}Crystal Synthesis and Device Fabrication}{118}{subsection.5.7.2}%
+\contentsline {subsection}{\numberline {5.7.3}Electrical Characterisation}{118}{subsection.5.7.3}%
+\contentsline {subsection}{\numberline {5.7.4}Beam Facility and Experimental Setup}{119}{subsection.5.7.4}%
+\contentsline {subsection}{\numberline {5.7.5}Digital Pulse Processing Pipeline}{120}{subsection.5.7.5}%
+\contentsline {subsection}{\numberline {5.7.6}Results}{122}{subsection.5.7.6}%
+\contentsline {subsection}{\numberline {5.7.7}Discussion: Neutron-Gamma Discrimination and Detection Efficiency}{123}{subsection.5.7.7}%
+\contentsline {section}{\numberline {5.8}Ion Migration and Device Stability}{125}{section.5.8}%
+\contentsline {subsection}{\numberline {5.8.1}Contact Degradation at Elevated Bias}{125}{subsection.5.8.1}%
+\contentsline {subsection}{\numberline {5.8.2}Ion Migration Consequences for Spectroscopy}{127}{subsection.5.8.2}%
+\contentsline {subsection}{\numberline {5.8.3}Mitigation Strategies}{128}{subsection.5.8.3}%
+\contentsline {section}{\numberline {5.9}Summary}{128}{section.5.9}%
+\contentsline {chapter}{\numberline {6.}Thermal Radiation Sensing Concepts for Nuclear Systems}{131}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Introduction}{131}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Gamma Heating and the Gamma Thermometer Principle}{132}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Optical Frequency Domain Reflectometry}{133}{subsection.6.2.1}%
+\contentsline {section}{\numberline {6.3}Optical Fiber-Based Gamma Thermometer Design}{133}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Cross-Sectional Geometry}{133}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Axial Layout}{135}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Optical Fiber-Based Neutron Dosimeter Concept}{135}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Simulation Methodology}{137}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Analytical Thermal Model}{137}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Modulation Transfer Function}{138}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Computational Implementation}{139}{subsection.6.5.3}%
+\contentsline {section}{\numberline {6.6}Sensor Design Parameters}{140}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Simulation Results}{141}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Predicted Temperature Differential}{141}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {6.7.2}Temperature Distributions}{143}{subsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.7.3}Modulation Transfer Function Results}{143}{subsection.6.7.3}%
+\contentsline {section}{\numberline {6.8}Experimental Testing and Discussion of the OFBGT}{145}{section.6.8}%
+\contentsline {subsection}{\numberline {6.8.1}Reactor Testing Campaign}{145}{subsection.6.8.1}%
+\contentsline {subsection}{\numberline {6.8.2}Discrepancy Between Predicted and Measured $\Delta T$}{145}{subsection.6.8.2}%
+\contentsline {section}{\numberline {6.9}Status of the OFBND}{146}{section.6.9}%
+\contentsline {section}{\numberline {6.10}Summary}{148}{section.6.10}%
+\contentsline {chapter}{\numberline {7.}Digital Electronics Verification Methods for Radiation Environments}{150}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Introduction}{150}{section.7.1}%
+\contentsline {section}{\numberline {7.2}FFSR RTL Architecture}{151}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}System-Level Overview}{151}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Module Descriptions}{152}{subsection.7.2.2}%
+\contentsline {subsubsection}{top\_selftest\_100mhz\_dbg}{152}{section*.8}%
+\contentsline {subsubsection}{ff\_scanfarm and ff\_scanfarm\_sig}{154}{section*.9}%
+\contentsline {subsubsection}{scan\_chain Primitive}{154}{section*.10}%
+\contentsline {subsection}{\numberline {7.2.3}Core Algorithms}{154}{subsection.7.2.3}%
+\contentsline {subsubsection}{Shift-Register State Update}{154}{section*.11}%
+\contentsline {subsubsection}{Optional Upset Injection for Verification}{155}{section*.12}%
+\contentsline {subsubsection}{Signature Computation and Mismatch Detection}{155}{section*.13}%
+\contentsline {subsubsection}{Sticky Error Memory}{156}{section*.14}%
+\contentsline {subsubsection}{PRBS31 Recurrence}{156}{section*.15}%
+\contentsline {subsubsection}{UART Frame Formation}{156}{section*.16}%
+\contentsline {section}{\numberline {7.3}Test Configuration}{157}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Devices Under Test}{157}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Radiation Environment}{158}{subsection.7.3.2}%
+\contentsline {section}{\numberline {7.4}Experimental Results}{166}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Baseline Test (January~26, Out of Beam)}{166}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Day~1 Reactor Run (January~27)}{170}{subsection.7.4.2}%
+\contentsline {subsubsection}{Upset Count Results}{170}{section*.17}%
+\contentsline {subsubsection}{PSU Current Monitoring---Day~1}{171}{section*.18}%
+\contentsline {subsubsection}{FFSR1 UART Format Change---Candidate Configuration Memory SEU}{171}{section*.19}%
+\contentsline {subsection}{\numberline {7.4.3}Overnight Monitoring (January~27--28)}{173}{subsection.7.4.3}%
+\contentsline {subsection}{\numberline {7.4.4}Day~2 Reactor Run (January~28)}{174}{subsection.7.4.4}%
+\contentsline {subsubsection}{FFSR3 and FFSR4 Early Dropouts}{175}{section*.20}%
+\contentsline {subsubsection}{PSU Current Monitoring---Day~2}{176}{section*.21}%
+\contentsline {subsubsection}{FFSR1 End-of-Run Burst Event and Confirmed DMR Upset}{176}{section*.22}%
+\contentsline {section}{\numberline {7.5}Discussion}{179}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}SEU Sensitivity of the DMR Design}{179}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}Configuration Memory Vulnerability}{179}{subsection.7.5.2}%
+\contentsline {subsection}{\numberline {7.5.3}TID Effects in PSU Current Data}{180}{subsection.7.5.3}%
+\contentsline {subsection}{\numberline {7.5.4}Implications for FPGA Radiation Hardening}{180}{subsection.7.5.4}%
+\contentsline {section}{\numberline {7.6}Summary}{181}{section.7.6}%
+\contentsline {chapter}{\numberline {8.}Methods and Algorithms of the Fixed-Point Thermal Control Benchmark}{183}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Introduction}{183}{section.8.1}%
+\contentsline {section}{\numberline {8.2}System-Level Methodology}{184}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Numerical Representation and Sampling Structure}{186}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Input Stimulus and Run/Restart Control}{187}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Button-Controlled Run Logic}{187}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Stimulus Generator}{188}{subsection.8.4.2}%
+\contentsline {section}{\numberline {8.5}Controller Algorithm: Reverse-Acting I-PD with Anti-Windup}{189}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Actuator Dynamics and Nonlinear Valve Mapping}{191}{section.8.6}%
+\contentsline {subsection}{\numberline {8.6.1}First-Order Actuator with Slew Limiting}{191}{subsection.8.6.1}%
+\contentsline {subsection}{\numberline {8.6.2}Equal-Percentage Valve Characteristic}{191}{subsection.8.6.2}%
+\contentsline {subsection}{\numberline {8.6.3}Coefficient Builder}{192}{subsection.8.6.3}%
+\contentsline {section}{\numberline {8.7}Two-Node Thermal Plant}{193}{section.8.7}%
+\contentsline {subsection}{\numberline {8.7.1}Two-Node Forward-Euler Integration}{193}{subsection.8.7.1}%
+\contentsline {subsection}{\numberline {8.7.2}Outlet Transport Lag}{194}{subsection.8.7.2}%
+\contentsline {section}{\numberline {8.8}Quantized Measurement Path}{194}{section.8.8}%
+\contentsline {section}{\numberline {8.9}Redundancy, Fault Detection, and Telemetry}{195}{section.8.9}%
+\contentsline {subsection}{\numberline {8.9.1}Dual-Modular Redundancy}{195}{subsection.8.9.1}%
+\contentsline {subsection}{\numberline {8.9.2}Saturation Activity Monitor}{195}{subsection.8.9.2}%
+\contentsline {subsection}{\numberline {8.9.3}UART Logging Method}{196}{subsection.8.9.3}%
+\contentsline {section}{\numberline {8.10}Timing and Module-to-Method Mapping}{197}{section.8.10}%
+\contentsline {section}{\numberline {8.11}Neutron Irradiation Experiment Setup}{197}{section.8.11}%
+\contentsline {section}{\numberline {8.12}Experimental Observations and Discussion}{198}{section.8.12}%
+\contentsline {subsection}{\numberline {8.12.1}ROM Stimulus Integrity}{198}{subsection.8.12.1}%
+\contentsline {subsection}{\numberline {8.12.2}Plant-State Decay}{199}{subsection.8.12.2}%
+\contentsline {subsection}{\numberline {8.12.3}DMR Response}{201}{subsection.8.12.3}%
+\contentsline {subsection}{\numberline {8.12.4}Discussion of Failure Mechanism}{204}{subsection.8.12.4}%
+\contentsline {subsubsection}{Exclusion of Firmware-Induced Numerical Drift}{204}{section*.23}%
+\contentsline {subsubsection}{Exclusion of BRAM Data Corruption}{204}{section*.24}%
+\contentsline {subsubsection}{Consistency with Configuration Memory SEU}{205}{section*.25}%
+\contentsline {subsubsection}{Implications for DMR Effectiveness}{206}{section*.26}%
+\contentsline {section}{\numberline {8.13}Relevance to Radiation-Effects Objectives}{206}{section.8.13}%
+\contentsline {section}{\numberline {8.14}Chapter Summary}{208}{section.8.14}%
+\contentsline {chapter}{\numberline {9.}Conclusions and Future Work}{214}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Summary of Research Contributions}{214}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Key Findings}{215}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Perovskite Solar Cells as Current-Mode Radiation Monitors}{215}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Perovskite Semiconductor Radiation Detectors}{216}{subsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.2.3}Thermal Radiation Sensing Concepts}{217}{subsection.9.2.3}%
+\contentsline {subsection}{\numberline {9.2.4}Digital Electronics Verification for Radiation Environments}{218}{subsection.9.2.4}%
+\contentsline {section}{\numberline {9.3}Implications for Nuclear Monitoring Systems}{220}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Future Research Directions}{222}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Perovskite Materials and Devices}{222}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}Thermal Radiation Sensing}{223}{subsection.9.4.2}%
+\contentsline {subsection}{\numberline {9.4.3}FPGA-Based Instrumentation}{223}{subsection.9.4.3}%
+\contentsline {subsection}{\numberline {9.4.4}System Integration}{224}{subsection.9.4.4}%
+\contentsline {front}{{Bibliography}}{225}{chapter*.27}%

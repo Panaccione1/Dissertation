@@ -1,21 +1,22 @@
 \vskip 0.55in {\bfseries Table}\hfill {\bfseries Page} \vskip 0.25em\rm 
 \contentsline {table}{\numberline {2.1}{\ignorespaces Selected properties of wide bandgap semiconductor detector materials at 300~K. CZT = cadmium zinc telluride Cd$_{0.9}$Zn$_{0.1}$Te. Data compiled from~\cite {Owens2004,He_NatPhoton_2021,Springer_CsPbBr3,knoll2010}.}}{26}{table.2.1}%
-\contentsline {table}{\numberline {4.1}{\ignorespaces Steady-state short-circuit current of the Cs$_{0.1}$FA$_{0.9}$PbI$_3$ module at OSU NRL FBF. Uncertainties are $\pm 1\sigma $ over the measurement interval. ``Gamma filter closed'' and ``gamma filter open'' refer to the polyethylene/lead shielding assembly that preferentially attenuates the reactor gamma flux while transmitting fast neutrons.}}{85}{table.4.1}%
-\contentsline {table}{\numberline {5.1}{\ignorespaces Hydrogen atom density comparison for fast neutron detector materials. MHyPbCl$_3$ achieves a hydrogen density comparable to organic scintillators despite being an inorganic-organic hybrid perovskite.}}{92}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces X-ray sensitivity of the MAPbI$_3$-hBN detector as a function of applied bias. Sensitivity values are extracted from the ratio of the X-ray-induced current to the calibrated dose rate multiplied by the contact area (Equation~\ref {eq:sensitivity}).}}{100}{table.5.2}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces FBF beam conditions used for MHyPbCl$_3$ neutron detection experiments. All measurements at OSURR operating power.}}{120}{table.5.3}%
-\contentsline {table}{\numberline {6.1}{\ignorespaces OFBGT design parameters.}}{143}{table.6.1}%
-\contentsline {table}{\numberline {6.2}{\ignorespaces OFBND design parameters.}}{143}{table.6.2}%
-\contentsline {table}{\numberline {6.3}{\ignorespaces Linear power densities for the OFBGT and OFBND.}}{143}{table.6.3}%
-\contentsline {table}{\numberline {6.4}{\ignorespaces Comparison of OFBGT and OFBND modeling results.}}{144}{table.6.4}%
-\contentsline {table}{\numberline {7.1}{\ignorespaces Summary of primary RTL blocks in the FFSR design.}}{157}{table.7.1}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces CMOD~S7 device configuration and test timeline.}}{161}{table.7.2}%
-\contentsline {table}{\numberline {7.3}{\ignorespaces Day~1 reactor run upset detection results. $^{*}$FFSR1 count includes 250 \texttt {CNT}-format and $\approx $3\,252 \texttt {CNZ}-format readings (see Section~\ref {subsec:ch6_ffsr1_day1}).}}{174}{table.7.3}%
-\contentsline {table}{\numberline {7.4}{\ignorespaces Overnight (out-of-beam) monitoring results.}}{177}{table.7.4}%
-\contentsline {table}{\numberline {7.5}{\ignorespaces Day~2 (gamma shutter open) upset detection results.}}{179}{table.7.5}%
-\contentsline {table}{\numberline {8.1}{\ignorespaces Implementation snapshot---key parameters of the fixed-point thermal control benchmark as configured in the present irradiation experiments.}}{189}{table.8.1}%
-\contentsline {table}{\numberline {8.2}{\ignorespaces Piecewise input schedule implemented by the stimulus generator. Each interval exercises a different combination of reference and disturbance conditions.}}{193}{table.8.2}%
-\contentsline {table}{\numberline {8.3}{\ignorespaces Mapping between RTL modules and the mathematical methods they implement.}}{214}{table.8.3}%
-\contentsline {table}{\numberline {8.4}{\ignorespaces Current top-level benchmark parameters extracted from the RTL implementation.}}{215}{table.8.4}%
-\contentsline {table}{\numberline {8.5}{\ignorespaces Summary of neutron beam facility parameters used in the fixed-point thermal control benchmark experiment. All values are identical to those reported in the FFSR irradiation campaign (Chapter~\ref {chap:ffsr}).}}{216}{table.8.5}%
-\contentsline {table}{\numberline {8.6}{\ignorespaces Observed failure characteristics of the PID thermal control benchmark and their consistency with a CRAM SEU mechanism.}}{217}{table.8.6}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces OSURR FBF beam conditions as a function of gamma shutter and Cd filter configuration. All flux and dose-rate values are referenced to 450~kW$_{\mathrm {th}}$ reactor power at the detector position.}}{87}{table.4.1}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Steady-state short-circuit current of the Cs$_{0.1}$FA$_{0.9}$PbI$_3$ module at OSU NRL FBF. Uncertainties are $\pm 1\sigma $ over the measurement interval. ``Gamma filter closed'' and ``gamma filter open'' refer to the polyethylene/lead shielding assembly that preferentially attenuates the reactor gamma flux while transmitting fast neutrons.}}{88}{table.4.2}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Hydrogen atom density comparison for selected fast neutron detector materials.}}{94}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces X-ray sensitivity of the MAPbI$_3$-hBN detector as a function of applied bias.}}{97}{table.5.2}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces FBF beam conditions used for MHyPbCl$_3$ neutron detection experiments. See Section~\ref {sec:osurr_fbf} for a full description of each filtering element.}}{119}{table.5.3}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces OFBGT design parameters.}}{140}{table.6.1}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces OFBND design parameters.}}{140}{table.6.2}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Linear power densities for the OFBGT and OFBND.}}{141}{table.6.3}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Comparison of OFBGT and OFBND modeling results.}}{142}{table.6.4}%
+\contentsline {table}{\numberline {7.1}{\ignorespaces Summary of primary RTL blocks in the FFSR design.}}{153}{table.7.1}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces CMOD~S7 device configuration and test timeline.}}{157}{table.7.2}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Day~1 reactor run upset detection results. $^{*}$FFSR1 count includes 250 \texttt {CNT}-format and $\approx $3\,252 \texttt {CNZ}-format readings (see Section~\ref {subsec:ch6_ffsr1_day1}).}}{170}{table.7.3}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Overnight (out-of-beam) monitoring results.}}{173}{table.7.4}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Day~2 (gamma shutter open) upset detection results.}}{175}{table.7.5}%
+\contentsline {table}{\numberline {8.1}{\ignorespaces Implementation snapshot, key parameters of the fixed-point thermal control benchmark as configured in the present irradiation experiments.}}{185}{table.8.1}%
+\contentsline {table}{\numberline {8.2}{\ignorespaces Piecewise input schedule implemented by the stimulus generator.}}{189}{table.8.2}%
+\contentsline {table}{\numberline {8.3}{\ignorespaces Mapping between RTL modules and the mathematical methods they implement.}}{210}{table.8.3}%
+\contentsline {table}{\numberline {8.4}{\ignorespaces Current top-level benchmark parameters extracted from the RTL implementation.}}{211}{table.8.4}%
+\contentsline {table}{\numberline {8.5}{\ignorespaces Summary of neutron beam facility parameters used in the fixed-point thermal control benchmark experiment.}}{212}{table.8.5}%
+\contentsline {table}{\numberline {8.6}{\ignorespaces Observed failure characteristics of the PID thermal control benchmark and their consistency with a CRAM SEU mechanism.}}{213}{table.8.6}%

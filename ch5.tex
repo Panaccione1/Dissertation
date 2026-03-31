@@ -1,7 +1,18 @@
 %% ============================================================
-%%  Chapter 5 — Perovskite Semiconductor Radiation Detectors
+%%  Chapter 5, Perovskite Semiconductor Radiation Detectors
 %%  Dissertation: Radiation Responsive Materials for Advanced
 %%  Radiation Detection and Systems
+%%
+%%  Structure: organised by device
+%%    5.1  Detector Principles
+%%    5.2  MAPbI3-hBN X-Ray Detector
+%%    5.3  2D Perovskite (PEA2MA2Pb3I10) with 5F-PEAI
+%%    5.4  CsPbBr3 Gamma-Ray Detector
+%%    5.5  FAPbBr3 Gamma-Ray Detector
+%%    5.6  MAPbBr3 Fabrication Challenges
+%%    5.7  MHyPbCl3 Fast Neutron Detector
+%%    5.8  Ion Migration, Cross-Device Discussion
+%%    5.9  Summary
 %% ============================================================
 
 \chapter{Perovskite Semiconductor Radiation Detectors}
@@ -25,1706 +36,1363 @@ that characterises the photovoltaic geometry of
 Chapter~\ref{ch:CsFAPbI}.
 
 Halide perovskites present a compelling case for direct-conversion
-detector development.  Their heavy-metal cation sublattice —
-dominated by lead in the systems studied here — provides a high
+detector development.  Their heavy-metal cation sublattice,
+dominated by lead in the systems studied here, provides a high
 effective atomic number, giving large photoelectric cross sections
 at gamma and X-ray energies that are difficult or impossible to
 achieve with silicon or organic semiconductors.  Some
-methylammonium-based and methylhydrazinium-based compositions
-additionally incorporate a high density of hydrogen atoms, enabling
-elastic proton-recoil reactions with fast neutrons that allow
-direct-conversion neutron detection without requiring a separate
-conversion layer.  Solution-phase crystal growth methods developed
-over the past decade for photovoltaic research have produced
+methylhydrazinium-based compositions additionally incorporate a
+high density of hydrogen atoms, enabling elastic proton-recoil
+reactions with fast neutrons that allow direct-conversion neutron
+detection without requiring a separate conversion layer.
+Solution-phase crystal growth methods have produced
 centimetre-scale single crystals with carrier $\mu\tau$ products
 approaching or exceeding those of polycrystalline CZT, a property
-critical for efficient charge collection across the millimetre-scale
-thicknesses required to stop MeV-energy photons and neutrons.
+critical for efficient charge collection across the
+millimetre-scale thicknesses required to stop MeV-energy photons
+and neutrons.
 
-The experimental program described in this chapter spans three
-radiation types and is organised by material system and detection
-objective.  Section~\ref{sec:xray_detector} treats polycrystalline
-and thin-film X-ray detection, covering both the MAPbI$_3$-hBN
-device characterised in this work and the 2D perovskite
-(PEA$_2$MA$_2$Pb$_3$I$_{10}$) detector with 5F-PEAI surface
-treatment reported by Tsai et al., in which the present author
-served as co-investigator~\cite{Tsai2022ionmig}.
-Section~\ref{sec:gamma_detector} describes single-crystal bromide
-perovskite gamma-ray spectrometers, presenting the CsPbBr$_3$ and
-FAPbBr$_3$ devices and the fabrication challenges encountered with
-MAPbBr$_3$.  Section~\ref{sec:neutron_detector} reports the novel
-organic-metal halide perovskite MHyPbCl$_3$ (methylhydrazinium
-lead trichloride), synthesised and tested as a fast neutron
-detector using the Fast Beam Facility (FBF) at the Ohio State
-University Research Reactor.  Throughout all three application
-domains, a recurring materials-physics challenge — the migration of
-halide ions under the large electric fields required for efficient
-charge collection — dominated the device performance and
-ultimately set the practical limits on applied bias, detector
-lifetime, and energy resolution.
-Section~\ref{sec:ion_migration_detector} draws together the ion
-migration observations from all three detector systems, discusses
-the mitigation strategies evaluated in this work, and identifies
-directions for future research.
+This chapter is organised by device, with each section covering a
+single detector system from fabrication through characterisation to
+radiation detection results.  Six devices are presented: the
+MAPbI$_3$-hBN X-ray detector
+(Section~\ref{sec:mapbi_hbn_xray}), the 2D perovskite
+(PEA$_2$MA$_2$Pb$_3$I$_{10}$) X-ray detector with 5F-PEAI surface
+treatment (Section~\ref{sec:2d_perovskite_xray}), the
+CsPbBr$_3$ gamma-ray detector
+(Section~\ref{sec:cspbbr_gamma}), the FAPbBr$_3$ gamma-ray
+detector (Section~\ref{sec:fapbbr_gamma}), the MAPbBr$_3$ gamma
+detector (Section~\ref{sec:mapbbr_issues}), and the MHyPbCl$_3$
+fast neutron detector
+(Section~\ref{sec:neutron_detector}).  A cross-device discussion
+of ion migration, the central performance-limiting mechanism
+observed across all systems, is presented in
+Section~\ref{sec:ion_migration_detector}, followed by a summary
+in Section~\ref{sec:ch5_summary}.
 
 
-%% ------------------------------------------------------------
-\section{Perovskite Semiconductor Detector Principles}
+%% ============================================================
+\section{Direct-Conversion Detector Principles}
 \label{sec:detector_principles}
-%% ------------------------------------------------------------
+%% ============================================================
 
-A direct-conversion radiation detector converts the energy deposited
-by an ionising particle or photon directly into an electrical signal,
-without an intermediate scintillation step.  When a gamma ray,
-X-ray, or charged particle deposits energy $E$ in a semiconductor
-detector of bandgap $E_g$, approximately $E/W$ electron-hole pairs
-are created, where $W \approx 2.8\,E_g$ is the mean ionisation
-energy per pair~\cite{knoll2010}.  The carriers are swept by an
-applied electric field to opposite contacts, where they induce a
-charge pulse on the readout electronics.  For spectroscopic
-operation, this pulse must be faithfully proportional to the
-deposited energy — a condition that requires complete charge
-collection and minimal trapping of carriers en route to the contacts.
+A direct-conversion radiation detector converts the energy
+deposited by an ionising particle or photon directly into an
+electrical signal, without an intermediate scintillation step.
+When a gamma ray, X-ray, or charged particle deposits energy $E$
+in a semiconductor detector of bandgap $E_g$, approximately
+$E/W$ electron-hole pairs are created, where
+$W \approx 2.8\,E_g$ is the mean ionisation energy per
+pair~\cite{knoll2010}.  The carriers are swept by an applied
+electric field to opposite contacts, where they induce a charge
+pulse on the readout electronics.  For spectroscopic operation,
+this pulse must be faithfully proportional to the deposited
+energy, a condition that requires complete charge collection
+and minimal trapping of carriers en route to the contacts.
 
 The probability that a carrier generated at depth $x$ in the
 crystal (of thickness $d$) reaches the collecting contact is
 described by the Hecht equation,
-
 \begin{equation}
   \eta = \frac{\mu\tau E}{d}
     \left[1 - \exp\!\left(-\frac{d}{\mu\tau E}\right)\right],
   \label{eq:hecht}
 \end{equation}
-
-\noindent where $E = V/d$ is the applied electric field,
-$V$ is the applied voltage, and $\mu\tau$ is the
-mobility-lifetime product of the carrier species (electrons
-or holes) that dominates collection~\cite{Hofstadter1949}.
+where $E = V/d$ is the applied electric field, $V$ is the applied
+voltage, and $\mu\tau$ is the mobility-lifetime product of the
+dominant carrier species~\cite{Hofstadter1949}.
 Equation~(\ref{eq:hecht}) shows that achieving high collection
-efficiency $\eta \to 1$ requires either a large $\mu\tau$
-product or a large applied field, or both.  For a 1-mm-thick
-crystal with $\mu\tau = 10^{-3}$~cm$^2$\,V$^{-1}$, for
-instance, complete collection requires fields of order
-10~V\,$\mu$m$^{-1}$, i.e.\ applied voltages of order 1~kV.
-This requirement for large applied voltages is in direct
-tension with the ion-migration instability described in
-Section~\ref{sec:ion_migration_detector}.
+efficiency $\eta \to 1$ requires either a large $\mu\tau$ product
+or a large applied field, or both.  For a 1-mm-thick crystal with
+$\mu\tau = 10^{-3}$~cm$^2$\,V$^{-1}$, complete collection
+requires fields of order 10~V\,$\mu$m$^{-1}$, i.e.\ applied
+voltages of order 1~kV.  This requirement for large applied
+voltages is in direct tension with the ion-migration instability
+described in Section~\ref{sec:ion_migration_detector}.
 
 Two additional material requirements govern detector performance.
 First, the dark resistivity $\rho$ must be sufficiently high that
-the leakage current $I_{\rm dark} = V\!A/(\rho d)$ (where $A$ is
-the contact area) produces an electronic noise contribution smaller
-than the signal charge from the smallest radiation event of interest.
-For gamma spectroscopy with CZT-like performance, $\rho > 10^{9}$~$\Omega$\,cm
-is typically required~\cite{Luke1995}.  The three-dimensional
-(3D) halide perovskites studied in this work achieve resistivities
-in the range $10^{9}$--$10^{12}$~$\Omega$\,cm in their highest-quality
+the leakage current $I_{\mathrm{dark}} = V\!A/(\rho d)$ produces an
+electronic noise contribution smaller than the signal charge from
+the smallest radiation event of interest.  For gamma spectroscopy
+with CZT-like performance,
+$\rho > 10^{9}$~$\Omega$\,cm is typically
+required~\cite{Luke1995}.  The 3D halide perovskites studied in
+this work achieve resistivities in the range
+$10^{9}$--$10^{12}$~$\Omega$\,cm in their highest-quality
 single-crystal forms, competitive with or exceeding that of
-polycrystalline CZT.  Second, the crystal must be thick enough
-to stop a significant fraction of the incident radiation.  The
-mean free path of a 662-keV gamma ray (the primary emission of
+polycrystalline CZT.  Second, the crystal must be thick enough to
+stop a significant fraction of the incident radiation.  The mean
+free path of a 662-keV gamma ray (the primary emission of
 $^{137}$Cs) in CsPbBr$_3$ is approximately 7~mm, meaning that
 crystals of order 5--10~mm are required for reasonable detection
-efficiency.  Growing defect-free perovskite single crystals at
-these length scales presents a significant fabrication challenge,
-discussed in Section~\ref{sec:fabrication}.
+efficiency.
 
-For fast neutron detection, the governing interaction is not
-photoelectric absorption but elastic proton recoil: a fast neutron
-of kinetic energy $E_n$ collides with a hydrogen nucleus
-(proton), transferring up to $E_n$ of kinetic energy to the recoil
-proton in a head-on collision.  The recoil proton then deposits
-its energy densely in the crystal volume, generating a large
-number of electron-hole pairs.  The detection efficiency of a
-hydrogenous material is therefore proportional to its hydrogen
-atom density $n_H$.  Table~\ref{tab:h_density} compares $n_H$
-for the key materials considered in this work.
+For fast neutron detection, the governing interaction is elastic
+proton recoil: a fast neutron of kinetic energy $E_n$ collides
+with a hydrogen nucleus, transferring up to $E_n$ of kinetic
+energy to the recoil proton in a head-on collision.  The recoil
+proton then deposits its energy densely in the crystal volume.
+The detection efficiency of a hydrogenous material is therefore
+proportional to its hydrogen atom density $n_H$.
+Table~\ref{tab:h_density} compares $n_H$ for the key materials
+considered in this work.
 
 \begin{table}[htbp]
 \centering
-\caption{Hydrogen atom density comparison for fast neutron
-         detector materials.  MHyPbCl$_3$ achieves a hydrogen
-         density comparable to organic scintillators despite
-         being an inorganic-organic hybrid perovskite.}
+\caption{Hydrogen atom density comparison for selected fast neutron detector materials.}
 \label{tab:h_density}
-\begin{tabular}{lllc}
+\begin{tabular}{llcc}
 \hline
 Material & Formula & Density (g\,cm$^{-3}$) & $n_H$ (cm$^{-3}$) \\
 \hline
-Stilbene          & C$_{14}$H$_{12}$  & 1.16 & $5.67\times10^{22}$ \\
-Rubrene           & C$_{42}$H$_{28}$  & 1.27 & $3.62\times10^{22}$ \\
-EJ-276 plastic    & C$_n$H$_m$        & 1.02 & $4.82\times10^{22}$ \\
+Stilbene          & C$_{14}$H$_{12}$    & 1.16 & $5.67\times10^{22}$ \\
+Rubrene           & C$_{42}$H$_{28}$    & 1.27 & $3.62\times10^{22}$ \\
+EJ-276 plastic    & C$_n$H$_m$          & 1.02 & $4.82\times10^{22}$ \\
 MHyPbCl$_3$       & CH$_6$N$_2$PbCl$_3$ & 3.25 & $\sim4.0\times10^{22}$ \\
 \hline
 \end{tabular}
 \end{table}
 
 
-%% ------------------------------------------------------------
-\section{Materials, Crystal Growth, and Device Fabrication}
-\label{sec:fabrication}
-%% ------------------------------------------------------------
-
-\subsection{Perovskite Crystal Systems}
-\label{sec:crystal_systems}
-
-Four distinct halide perovskite crystal chemistries were
-investigated as detector platforms.
-MAPbI$_3$ doped with hexagonal boron nitride
-(hBN) was used as an X-ray detector medium.  The hBN
-inclusions were incorporated to improve grain boundary
-passivation and reduce the density of deep-level trap states
-that would otherwise act as recombination centres for
-radiation-generated carriers.  The 3D bromide perovskites
-CsPbBr$_3$, MAPbBr$_3$, and FAPbBr$_3$ — where Cs, MA, and
-FA denote the inorganic caesium, methylammonium, and
-formamidinium A-site cations, respectively — were pursued as
-gamma-ray spectrometers on account of their wide bandgap
-($\sim$2.3~eV), which provides the high dark resistivity
-essential for low-noise spectroscopy, their large effective
-atomic number driven by the Pb and Br sublattices, and
-their excellent carrier transport properties demonstrated
-in the photovoltaic literature~\cite{Saidaminov2015,He2019CsPbBr}.
-Finally, MHyPbCl$_3$ (methylhydrazinium lead trichloride),
-where MHy denotes the CH$_3$NH$_2$NH$_2^+$ methylhydrazinium
-cation, was selected as a fast neutron converter on the basis
-of its high hydrogen density, which places it on a par with
-conventional organic fast-neutron scintillators
-(Table~\ref{tab:h_density}), combined with the direct
-charge-collection advantage of a semiconductor~\cite{Panaccione_NIM_2024}.
-
-\subsection{Crystal Growth Procedures}
-\label{sec:crystal_growth}
-
-\subsubsection{MHyPbCl$_3$ Synthesis}
-
-Methylhydrazinium chloride (MHyCl) was first synthesised as the
-organic precursor salt.  To obtain MHyCl, 2.63~mL (50~mmol)
-of methylhydrazine was diluted with 5~mL of anhydrous
-isopropanol (IPA), and 100~mL of 0.5~M HCl solution was added
-to the IPA mixture without stirring.  After the combined
-solution was stored overnight in an inert atmosphere at room
-temperature, white plate crystals of MHyCl precipitated
-spontaneously.  The crystals were filtered, washed with cold
-IPA, and dried under vacuum at room temperature, yielding
-3.10~g ($\sim$38\%).
-
-Single crystals of MHyPbCl$_3$ were subsequently grown using
-an anti-solvent assisted crystallisation method.  Two millimoles
-each of MHyCl and PbCl$_2$ were dissolved in a co-solvent mixture
-of 5~mL DMF and 1~mL DMSO.  After stirring for 3~h, the
-solution was filtered through a 0.22-$\mu$m syringe filter to
-remove undissolved particles, then transferred to a 20-mL vial.
-This vial was placed inside a 100-mL bottle containing 15~mL
-of toluene as the anti-solvent and sealed in a glovebox.  After
-one week at room temperature, several clear hexagonal
-MHyPbCl$_3$ crystals formed.  The crystals were harvested
-and dried under vacuum.  Immediately prior to electrode
-deposition, the crystal surfaces were polished with polishing
-paper to remove the polycrystalline surface layer that
-accumulates during growth.
-
-\subsubsection{Bromide Perovskite Crystals}
-
-CsPbBr$_3$, MAPbBr$_3$, and FAPbBr$_3$ single crystals
-were grown externally and received by the research group
-for detector fabrication.  Upon receipt, all crystals were
-inspected under optical magnification for internal cracks,
-inclusions, and colour uniformity.  Crystals judged to be
-free of macroscopic defects were then mechanically planarised
-using silicon carbide abrasive paper, followed by sequential
-mechanical polishing with diamond polishing paste down to a
-10-nm grain size.  The crystals were rinsed with a hexane bath
-between each polishing stage to remove residual abrasive
-particles.  The final polished faces were inspected for
-surface uniformity and flatness prior to contact deposition.
-One FAPbBr$_3$ crystal cracked during the polishing stage
-and was excluded from subsequent electrical testing; a
-bare CsPbBr$_3$ crystal sustained internal cracking from
-an accidental drop during handling, and while it remained
-electrically functional, the crack likely introduced additional
-carrier trapping sites and reduced the geometric solid-angle
-efficiency for spectroscopy measurements.
-
-\subsection{Contact Architecture and Deposition}
-\label{sec:contact_deposition}
-
-Two distinct contact architectures were used, reflecting
-the different electronic requirements of the ohmic and
-rectifying contact geometries.
-
-\subsubsection{MHyPbCl$_3$ Ohmic Contact Device}
-
-For the MHyPbCl$_3$ fast neutron detector, an ohmic-ohmic
-contact configuration was adopted.  On the lower face of
-the crystal, an electron-transport bilayer consisting of
-30~nm of C$_{60}$ (fullerene) and 6~nm of bathocuproine
-(BCP) was deposited, followed by an 80-nm Cu top layer
-to complete the lower ohmic contact.  The upper face of
-the crystal received a 50-nm Au contact deposited by
-thermal evaporation.  The C$_{60}$/BCP bilayer serves
-simultaneously as an electron-selective interlayer and
-as a buffer that reduces the density of interface states
-at the Cu-perovskite junction.  Current-voltage
-characterisation confirmed ohmic, symmetric behaviour
-under both polarities of applied bias, consistent with
-the intended ohmic-ohmic device architecture.
-
-\subsubsection{Bromide Perovskite Schottky Devices}
-
-For the bromide perovskite gamma detectors, a Schottky
-(rectifying) contact architecture was pursued in order
-to create a depletion region that would both reduce the
-dark current and define the active detection volume of the
-device.  A pixelated contact geometry was used, with a
-$2\times2$ array of 1.25-mm-diameter titanium pixel contacts
-surrounded by an integrated guard ring to intercept and
-divert surface leakage currents away from the individual
-pixel measurement channels.  On the ohmic side of each
-crystal, a 50-nm gold layer was deposited by sputtering.
-
-The Ti Schottky contacts were deposited using an AJA Orion
-RF/DC sputter deposition system.  A shadow mask was drilled
-from an aluminium sheet to define the pixel and guard-ring
-geometry.  The titanium was deposited at 450~W with a
-deposition rate of approximately 1.15~\AA\,s$^{-1}$, followed
-immediately by a 10-nm nickel passivating overlayer at
-250~W (rate $\approx$2.1~\AA\,s$^{-1}$) to prevent
-atmospheric oxidation of the titanium surface upon venting.
-The gold ohmic contact was deposited on the opposite crystal
-face with a Denton sputter coater at a rate of
-$\sim$100~\AA\,per 90~s.  Electrical connection was made to
-each pixel contact using copper wire leads bonded with
-silver epoxy, and the assembled device was mounted in a
-shielded enclosure for electrical characterisation.
-
-
-%% ------------------------------------------------------------
-\section{Electrical Characterisation}
-\label{sec:electrical_char}
-%% ------------------------------------------------------------
-
-\subsection{Resistivity and Dark Current Stability}
-\label{sec:resistivity}
-
-Current-voltage (IV) characteristics for all devices were
-measured using a Keithley 2612A SourceMeter.  Sweep protocols
-ranged from the low-voltage regime ($\pm$2~V at a logarithmic
-current resolution of $10^{-12}$~A to confirm ohmic
-behaviour and extract contact resistance) to high-voltage
-unipolar sweeps (0 to $-100$~V or 0 to $-200$~V) for
-resistivity extraction and leakage current characterisation
-under detector operating conditions.  All sweeps were
-performed with the device in a light-tight enclosure to
-prevent photogenerated carrier contributions.
-
-The MHyPbCl$_3$ crystal yielded a resistivity of
-$4.43 \times 10^{11}$~$\Omega$\,cm, extracted from the
-slope of the ohmic low-field IV characteristic.  This
-value places MHyPbCl$_3$ squarely in the range required
-for high-sensitivity radiation detectors and exceeds the
-resistivity of commercial polycrystalline CZT by roughly
-two orders of magnitude, reflecting the low intrinsic
-carrier density achievable in high-quality perovskite
-single crystals.  The CsPbBr$_3$ device exhibited a
-working leakage current in the range of 315--710~nA at
-1000~V reverse bias.  This current was not stable upon
-first application of bias: the leakage overshot its
-quasi-steady-state value immediately after the voltage
-was stepped, then decayed gradually over a period of
-45~minutes to one hour before approaching a more slowly
-varying baseline.  The overshooting behaviour is
-consistent with rapid redistribution of mobile halide
-vacancies upon application of the field, followed by
-slower re-equilibration of the resulting space-charge
-distribution.  The FAPbBr$_3$ device demonstrated
-substantially lower leakage under high-voltage operation,
-with a maximum leakage current of $5 \pm 2.5$~nA during
-continuous operation above 700~V, and showed no signs
-of electrical instability over more than five hours of
-sustained high-voltage testing.
-
-IV hysteresis measurements — sweeping the bias from
-forward to reverse and immediately back to forward at a
-scan rate of 20~mV\,s$^{-1}$ — served as a sensitive
-diagnostic for ion-migration-driven charge redistribution.
-The MHyPbCl$_3$ device exhibited a measurable sweep-versus-hold
-difference in the low-voltage regime, indicative of a
-polarisation effect driven by slow ionic relaxation.
-For the bromide perovskites, hysteresis was observed at
-all bias levels and was most pronounced at elevated bias,
-consistent with field-driven amplification of the
-ion-migration rate~\cite{Yuan2016ionmig}.  The mechanistic
-origins of this hysteresis and its consequences for
-detector operation are examined in detail in
-Section~\ref{sec:ion_migration_detector}.
-
-\subsection{Mobility-Lifetime Product}
-\label{sec:mut_product}
-
-The $\mu\tau$ product was extracted from photocurrent
-measurements under X-ray excitation as a function of
-applied bias, fitting the resulting data to
-Equation~(\ref{eq:hecht}).  For MHyPbCl$_3$, this
-procedure yielded $\mu\tau = 9.1 \times 10^{-3}$~cm$^2$\,V$^{-1}$,
-a value comparable to that reported for high-quality
-CsPbBr$_3$ single crystals in the
-literature~\cite{He2019CsPbBr} and approximately an
-order of magnitude larger than typical values for
-polycrystalline CZT radiation detector grade material.
-The high $\mu\tau$ of MHyPbCl$_3$ indicates that
-carriers generated by neutron-induced proton recoil events
-can traverse centimetre-scale crystal thicknesses without
-significant trapping losses, provided the applied electric
-field is sufficiently large.  Physically, the large $\mu\tau$
-reflects the extended carrier diffusion lengths achievable
-in defect-lean single crystals grown by the anti-solvent
-method, where the slow precipitation kinetics produce
-crystals with lower intrinsic vacancy concentrations than
-those formed by faster-nucleation techniques.
-
-
 %% ============================================================
-%%  POLYCRYSTALLINE X-RAY DETECTION
-%% ============================================================
-\section{Polycrystalline X-Ray Detection}
-\label{sec:xray_detector}
-
-This section presents two polycrystalline perovskite detector
-systems developed for X-ray sensing.  The first is the
-MAPbI$_3$-hBN device fabricated and characterised in this work,
-which demonstrated the role of atmospheric humidity in limiting
-detector performance under applied bias.  The second is the 2D
-perovskite (PEA$_2$MA$_2$Pb$_3$I$_{10}$) detector with a
-fluorinated surface treatment, reported by Tsai et
-al.~\cite{Tsai2022ionmig} with the present author as
-co-investigator, which directly addressed the voltage-induced
-instability problem through a hydrophobic 5F-PEAI barrier
-layer and achieved X-ray sensitivities approaching
-1000~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$.
-
-
-%% ------------------------------------------------------------
-\subsection{MAPbI$_3$-hBN X-Ray Detector}
+\section{MAPbI$_3$-hBN X-Ray Detector}
 \label{sec:mapbi_hbn_xray}
+%% ============================================================
+
+The MAPbI$_3$-hBN device was the primary polycrystalline X-ray
+detector fabricated and characterised in this work.  Its chief
+contribution is establishing the role of atmospheric humidity in
+limiting perovskite detector performance under applied bias, and
+demonstrating that vacuum operation partially restores intrinsic
+carrier transport.
+
+%% ------------------------------------------------------------
+\subsection{Material and Device Fabrication}
+\label{sec:mapbi_fabrication}
 %% ------------------------------------------------------------
 
-\subsubsection{Experimental Setup and Dosimetry Calibration}
-\label{sec:xray_setup}
+MAPbI$_3$ (methylammonium lead triiodide) doped with hexagonal
+boron nitride (hBN) was used as the X-ray absorber medium.  The
+hBN inclusions were incorporated to improve grain boundary
+passivation and reduce the density of deep-level trap states that
+would otherwise act as recombination centres for
+radiation-generated carriers.  The contact architecture was
+asymmetric, with the hBN/MAPbI$_3$ layer sandwiched between
+contacts of differing work function.  This asymmetry creates a
+built-in potential that enables a photovoltaic-like X-ray response
+even at zero applied bias, as demonstrated below.
 
-X-ray characterisation was performed using a benchtop X-ray
-tube operated at tube voltages of 30--50~kVp.  The tube
-output was collimated to a conical beam with an exit
-aperture of approximately 2~cm at the tube port.  The
-primary detector under X-ray evaluation in this subsection
-is the MAPbI$_3$-hBN device.  The photocurrent induced by
-X-ray exposure was measured as a function of applied bias
-using the Keithley 2612A SourceMeter, with the X-ray
-beam switched on and off periodically to distinguish the
-radiation-induced signal above the dark-current baseline.
-The X-ray sensitivity $S$ is defined as
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.55\textwidth]{figures/5_mapbi_hbn_device_photo}
+  \caption{MAPbI$_3$-hBN X-ray detector mounted for electrical testing.}
+  \label{fig:mapbi_device_photo}
+\end{figure}
 
+%% ------------------------------------------------------------
+\subsection{Electrical Characterisation}
+\label{sec:mapbi_electrical}
+%% ------------------------------------------------------------
+
+Current-voltage (IV) characteristics were measured using a
+Keithley 2612A SourceMeter, with sweep protocols covering $\pm$2~V
+for contact resistance extraction up to high-voltage unipolar
+sweeps (0 to $-200$~V) for leakage characterisation under detector
+operating conditions.  All sweeps were performed in a light-tight
+enclosure to prevent photogenerated carrier contributions.  IV
+hysteresis measurements at 20~mV\,s$^{-1}$ served as a diagnostic
+for ion-migration-driven charge redistribution; the MAPbI$_3$-hBN
+device exhibited a measurable sweep-versus-hold difference in the
+low-voltage regime, indicative of a slow ionic relaxation
+polarisation effect consistent with field-driven amplification of
+the ion-migration rate.
+
+%% ------------------------------------------------------------
+\subsection{X-Ray Sensitivity Measurements}
+\label{sec:mapbi_sensitivity}
+%% ------------------------------------------------------------
+
+X-ray characterisation was performed using a benchtop X-ray tube
+operated at 30--50~kVp, collimated to a conical beam with an
+$\sim$2~cm exit aperture.  The photocurrent was measured as a
+function of applied bias with the X-ray beam switched on and off
+periodically to distinguish the radiation-induced signal from the
+dark-current baseline.  X-ray sensitivity $S$ is defined as
 \begin{equation}
   S = \frac{\Delta I}{A \cdot \dot{D}},
   \label{eq:sensitivity}
 \end{equation}
+where $\Delta I$ is the X-ray-induced change in current, $A$ is
+the active contact area, and $\dot{D}$ is the calibrated dose
+rate.  The dose rate was calibrated using a RaySafe 452 dosimeter;
+however, the conical beam geometry caused dose-rate variation
+across the dosimeter face, leading to underestimation of the dose
+rate incident on the small perovskite contact area.  NanoDot
+optically stimulated luminescence (OSL) dosimeters were identified
+as a more appropriate calibration tool for subsequent experiments.
 
-\noindent where $\Delta I$ is the X-ray-induced change
-in current, $A$ is the active contact area, and
-$\dot{D}$ is the X-ray dose rate incident on the detector.
-The dose rate was calibrated using a RaySafe 452 dosimeter
-positioned in the beam.  The RaySafe 452 contains 24 silicon
-diodes and one Geiger-Müller tube distributed over a large
-active area, which introduced a systematic calibration
-uncertainty when the detector active area was smaller than
-the dosimeter sensing region.  In particular, the conical
-beam geometry caused the dose rate to vary across the dosimeter
-face, leading to an underestimation of the dose rate
-incident on the small perovskite contact area.  To address
-this, NanoDot optically stimulated luminescence (OSL)
-dosimeters — which integrate dose over a localised area
-comparable to the perovskite contact dimensions — were
-identified as a more appropriate calibration tool for
-subsequent experiments.
-
-\subsubsection{X-Ray Sensitivity Results}
-\label{sec:xray_sensitivity}
-
-Figure~\ref{fig:xray_sensitivity} shows the extracted
-X-ray sensitivity of the MAPbI$_3$-hBN device as a
-function of applied bias voltage.  At 5~V reverse bias
-the sensitivity was $0.107~\mu$C\,(Gy\,cm$^2$)$^{-1}$.
-Increasing the bias to 10~V raised the sensitivity to
-a measured mean of
-$0.245~\mu$C\,(Gy\,cm$^2$)$^{-1}$ (two independent
-measurements yielding 0.245 and 0.252~$\mu$C\,(Gy\,cm$^2$)$^{-1}$
-at the same bias, confirming reproducibility), and at
-20~V the sensitivity reached
-$0.411~\mu$C\,(Gy\,cm$^2$)$^{-1}$.  The monotonic
-increase of sensitivity with applied bias is consistent
-with Equation~(\ref{eq:hecht}): as the electric field
-increases, the carrier drift length grows, fewer carriers
-are trapped before reaching the contacts, and the
-collected charge per unit deposited energy increases
-correspondingly.  The sub-linear growth of sensitivity
-with voltage — a factor of $\sim$3.8 increase in
-sensitivity for a factor of four increase in voltage —
-suggests that the device has not yet entered the
-charge-collection saturation regime at 20~V, and that
-further gains could be achieved at higher fields.
+Sensitivity increased monotonically with applied bias:
+$0.107~\mu$C\,(Gy\,cm$^2$)$^{-1}$ at 5~V,
+$0.245~\mu$C\,(Gy\,cm$^2$)$^{-1}$ at 10~V (confirmed by repeat
+measurement at $0.252~\mu$C\,(Gy\,cm$^2$)$^{-1}$), and
+$0.411~\mu$C\,(Gy\,cm$^2$)$^{-1}$ at 20~V.  The sub-linear
+voltage dependence, a factor of $\sim$3.8 sensitivity gain for
+a factor-of-four voltage increase, indicates the device had not
+yet entered the charge-collection saturation regime at 20~V.
 
 \begin{table}[htbp]
 \centering
-\caption{X-ray sensitivity of the MAPbI$_3$-hBN detector
-         as a function of applied bias.  Sensitivity values
-         are extracted from the ratio of the X-ray-induced
-         current to the calibrated dose rate multiplied by
-         the contact area (Equation~\ref{eq:sensitivity}).}
-\label{tab:xray_sensitivity}
-\begin{tabular}{cc}
+\caption{X-ray sensitivity of the MAPbI$_3$-hBN detector as a function of applied bias.}
+\label{tab:mapbi_sensitivity}
+\begin{tabular}{ccc}
 \hline
-Applied Bias (V) & Sensitivity ($\mu$C\,(Gy\,cm$^2$)$^{-1}$) \\
+Applied Bias (V) & Sensitivity ($\mu$C\,(Gy\,cm$^2$)$^{-1}$) & Notes \\
 \hline
-5  & 0.107 \\
-10 & 0.245 \\
-10 & 0.252 \\
-20 & 0.411 \\
+5  & 0.107 & \\
+10 & 0.245 & First measurement \\
+10 & 0.252 & Repeat, confirms reproducibility \\
+20 & 0.411 & \\
 \hline
 \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.65\textwidth]{figures/5_1_xray_sensitivity.png}
-  \caption{X-ray sensitivity of the MAPbI$_3$-hBN detector
-           as a function of applied reverse bias.  Sensitivity
-           increases monotonically with field, consistent with
-           improved charge collection efficiency described by
-           the Hecht equation (Equation~\ref{eq:hecht}).
-           Error bars represent the spread between repeated
-           measurements at the same bias condition.}
-  \label{fig:xray_sensitivity}
+  \includegraphics[width=0.85\textwidth]{figures/5_mapbi_hbn_sensitivity}
+  \caption{X-ray sensitivity of the MAPbI$_3$-hBN detector as a function of applied reverse bias.}
+  \label{fig:mapbi_sensitivity}
 \end{figure}
 
-A bi-polar X-ray response was observed at zero applied
-bias in some MAPbI$_3$-hBN device configurations, wherein
-a spontaneous photovoltaic-like current transient was
-generated by X-ray exposure without any external voltage
-source.  This response is attributed to the asymmetric
-contact architecture, which creates a built-in potential
-difference between the hBN/MAPbI$_3$ and the Au contact
-interfaces.  The built-in field sweeps radiation-generated
-carriers toward the respective contacts even in the absence
-of applied bias, producing a net photocurrent that switches
-polarity depending on the direction of the dominant carrier
-flow.
+A bi-polar X-ray response was observed at zero applied bias in
+some device configurations: a spontaneous photovoltaic-like
+current transient was generated by X-ray exposure without any
+external voltage.  This is attributed to the asymmetric contact
+architecture creating a built-in potential difference between the
+hBN/MAPbI$_3$ and Au contact interfaces, which sweeps
+radiation-generated carriers toward the respective contacts even
+in the absence of applied bias.
 
-\subsubsection{Vacuum Testing and Humidity Effects}
-\label{sec:vacuum_testing}
+%% ------------------------------------------------------------
+\subsection{Vacuum Testing and Humidity Effects}
+\label{sec:mapbi_vacuum}
+%% ------------------------------------------------------------
 
-The role of atmospheric humidity in X-ray detector performance
-was directly evaluated by repeating X-ray sensitivity
-measurements on the MAPbI$_3$-hBN device under vacuum
-conditions (base pressure $< 10^{-3}$~Torr) and comparing
-the results to measurements performed in ambient laboratory
-air.  Figures~\ref{fig:vacuum_5v}--\ref{fig:vacuum_20v}
-present the X-ray current transients at 5, 10, and 20~V
-applied bias under both conditions.  In each case, the
-X-ray-induced current was larger and more stable under
-vacuum than under ambient atmosphere at matched bias, and
-the dark-current baseline was lower under vacuum.  These
-improvements are consistent with the suppression of
-moisture-accelerated ion migration under vacuum.  When
-water molecules are present at grain boundaries and crystal
-surfaces, they facilitate the diffusion of halide vacancies
-under the applied field, creating shunting pathways and
-broadening the internal electric field distribution in ways
-that reduce the effective field in the bulk and hence the
-charge collection efficiency.  Removal of ambient moisture
-under vacuum disrupts this pathway and partially restores
-the intrinsic carrier transport properties of the crystal.
+To directly evaluate the role of atmospheric humidity, X-ray
+sensitivity measurements were repeated under vacuum (base
+pressure $< 10^{-3}$~Torr) and compared to measurements in
+ambient laboratory air at matched bias voltages of 5, 10, and
+20~V.  In every case, the X-ray-induced current was larger and
+more stable under vacuum, and the dark-current baseline was lower.
+These improvements are consistent with suppression of
+moisture-accelerated ion migration: water molecules at grain
+boundaries facilitate halide vacancy diffusion under the applied
+field, creating shunting pathways and reducing the effective bulk
+field.  Removing ambient moisture under vacuum disrupts this
+pathway and partially restores intrinsic carrier transport.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.80\textwidth]{figures/5_2_vacuum_comparison.png}
-  \caption{Comparison of X-ray current transients at 5, 10,
-           and 20~V applied bias for the MAPbI$_3$-hBN device
-           in ambient air (solid curves) and under vacuum
-           (dashed curves).  Vacuum operation consistently
-           produces a larger and more stable radiation-induced
-           current, attributed to suppression of
-           moisture-accelerated ion migration.}
-  \label{fig:vacuum_comparison}
+  \includegraphics[width=0.80\textwidth]{figures/5_mapbi_hbn_xray_vacuum}
+  \caption{X-ray current transients for the MAPbI$_3$-hBN device at 5, 10, and 20~V bias in ambient air and under vacuum.}
+  \label{fig:mapbi_vacuum}
 \end{figure}
 
-Despite the improvements afforded by vacuum operation, the
-MAPbI$_3$-hBN device ultimately failed after approximately
-five hours of continuous operation at 400~V applied bias.
-Post-failure inspection showed that the device could no
-longer sustain any significant reverse bias, consistent
-with the formation of a low-resistance shunting pathway
-through the crystal bulk.  This failure mode is attributed
-to the catastrophic redistribution of ionic species under
-the large applied field: as mobile iodide vacancies
-accumulate at the electrode interfaces, the local electric
-field at those interfaces increases dramatically, eventually
-driving a decomposition of the perovskite lattice into its
-constituent binary and ternary phases.  Vacuum operation
+
+%% ------------------------------------------------------------
+\subsection{Alpha Spectroscopy Under Vacuum}
+\label{sec:mapbi_alpha}
+%% ------------------------------------------------------------
+
+Alpha particles deposit their energy very densely within a few
+micrometres of the crystal surface and generate a correspondingly
+large number of electron-hole pairs, for a 5.49-MeV alpha from
+Am-241 and $W \approx 2.8\,E_g \approx 8$~eV per pair in
+MAPbI$_3$, approximately $6.8 \times 10^5$ carriers are generated
+per event, roughly three orders of magnitude more than a single
+662-keV gamma interaction.  Despite this large signal charge,
+alpha spectroscopy had not been attempted with halide perovskite
+detectors at the time of this work because vacuum operation,
+which is required to position a source in close proximity without
+air attenuation of the short-range alpha particles, was known
+to increase the leakage current of perovskite devices, rendering
+pulse-height analysis impractical.  The physical origin of this
+vacuum-induced leakage increase is not well established; proposed
+explanations include a reduction in surface resistance as adsorbed
+surface species are removed under evacuation, and electrical
+disturbances arising from outgassing of volatile components from
+the perovskite film.
+
+The MAPbI$_3$-hBN device was anomalous in this respect: under
+vacuum (base pressure $< 10^{-3}$~Torr), the leakage current
+decreased rather than increased, yielding a stable, low dark
+current baseline over extended bias hold periods.  This behaviour
+distinguished the device from other perovskite systems tested in
+this programme and made alpha spectroscopy feasible for the first
+time.  With the noise floor below the alpha signal level, a
+resolvable Am-241 spectrum was obtained, shown in
+Figure~\ref{fig:mapbi_am241}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.60\textwidth]{figures/5_mapbi_hbn_am241_vacuum}
+  \caption{Am-241 spectrum and device stability data for the MAPbI$_3$-hBN detector under vacuum operation.}
+  \label{fig:mapbi_am241}
+\end{figure}
+
+The broader significance of this result was subsequently
+confirmed by independent groups.  Zhang et al.\ reported
+high-resolution alpha particle spectroscopy with a CsPbBr$_3$
+single-crystal detector, achieving an energy resolution of
+6.9\% with commercial electronics and 1.1\% with a full-custom
+readout ASIC designed to minimise parasitic capacitance and
+electronic noise~\cite{Zhang2024alpha}.  That work achieved
+stable low leakage in ambient conditions through crystal surface
+thinning to remove the high-concentration CsPb$_2$Br$_5$ phase
+combined with a Schottky electrode geometry, enabling a dark
+current of 34.6~nA\,cm$^{-2}$ at 200~V without vacuum
+enclosure.
+
+Despite these improvements, the MAPbI$_3$-hBN device failed
+irreversibly after approximately five hours of continuous
+operation at 400~V applied bias.  Post-failure inspection showed
+the device could no longer sustain any significant reverse bias,
+consistent with the formation of a low-resistance shunting pathway
+through the crystal bulk.  This failure mode is attributed to
+catastrophic redistribution of ionic species under the large
+field: as mobile iodide vacancies accumulate at the electrode
+interfaces, the local electric field increases dramatically,
+eventually driving decomposition of the perovskite lattice into
+its constituent binary and ternary phases.  Vacuum operation
 delays but does not eliminate this failure mode.
 
-\subsubsection{Charge Trapping and Sensitivity Degradation}
-\label{sec:xray_trapping}
+%% ------------------------------------------------------------
+\subsection{Charge Trapping and Sensitivity Degradation}
+\label{sec:mapbi_trapping}
+%% ------------------------------------------------------------
 
-Beyond the acute device failure observed at 400~V,
-a more gradual form of sensitivity degradation was
-observed under continuous X-ray exposure at moderate
-bias levels, referred to here as charge trapping.
-During prolonged irradiation at $-50$~V, the
-X-ray-induced current was observed to decrease
-monotonically over the course of several minutes,
-even though the incident X-ray flux remained constant.
-A comparable decay was recorded at $+50$~V.  A
-measurement of sensitivity performed after this
-trapping period showed a reduced value relative to
-the pre-trapping measurement at the same bias.
+A more gradual form of sensitivity degradation, distinct from
+the acute failure at 400~V, was observed under continuous
+X-ray exposure at moderate bias.  During prolonged irradiation at
+$-50$~V, the X-ray-induced current decreased monotonically over
+several minutes even though the incident X-ray flux was constant.
+A comparable decay was recorded at $+50$~V.
 
-The trapping phenomenon is attributed to the
-progressive filling of mid-gap trap states within
-the crystal.  Radiation-generated carriers that
-become trapped at these sites are immobilised and
-unable to contribute to the measured current;
-additionally, the trapped charge builds an opposing
-space-charge field that reduces the net electric
-field available for sweeping subsequently generated
-carriers to the contacts.  This behaviour is
-distinct from, though mechanistically related to,
-ion migration: both processes reduce charge
-collection efficiency under sustained applied bias,
-but trapping occurs on a timescale of seconds to
-minutes governed by the carrier capture cross sections
-of the trap states, whereas ion migration proceeds
-on timescales of tens of minutes to hours governed
-by the diffusivity of the ionic species.  The
-distinction has implications for mitigation: trap-state
-filling can in principle be reversed by briefly
-reducing the bias to zero (allowing trapped carriers
-to recombine or detrap thermally), whereas ionic
-redistribution is reversed only by allowing the
-crystal to equilibrate for extended periods, and may
-in extreme cases represent permanent structural
-damage to the crystal.
-
-\subsubsection{Discussion}
-\label{sec:mapbi_hbn_discussion}
-
-The absolute sensitivity values measured for the
-MAPbI$_3$-hBN device — of order
-$10^{-1}$~$\mu$C\,(Gy\,cm$^2$)$^{-1}$ at modest
-bias voltages — are substantially below those reported
-for optimised 2D perovskite thin-film detectors, as
-discussed in the following subsection.  The gap reflects
-the thick absorber geometry of the 3D crystal, which
-requires much larger absolute voltages to achieve
-equivalent electric fields compared to a 9-$\mu$m
-thin film.  Nevertheless, the MAPbI$_3$-hBN results
-establish two critical findings: first, that the
-sensitivity follows the Hecht equation dependence on
-field, confirming that charge collection — not
-absorption — is the performance-limiting factor at
-these bias levels; and second, that vacuum operation
-demonstrably suppresses the moisture-accelerated
-degradation pathway, confirming the mechanistic link
-between humidity and voltage-induced instability
-that motivated the 5F-PEAI surface treatment strategy
-described next.
-
+The trapping phenomenon is attributed to progressive filling of
+mid-gap trap states within the crystal.  Carriers trapped at
+these sites are immobilised and cannot contribute to measured
+current; additionally, the trapped charge builds an opposing
+space-charge field that reduces the net electric field for
+subsequently generated carriers.  Trapping occurs on a timescale
+of seconds to minutes (governed by trap capture cross sections),
+whereas ion migration proceeds on timescales of tens of minutes
+to hours (governed by ionic diffusivity).  The distinction has
+implications for mitigation: trap-state filling can be reversed
+by briefly grounding the device to allow trapped carriers to
+recombine or detrap thermally, whereas ionic redistribution
+requires extended equilibration and may in extreme cases represent
+permanent structural damage.
 
 %% ------------------------------------------------------------
-\subsection{2D Perovskite Detector with 5F-PEAI Surface Treatment}
+\subsection{Discussion}
+\label{sec:mapbi_discussion}
+%% ------------------------------------------------------------
+
+The absolute sensitivity values of the MAPbI$_3$-hBN device,
+of order $10^{-1}$~$\mu$C\,(Gy\,cm$^2$)$^{-1}$ at modest bias
+voltages, are substantially below those of optimised 2D
+perovskite thin-film detectors (Section~\ref{sec:2d_perovskite_xray}),
+reflecting the thick absorber geometry rather than any intrinsic
+material limitation.  This device establishes two critical
+findings: first, that sensitivity follows the Hecht equation field
+dependence, confirming charge collection, not absorption, is
+the performance-limiting factor at these bias levels; and second,
+that vacuum operation demonstrably suppresses the
+moisture-accelerated degradation pathway, directly motivating the
+5F-PEAI surface treatment strategy demonstrated in the next
+section.
+
+
+%% ============================================================
+\section{2D Perovskite (PEA$_2$MA$_2$Pb$_3$I$_{10}$) X-Ray
+         Detector with 5F-PEAI Surface Treatment}
 \label{sec:2d_perovskite_xray}
+%% ============================================================
+
+The voltage-induced instability observed in the MAPbI$_3$-hBN
+device is a general challenge for all perovskite direct-conversion
+detectors requiring sustained reverse bias.  To address this in
+polycrystalline thin-film detectors, Tsai et al.\ developed a
+fluorinated surface treatment strategy~\cite{Tsai2022ionmig},
+with the present author contributing to device fabrication and
+X-ray characterisation.  This section presents that work in full
+as it directly motivates the mitigation strategies discussed in
+Section~\ref{sec:ion_migration_detector}.
+
+%% ------------------------------------------------------------
+\subsection{Device Structure and Material Characterisation}
+\label{sec:2d_device_char}
 %% ------------------------------------------------------------
 
-The voltage-induced instability observed in the
-MAPbI$_3$-hBN device is not unique to 3D single crystals;
-it is a general challenge for all perovskite direct-conversion
-detectors that require sustained reverse bias.  To address
-this instability in polycrystalline thin-film detectors,
-Tsai et al.\ developed a fluorinated surface treatment
-strategy that was reported in~\cite{Tsai2022ionmig}, with the
-present author contributing to device fabrication and X-ray
-characterisation.  The key results of that work are
-summarised here to provide context for the mitigation
-strategies discussed in
-Section~\ref{sec:ion_migration_detector} and to establish
-the state-of-the-art X-ray sensitivity achievable in
-perovskite thin-film detectors when the voltage instability
-problem is mitigated.
+The 2D perovskite detector employed a p--i--n diode architecture.
+The p-type contact was poly[bis(4-phenyl)(2,4,6-trimethylphenyl)
+amine] (PTAA) and the n-type contact was a fullerene (60~nm) /
+bathocuproine BCP (10~nm) bilayer, completed with a gold top
+contact without additional encapsulation.  The intrinsic
+perovskite layer targeted a PEA$_2$MA$_2$Pb$_3$I$_{10}$
+composition (PEA = phenylethylammonium).  Cross-sectional SEM
+showed a continuous, compact film approximately 9~$\mu$m thick,
+with large crystal grains extending through most of the film
+thickness and a more disordered, smaller-crystallite structure
+near the surface.  Synchrotron GIWAXS confirmed high
+crystallinity with strong discrete Bragg spots and weak
+Debye--Scherrer rings from the surface-near disordered layer.
 
-\subsubsection{Device Structure and Material Characterisation}
-\label{sec:2d_device_char}
-
-The 2D perovskite detector employed a p--i--n diode
-architecture, where the p-type contact was made with
-poly[bis(4-phenyl)(2,4,6-trimethylphenyl)amine] (PTAA) and
-the n-type contact was composed of a bilayer of fullerene
-(60~nm) and bathocuproine, BCP (10~nm).  The detector was
-completed with a gold top contact without any additional
-encapsulation.  The intrinsic perovskite layer targeted a
-PEA$_2$MA$_2$Pb$_3$I$_{10}$ composition, where PEA denotes
-phenylethylammonium.  Cross-sectional scanning electron
-microscopy (SEM) showed a continuous, compact film
-approximately 9~$\mu$m thick, with most of the film composed
-of large crystal grains extending through the film thickness
-and a relatively more disordered structure with smaller
-crystallites near the surface.  Synchrotron grazing incidence
-wide-angle X-ray scattering (GIWAXS) confirmed high
-crystallinity, with strong discrete Bragg spots indicating
-preferred crystal orientations alongside weak ring-like
-Debye--Scherrer patterns from the smaller disordered
-crystallites near the surface.
-
-\subsubsection{Humidity-Dependent Instability}
+%% ------------------------------------------------------------
+\subsection{Humidity-Dependent Instability}
 \label{sec:2d_humidity}
+%% ------------------------------------------------------------
 
-A systematic investigation of the relationship between ambient
-humidity and device stability established that the severity of
-voltage-induced instability is directly correlated with the
-relative humidity (RH) of the operating environment.  Devices
-were subjected to IV sweeps and bias-hold tests at controlled
-RH levels of 0\%, 20\%, and 40\% in a sealed chamber.
+Devices were tested at controlled relative humidity (RH) of 0\%,
+20\%, and 40\% in a sealed chamber.  At 0\% RH, devices exhibited
+no measurable I--V hysteresis and remained stable to voltages
+beyond $-15$~V.  As RH was raised to 40\%, hysteresis became
+pronounced and breakdown voltage fell dramatically: devices failed
+irreversibly between $-8$ and $-10$~V, versus more than twice
+that at 0\% RH.  Dark current measurements at $-5$~V in 40\% RH
+air showed device failure within two to three minutes.  The
+combination of reverse bias and humidity was identified as the
+critical driver of failure, moisture alone was insufficient to
+cause instantaneous breakdown.
 
-At 0\% RH (inert atmosphere), the devices exhibited no
-measurable I--V hysteresis across the tested voltage range and
-remained stable under sustained reverse bias to voltages
-beyond $-15$~V.  As the RH was raised to 20\% and then to
-40\%, the hysteresis in the forward-to-reverse sweep became
-progressively more pronounced, and the breakdown voltage
-decreased dramatically: devices at 40\% RH failed irreversibly
-at bias voltages as low as $-8$ to $-10$~V, whereas their
-counterparts tested at 0\% RH survived to voltages more than
-twice as large.  Time-resolved dark current measurements at
-constant $-5$~V bias in 40\% RH air showed that devices
-failed within two to three minutes, while the same devices
-at zero bias in 40\% RH remained stable for over one hour.
-The combination of reverse bias and humidity was therefore
-identified as the critical driver of device failure, with
-moisture alone being insufficient to cause instantaneous
-breakdown.
-
-\subsubsection{5F-PEAI Surface Treatment and Results}
+%% ------------------------------------------------------------
+\subsection{5F-PEAI Surface Treatment and Results}
 \label{sec:5fpeai_results}
+%% ------------------------------------------------------------
 
-To combat the moisture-accelerated breakdown, a fluorinated
-phenylethylammonium iodide (5F-PEAI) barrier layer was applied
-to the perovskite surface.  The 5F-PEAI molecule replaces all
-five hydrogen atoms on the phenyl ring of PEAI with fluorine
-atoms, increasing the surface energy and producing a hydrophobic
-barrier.  After incorporation with 5F-PEAI, the water contact
-angle of the perovskite surface increased from 66.1$^\circ$ to
-76.0$^\circ$ (approximately 15\%), confirming a higher surface
-energy.
+A fluorinated phenylethylammonium iodide (5F-PEAI) barrier layer
+was applied to the perovskite surface, replacing all five hydrogen
+atoms on the PEAI phenyl ring with fluorine.  This increased the
+water contact angle from 66.1$^\circ$ to 76.0$^\circ$
+($\approx$15\%), confirming enhanced hydrophobicity.  At the
+optimal concentration of 4~mg\,mL$^{-1}$, 5F-PEAI penetrated
+grain boundaries and stabilised the device to $-16$~V in 40\% RH,
+compared to $-10$~V for the untreated device.  ToF-SIMS
+fluorine mapping confirmed grain boundary penetration at the
+higher concentration.
 
-Time evolution of the dark current at constant $-5$~V bias and
-RH~=~40\% showed striking differences between treated and
-untreated devices.  The unprotected device exhibited large dark
-current fluctuations after two minutes, followed by device
-shunting with sudden current jumps of three orders of magnitude.
-In contrast, the 5F-PEAI-protected device remained stable over
-30~minutes of continuous biasing under the same conditions.
+DFT calculations revealed the mechanism: the PEA surface has a
+water penetration activation energy of only $\sim$5~meV, far
+below room-temperature thermal energy, whereas the fluorinated
+5F-PEA surface raises this barrier to $\sim$120~meV, with strong
+electrostatic repulsion from electronegative fluorine atoms
+preventing moisture ingress.
 
-The 5F-PEAI concentration was varied to optimise the
-protection.  At 1~mg\,mL$^{-1}$, the coating provided
-negligible improvement, possibly due to non-uniform coverage.
-At 2~mg\,mL$^{-1}$, the device survived up to $-14$~V with
-current fluctuations appearing only near the highest bias,
-approaching its limit at $-16$~V (1.8~V\,$\mu$m$^{-1}$).
-At 4~mg\,mL$^{-1}$, the device sustained up to $-16$~V
-without any sign of failure.  Time-of-flight secondary ion mass
-spectroscopy (ToF-SIMS) fluorine mapping revealed that at the
-higher concentration, fluorine atoms penetrated below the
-surface and diffused through the grain boundaries, providing
-the comprehensive moisture protection responsible for the
-enhanced breakdown threshold.
-
-Overlaying the I--V curves of all four devices before their
-breakdown thresholds revealed that the 2~mg\,mL$^{-1}$
-treatment reduced the dark current in the reverse bias regime
-while leaving forward injection unaffected, indicating surface
-passivation without interfering with carrier transport.  The
-4~mg\,mL$^{-1}$ treatment produced a reduced forward injection
-current, indicating that a thicker 5F-PEAI layer introduces an
-energy barrier at the interface that becomes more insulating.
-
-\subsubsection{X-Ray Detection Performance}
+%% ------------------------------------------------------------
+\subsection{X-Ray Detection Performance}
 \label{sec:2d_xray_performance}
+%% ------------------------------------------------------------
 
-Photodetection and X-ray characterisation were performed on
-the 5F-PEAI-treated devices.  External quantum efficiency (EQE)
-measurements under visible-light illumination showed that all
-devices exhibited vanishing efficiency near zero bias due to
-their thick absorber volumes (approximately 8--9~$\mu$m),
-where a significant fraction of carriers recombine before
-reaching the contacts.  As the reverse bias increased from 0 to
-$-5$~V, EQEs rose rapidly from 3--6\% to approximately 15\%.
-At higher reverse bias ($-10$~V), the uncoated device's EQE
-saturated toward 30\%, while the 5F-PEAI-coated devices
-continued to grow, ultimately reaching 50\%.  The lower
-efficiency at low bias for the thicker 5F-PEAI coating is
-understood as a consequence of the charge extraction barrier
-formed by the insulating fluorinated layer at the interface.
+EQE measurements showed that 5F-PEAI-coated devices reached 50\%
+at $-10$~V reverse bias, compared to 30\% saturation for the
+uncoated device.  X-ray sensitivity at 4~V bias reached an
+average of $862.5~\mu$C\,(Gy$_{\mathrm{air}}$\,cm$^2$)$^{-1}$ (vs.\
+$726.2~\mu$C\,(Gy$_{\mathrm{air}}$\,cm$^2$)$^{-1}$ for the reference),
+with a maximum of $996.3~\mu$C\,(Gy$_{\mathrm{air}}$\,cm$^2$)$^{-1}$,
+among the highest reported for polycrystalline perovskite
+detectors of comparable absorber thickness.
 
-X-ray sensitivity was measured using an Amptek mini-X-ray tube
-with an Ag target, producing characteristic radiation at
-22.1~keV and a maximum bremsstrahlung energy of 50~keV.  The
-X-ray tube was cycled on and off at increasing tube currents,
-tuning the dose rate from 2 to 70~$\mu$Gy$_{\rm air}$\,s$^{-1}$.
-Sensitivity was extracted from the slope of the linear
-regression between the X-ray-induced photocurrent and the dose
-rate.  At a bias of 4~V, the 5F-PEAI-treated device achieved a
-higher average sensitivity of
-862.5~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$ compared to
-726.2~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$ for the
-reference device.  The maximum reported sensitivity at 4~V
-was 996.3~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$ for the
-5F-PEAI device and
-828.3~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$ for the
-reference, confirming the superior performance and stability
-of the treated device.  The five electrode pixels on the
-5F-PEAI device consistently reached 6--7~V with measurable
-sensitivities, whereas the reference device pixels could only
-operate at 5--6~V before exhibiting sharply increased noise.
-
-\subsubsection{Mechanistic Understanding}
-\label{sec:2d_mechanism}
-
-The mechanism by which 5F-PEAI suppresses the
-moisture-accelerated breakdown was elucidated through
-photoluminescence (PL) mapping and first-principles quantum
-chemical simulations.  PL peak-position maps acquired after
-voltage stressing at $-1$, $-5$, and $-7$~V for 30~minutes
-showed that the unprotected device developed pronounced
-spatial inhomogeneity in its PL wavelength and intensity after
-$-7$~V stress, with local hot spots of shifted emission
-indicative of ion-migration-driven phase segregation.  The PL
-peak distribution of the untreated device shifted toward
-lower energy and broadened significantly, consistent with
-defect creation and the formation of lower-$n$-numbered
-phases through field-driven phase segregation.  In contrast,
-the 5F-PEAI-treated device maintained a sharp PL distribution
-centred near 735~nm even after identical voltage stress.
-
-DFT calculations of the water migration pathway through the
-organic layers revealed a key mechanistic difference.  On the
-PEA-covered surface, the activation energy for water
-penetration was only approximately 5~meV — far below the
-thermal energy at room temperature — meaning water molecules
-percolate through the organic capping layer essentially without
-barrier.  Moreover, water became more stable (by approximately
-58~meV) in the vicinity of the iodide atoms on the inorganic
-Pb/I surface, thermodynamically favouring moisture ingress.
-In contrast, the fluorinated 5F-PEA layer raised the
-activation barrier for water penetration to approximately
-120~meV.  The fluorinated molecules make the surface
-predominantly electronegative, so approaching water molecules
-encounter strong electrostatic repulsion between oxygen and
-fluorine atoms.  This computational result directly explains
-why the 5F-PEAI coating prevents the moisture-accelerated
-degradation observed in both the 2D detector and, by
-extension, the 3D MAPbI$_3$-hBN device tested in this work.
-
-\subsubsection{Discussion}
+%% ------------------------------------------------------------
+\subsection{Discussion}
 \label{sec:2d_discussion}
+%% ------------------------------------------------------------
 
-The absolute sensitivity values measured for the
-MAPbI$_3$-hBN device (of order
-$10^{-1}$~$\mu$C\,(Gy\,cm$^2$)$^{-1}$) are three to four
-orders of magnitude below those demonstrated for the
-5F-PEAI-treated 2D perovskite detector (approaching
-$10^3$~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$).  This gap
-reflects fundamental differences in device geometry rather
-than intrinsic material quality: the 2D perovskite's
-$\sim$9-$\mu$m thin-film geometry charges and discharges
-rapidly under modest applied fields, whereas the thick 3D
-crystal requires much larger absolute voltages to achieve
-equivalent electric field strengths.  The 2D detector also
-benefits from a built-in p--i--n junction that provides
-efficient carrier extraction even at low bias.
-
-The 5F-PEAI surface treatment demonstrated by Tsai et al.\
-establishes a clear pathway for stabilising polycrystalline
-perovskite detectors against the moisture-accelerated
-breakdown that limited the MAPbI$_3$-hBN device in this
-work.  The combination of enhanced breakdown voltage
-(up to $-16$~V at 40\% RH, compared to $-10$~V for the
-untreated device) and high X-ray sensitivity
-($\sim$1000~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$) makes
-the 5F-PEAI-treated detector competitive with the highest
-reported sensitivities for polycrystalline perovskite detectors
-of comparable absorber thickness.  Extending this passivation
-strategy to the 3D single crystal systems used for gamma-ray
-and neutron detection in the following sections is identified
-as a high-priority direction for future work.
+The sensitivity values of the 5F-PEAI-treated 2D detector
+($\sim$$10^3$~$\mu$C\,(Gy$_{\mathrm{air}}$\,cm$^2$)$^{-1}$) exceed
+those of the MAPbI$_3$-hBN device ($\sim$$10^{-1}$~$\mu$C)
+by three to four orders of magnitude, reflecting device geometry
+differences rather than intrinsic material quality.  The 5F-PEAI
+surface treatment demonstrates a clear pathway for stabilising
+polycrystalline perovskite detectors against moisture-accelerated
+breakdown.  Extending this passivation strategy to the 3D single
+crystal systems used for gamma-ray and neutron detection is
+identified as a high-priority direction for future work.
 
 
 %% ============================================================
-%%  SINGLE-CRYSTAL GAMMA-RAY DETECTION
-%% ============================================================
-\section{Single-Crystal Gamma-Ray Detection}
-\label{sec:gamma_detector}
-
-This section presents the gamma-ray spectroscopy results
-obtained from the bromide perovskite single-crystal detectors.
-The three crystals — CsPbBr$_3$, FAPbBr$_3$, and MAPbBr$_3$
-— share the same Schottky contact architecture and readout
-chain but produced markedly different outcomes, ranging from
-proof-of-concept spectroscopy (FAPbBr$_3$) to complete
-fabrication failure (MAPbBr$_3$).  Each crystal system is
-discussed in turn below.
-
-\subsection{Experimental Setup and Acquisition Chain}
-\label{sec:gamma_setup}
-
-Gamma-ray spectroscopy experiments were performed using two
-isotopic sources: a $^{137}$Cs source emitting 662-keV
-photons, and a $^{57}$Co source emitting characteristic
-X-rays and gamma rays at 14, 122, and 136~keV.  The
-measurement electronics consisted of a CAEN A1422
-charge-sensitive preamplifier connected directly to
-the detector pixel contacts via copper wire leads,
-followed by an Ortec 926 multichannel analyser (MCA)
-shaping amplifier with a 10-$\mu$s shaping time constant,
-and a CAEN N6724 16-bit analogue-to-digital converter (ADC)
-with 16,384 channels (16k ADC) for digital pulse height
-analysis.  The 10-$\mu$s shaping time was selected
-to be long relative to the expected carrier transit
-time across the millimetre-scale crystal, ensuring
-that the shaped output pulse height is proportional
-to the total collected charge (i.e.\ minimising
-ballistic deficit).  Digitiser settings were:
-channel threshold at 15 channels, trigger hold-off
-of 1500~ns, input rise time of 1200~ns, trapezoid
-rise time of 8~$\mu$s, trapezoid flat-top of 5~$\mu$s,
-and energy fine gain of 10.  High voltages were
-supplied by a regulated power supply; the pixel
-contact and guard ring contacts were biased
-independently to allow guard-ring isolation
-experiments to be performed.
-
-The experimental geometry for gamma spectroscopy
-placed the source at a fixed distance from the
-detector face, with the geometry defined by the
-active pixel area.  Because the crystals used
-in this work were of order 2--3~mm in thickness
-and 5--8~mm in lateral dimension, the geometric
-efficiency for 662-keV gamma rays was inherently
-low: the mean free path of a 662-keV photon in
-CsPbBr$_3$ ($Z_{\rm eff} \approx 45$,
-$\rho \approx 4.5$~g\,cm$^{-3}$) is
-approximately 7~mm, meaning that fewer than
-50\% of photons traversing the crystal along
-its thin dimension undergo an interaction.
-
-
-%% --- CsPbBr3 ---
-\subsection{CsPbBr$_3$}
+\section{CsPbBr$_3$ Gamma-Ray Detector}
 \label{sec:cspbbr_gamma}
+%% ============================================================
 
-\subsubsection{Characterisation}
+CsPbBr$_3$ was the first bromide perovskite single crystal
+evaluated as a gamma-ray spectrometer in this work.  Its wide
+bandgap ($\sim$2.3~eV), large effective atomic number, and high
+reported resistivity made it a natural candidate for high-voltage
+spectroscopy.  In practice, the device was significantly limited
+by large, unstable leakage current at the operating bias required
+for reasonable charge collection.
 
-The CsPbBr$_3$ device exhibited a working leakage current
-in the range of 315--710~nA at 1000~V reverse bias, as
-detailed in Section~\ref{sec:resistivity}.  The leakage
-current was not stable upon first application of bias, showing
-a characteristic overshoot followed by a gradual decay over
-45~minutes to one hour.  This overshooting behaviour,
-consistent with redistribution of mobile halide vacancies upon
-application of the field, introduced additional electronic
-noise during the stabilisation period and limited the effective
-acquisition window for spectroscopy.
+%% ------------------------------------------------------------
+\subsection{Crystal Preparation and Contact Fabrication}
+\label{sec:cspbbr_fabrication}
+%% ------------------------------------------------------------
 
-\subsubsection{Results}
-
-The CsPbBr$_3$ detector was operated at 1000~V reverse
-bias for $^{137}$Cs spectroscopy measurements.  A
-comparison of count rates acquired with the source
-present versus background-only conditions yielded
-a source count rate of 17.45~counts\,s$^{-1}$ against a
-background of 9.11~counts\,s$^{-1}$, confirming a
-statistically significant response to the 662-keV
-source.  However, no resolvable photopeak at the
-expected 662-keV channel position was observed in the
-accumulated pulse-height spectrum.  The expected
-photopeak channel was estimated from a CZT energy
-calibration reference and the amplifier gain settings
-to fall at approximately channels 300--400 in the
-16k ADC.  Instead, the acquired spectrum displayed a
-broad continuum of counts at low channels consistent
-with incomplete charge collection and a spurious
-artefact near channel 16,382 (the maximum channel
-of the ADC), which was attributed to ADC saturation
-or ringing from large current transients generated
-during ion migration events.
+CsPbBr$_3$ single crystals were grown externally and received by
+the research group.  Crystals judged free of macroscopic defects
+were mechanically planarised using silicon carbide abrasive paper,
+then sequentially polished with diamond polishing paste to a
+10-nm surface finish.  A hexane bath rinse was performed between
+each polishing stage to remove residual abrasive particles.  One
+CsPbBr$_3$ crystal sustained internal cracking from an accidental
+drop during handling; while it remained electrically functional,
+the crack likely introduced additional carrier trapping sites and
+reduced the geometric detection efficiency.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.80\textwidth]{figures/5_3_cspbbr_spectrum.png}
-  \caption{Pulse-height spectrum acquired from the CsPbBr$_3$
-           detector at 1000~V reverse bias with the $^{137}$Cs
-           source present (solid line) and background-only
-           (dashed line).  A clear elevation in total count rate
-           is observed with the source, but no resolved photopeak
-           is apparent due to the high electronic noise from the
-           large device leakage current.  The anomalous feature
-           near channel 16,382 is attributed to ADC saturation
-           from ion-migration-induced current spikes.}
+  \includegraphics[width=0.85\textwidth]{figures/5_cspbbr_polishing}
+  \caption{CsPbBr$_3$ crystal during mechanical polishing preparation.}
+  \label{fig:cspbbr_polishing}
+\end{figure}
+
+The Schottky contact architecture, common to CsPbBr$_3$,
+MAPbBr$_3$, and FAPbBr$_3$, is shown schematically in
+Figure~\ref{fig:bromide_contact_schematic}.  The final device
+design, which produced the best spectroscopic results with the
+FAPbBr$_3$ crystal, used gold as the pixelated contact and
+Ti/Ni as a continuous back-face contact.  A 2$\times$2 array
+of 1.25-mm-diameter gold pixel contacts surrounded by an
+integrated guard ring was deposited through a drilled aluminium
+shadow mask using a Denton sputter coater.  On the opposite
+crystal face, a continuous Ti/Ni bilayer was deposited using
+an AJA Orion RF/DC sputter system: Ti was deposited at 450~W
+($\approx$1.15~\AA\,s$^{-1}$) followed immediately by a 10-nm
+Ni passivating overlayer at 250~W
+($\approx$2.1~\AA\,s$^{-1}$) across the full crystal face.
+Pixel contacts were wired via Cu leads bonded with silver epoxy.
+
+The necessity of the Ni overlayer was established empirically
+during early contact deposition trials, in which Ti was deposited
+without any capping layer.  Upon venting the deposition chamber
+to atmosphere, the bare Ti films were observed to delaminate from
+the crystal surface in a characteristic rolled pattern, visible
+in Figure~\ref{fig:ti_delamination}.  The root cause is the
+oxidation of Ti upon air exposure: as the surface of the Ti film
+converts to TiO$_x$, the crystallographic lattice mismatch
+between the oxide and the underlying metallic Ti generates a
+large in-plane compressive stress.  This biaxial stress causes
+the film to buckle and curl away from the perovskite surface,
+producing the ``swiss-roll'' delamination morphology observed.
+The problem was fully resolved by depositing the 10-nm Ni
+capping layer immediately after Ti, before venting, which
+prevents atmospheric oxygen from reaching the Ti surface and
+thereby eliminates the oxidation-driven stress.  No delamination
+was observed on any device fabricated with the Ti/Ni bilayer
+contact.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/5_ti_delamination}
+  \caption{Ti contact delamination on (a,\,b)~FAPbBr$_3$ and (c)~CsPbBr$_3$ crystal faces following deposition without a Ni capping layer.}
+  \label{fig:ti_delamination}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/5_bromide_contact_schematic}
+  \caption{Contact architecture for bromide perovskite gamma-ray detectors showing the Au pixel array with guard ring (left), continuous Ti/Ni back face (centre), and device layer stack (right).}
+  \label{fig:bromide_contact_schematic}
+\end{figure}
+
+%% ------------------------------------------------------------
+\subsection{Gamma Spectroscopy Setup}
+\label{sec:gamma_setup}
+%% ------------------------------------------------------------
+
+Gamma-ray spectroscopy used a $^{137}$Cs source (662~keV) and a
+$^{57}$Co source (14, 122, 136~keV).  The readout chain consisted
+of a CAEN A1422 charge-sensitive preamplifier connected directly
+to the pixel contacts, and a CAEN N6724 Digitizer
+16-bit ADC (16,384 channels).  The 10-$\mu$s shaping time
+minimises ballistic deficit.  Digitiser settings: threshold
+15~channels, trigger hold-off 1500~ns, input rise time 1200~ns,
+trapezoid rise time 8~$\mu$s, trapezoid flat-top 5~$\mu$s,
+energy fine gain 10.  The mean free path of a 662-keV photon in
+CsPbBr$_3$ ($Z_{\mathrm{eff}} \approx 45$,
+$\rho \approx 4.5$~g\,cm$^{-3}$) is approximately 7~mm; with
+crystal thicknesses of 2--3~mm, fewer than 50\% of photons
+interact, so geometric detection efficiency was inherently low.
+
+%% ------------------------------------------------------------
+\subsection{Electrical Characterisation}
+\label{sec:cspbbr_electrical}
+%% ------------------------------------------------------------
+
+The CsPbBr$_3$ device exhibited a working leakage current of
+315--710~nA at 1000~V reverse bias.  This current overshot its
+quasi-steady-state value immediately after the voltage step, then
+decayed gradually over 45~minutes to one hour, consistent with
+rapid redistribution of mobile halide vacancies followed by slower
+re-equilibration of the resulting space-charge distribution.
+
+%% ------------------------------------------------------------
+\subsection{Gamma Spectroscopy Results}
+\label{sec:cspbbr_results}
+%% ------------------------------------------------------------
+
+The CsPbBr$_3$ detector was operated at 1000~V reverse bias for
+$^{137}$Cs measurements.  The source count rate was
+17.45~counts\,s$^{-1}$ against a background of
+9.11~counts\,s$^{-1}$, a statistically significant response to
+the 662-keV source.  However, no resolvable photopeak at the
+expected 662-keV channel position was observed.  The spectrum
+displayed a broad continuum at low channels, consistent with
+incomplete charge collection, and a spurious artefact near
+channel 16,382 (the ADC maximum), attributed to ADC saturation
+from large ion-migration-induced current transients.  A Geant4
+Monte Carlo simulation of the crystal geometry confirmed the
+features expected for a small-volume Compton spectrometer.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/5_cspbbr_spectrum}
+  \caption{CsPbBr$_3$ pulse-height spectrum acquired at 1000~V reverse bias with a $^{137}$Cs source.}
   \label{fig:cspbbr_spectrum}
 \end{figure}
 
-A Geant4 Monte Carlo simulation of the CsPbBr$_3$ crystal
-geometry exposed to $^{137}$Cs (662-keV) gammas in a
-$4\pi$ source configuration was performed to compute the
-theoretical energy deposition spectrum.  The simulated
-spectrum showed the characteristic features expected
-for a small-volume Compton spectrometer: a Compton
-continuum, a Compton edge, and a full-energy peak whose
-intensity relative to the Compton continuum reflects
-the small crystal volume and the resulting high
-Compton-to-photoelectric ratio at 662~keV in a
-medium-Z material.
+%% ------------------------------------------------------------
+\subsection{Discussion}
+\label{sec:cspbbr_discussion}
+%% ------------------------------------------------------------
 
-\subsubsection{Discussion}
-
-The primary reason for the absence of a resolved photopeak
-is the high electronic noise contribution from the
-leakage current of the device.  At 1000~V reverse bias,
-the CsPbBr$_3$ device drew a working leakage current
-of 315--710~nA during the period immediately following
-bias application.  The root-mean-square (RMS) noise generated by a
-leakage current of this magnitude is far larger than the
-signal charge deposited by a single 662-keV gamma photon
-(approximately 0.4~pC for a 3-mm-thick CsPbBr$_3$ crystal
-with unity charge collection efficiency), rendering spectroscopic
-pulse resolution impossible during the transient stabilisation
-period.  Even at quasi-steady-state, the residual leakage and
-its associated shot noise remained the dominant contribution
-to the equivalent noise charge of the preamplifier-detector
-system at the 10-$\mu$s shaping time.  Comparison of the
-simulated and measured spectra confirmed that the measured
-spectrum was dominated by electronic noise rather than any
-intrinsic limitation of the CsPbBr$_3$ detector material:
-the resolution-limiting factor was the large, unstable
-leakage current and its noise contribution rather than
-the charge transport properties of the crystal itself.
+The resolution-limiting factor was the large, unstable leakage
+current, not the intrinsic charge transport properties of
+CsPbBr$_3$.  At 1000~V, the RMS noise generated by 315--710~nA
+of leakage current is far larger than the $\sim$0.4~pC signal
+charge from a single 662-keV gamma photon, rendering
+spectroscopic pulse resolution impossible during the transient
+stabilisation period.  Reducing leakage is therefore the primary
+engineering challenge, achievable through improved Schottky
+barrier quality (lower sputter power, better vacuum) and contact
+passivation to prevent the Ti-Br$^-$ chemical reaction documented
+in Section~\ref{sec:contact_degradation}.
 
 
-%% --- FAPbBr3 ---
-\subsection{FAPbBr$_3$}
+%% ============================================================
+\section{FAPbBr$_3$ Gamma-Ray Detector}
 \label{sec:fapbbr_gamma}
+%% ============================================================
 
-\subsubsection{Characterisation}
+The FAPbBr$_3$ single-crystal detector represented the most
+successful gamma spectrometer achieved in this work.  It
+demonstrated substantially lower leakage current and greater
+electrical stability than CsPbBr$_3$, ultimately producing
+spectral features attributable to both $^{137}$Cs and $^{57}$Co,
+a proof-of-concept demonstration of gamma spectroscopy in a
+solution-grown halide perovskite crystal.
 
-The FAPbBr$_3$ single-crystal detector, with a crystal
-thickness of 2.35~mm and contact area of
-$5.2 \times 6.15$~mm$^2$, demonstrated substantially
-better high-voltage stability than the CsPbBr$_3$ device.
-Electrical characterisation was first performed
-with IV sweeps from $-20$ to $+20$~V and from $-200$ to
-$+200$~V to assess the device leakage and confirm
-acceptable Schottky behaviour.  A bias stability test
-at $-200$~V over a six-hour period showed that the
-leakage current reached a pseudo-steady-state with
-a maximum measured value of $5 \pm 2.5$~nA during
-high-voltage operation, approximately sixty times
-lower than the CsPbBr$_3$ leakage at comparable bias.
-The lower leakage in FAPbBr$_3$ at the same applied bias
-is attributable to the better Schottky barrier quality
-achieved with the Ti contact on this particular crystal,
-which created a wider depletion region and a steeper
-band-bending profile at the metal-semiconductor interface.
+%% ------------------------------------------------------------
+\subsection{Crystal Preparation and Contact Fabrication}
+\label{sec:fapbbr_fabrication}
+%% ------------------------------------------------------------
 
-\subsubsection{Results}
-
-Spectroscopic measurements with $^{137}$Cs were
-performed at bias voltages from 700~V upward, as shown
-in Figure~\ref{fig:fapbbr_spectrum}.  At 700~V, the
-spectrum showed a broad peak feature centred near the
-expected channel position for the 662-keV photopeak,
-with a count rate of approximately 17.45~counts\,s$^{-1}$
-above a background of 9.11~counts\,s$^{-1}$.  At
-1600~V bias, a simultaneous acquisition with both the
-$^{137}$Cs (662-keV) and $^{57}$Co (122-keV) sources
-produced a spectrum in which two distinct features could
-be identified at channel positions consistent with the
-expected photon energies when calibrated against a
-reference CZT detector.  Figure~\ref{fig:fapbbr_spectrum}b
-compares the $^{137}$Cs and $^{57}$Co spectra acquired
-at 1600~V.  The count rates during acquisition were
-9.11~counts\,s$^{-1}$ for background, 17.45~counts\,s$^{-1}$
-for $^{137}$Cs, and 26.60~counts\,s$^{-1}$ for $^{57}$Co,
-reflecting the higher specific activity of the $^{57}$Co
-source used ($100~\mu$Ci vs.\ $5~\mu$Ci for $^{137}$Cs).
+FAPbBr$_3$ single crystals (FA = HC(NH$_2$)$_2^+$) were grown
+externally and received by the research group.  Crystals were
+inspected, mechanically planarised, and polished to a 10-nm
+surface finish using the standard hexane-rinsed diamond polishing
+protocol.  One FAPbBr$_3$ crystal cracked during polishing and
+was excluded from electrical testing.  The crystal used in
+spectroscopy had a thickness of 2.35~mm and contact area of
+$5.2 \times 6.15$~mm$^2$.  Contact architecture followed the
+same Schottky geometry as CsPbBr$_3$
+(Figure~\ref{fig:bromide_contact_schematic}).
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.85\textwidth]{figures/5_4_fapbbr_spectrum.png}
-  \caption{(a) Pulse-height spectrum from the FAPbBr$_3$ detector
-           under $^{137}$Cs irradiation at 700~V reverse bias,
-           showing a broad peak feature near the expected
-           photopeak channel.  (b) Spectrum comparison at 1600~V
-           with $^{137}$Cs (5~$\mu$Ci) and $^{57}$Co (100~$\mu$Ci).
-           Acquisition count rates: background 9.11~cps,
-           $^{137}$Cs 17.45~cps, $^{57}$Co 26.60~cps.  The
-           distinct features associated with each source's primary
-           gamma energies can be resolved from the background
-           continuum.}
+  \includegraphics[width=0.85\textwidth]{figures/5_fapbbr_mounted_device}
+  \caption{Mounted FAPbBr$_3$ pixelated Schottky detector with copper wire leads bonded to each pixel contact.}
+  \label{fig:fapbbr_mounted}
+\end{figure}
+
+%% ------------------------------------------------------------
+\subsection{Electrical Characterisation}
+\label{sec:fapbbr_electrical}
+%% ------------------------------------------------------------
+
+IV sweeps from $-20$ to $+20$~V and $-200$ to $+200$~V confirmed
+acceptable Schottky behaviour.  A bias stability test at $-200$~V
+over six hours showed leakage reaching a pseudo-steady-state with
+a maximum of $5 \pm 2.5$~nA, approximately 60$\times$ lower
+than the CsPbBr$_3$ leakage at comparable bias, attributable
+to a better Schottky barrier quality on this crystal.  The device
+showed no signs of electrical instability over more than five
+hours of sustained high-voltage testing.
+
+%% ------------------------------------------------------------
+\subsection{Gamma Spectroscopy Results}
+\label{sec:fapbbr_results}
+%% ------------------------------------------------------------
+
+Spectroscopic measurements with $^{137}$Cs were performed from
+700~V upward.  At 700~V, the spectrum showed a broad peak feature
+centred near the expected 662-keV channel position, with a count
+rate of $\sim$17.45~counts\,s$^{-1}$ above a background of
+9.11~counts\,s$^{-1}$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/5_fapbbr_spectrum_700_1600v}
+  \caption{FAPbBr$_3$ pulse-height spectra at (a)~700~V with $^{137}$Cs and (b)~1600~V with $^{137}$Cs, $^{57}$Co, and background overlaid.}
   \label{fig:fapbbr_spectrum}
 \end{figure}
 
-\subsubsection{Discussion}
+At 1600~V bias, a simultaneous acquisition with both $^{137}$Cs
+(5~$\mu$Ci, 662~keV) and $^{57}$Co (100~$\mu$Ci, 122~keV)
+produced a spectrum in which two distinct features could be
+identified at channel positions consistent with the expected
+photon energies, calibrated against a reference CZT detector.
+Count rates: 9.11~counts\,s$^{-1}$ (background),
+17.45~counts\,s$^{-1}$ ($^{137}$Cs), 26.60~counts\,s$^{-1}$
+($^{57}$Co), reflecting the higher specific activity of the
+$^{57}$Co source.
 
-The FAPbBr$_3$ results represent a significant improvement
-over the CsPbBr$_3$ device, and the detection of spectral
-features attributable to both $^{137}$Cs and $^{57}$Co at
-1600~V constitutes a proof-of-concept demonstration of
-gamma spectroscopy in a solution-grown halide perovskite
-crystal.  However, the energy resolution remains far below
-that required for isotope identification in a practical
-nuclear security application.  The resolution is limited by
-a combination of factors: residual leakage-current noise even
-at the low operating leakage of 5~nA; incomplete charge
-collection arising from carrier trapping analogous to that
-described in Section~\ref{sec:xray_trapping}; and ion
-migration-induced fluctuations in the device's internal
-electric field on timescales comparable to the spectroscopic
-acquisition period, which cause the effective gain of the
-detector to drift slowly and broaden any spectral features.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/5_fapbbr_spectrum_1800v_zoom}
+  \caption{$^{137}$Cs pulse-height spectrum from the pixelated FAPbBr$_3$ device at 1800~V (zoomed view).}
+  \label{fig:fapbbr_1800v_zoom}
+\end{figure}
 
-The superior performance of FAPbBr$_3$ relative to
-CsPbBr$_3$ under high-voltage operation merits comment.
-The FA$^+$ cation, being larger than Cs$^+$, creates a
-more tightly packed lattice with fewer pathways for halide
-vacancy migration, which may partly account for the lower
-leakage current and greater electrical stability observed
-over extended testing periods.  This hypothesis is
-consistent with literature reports that FA-based perovskites
-exhibit reduced ion migration rates compared to Cs-based
-and MA-based compositions at comparable
-temperatures~\cite{Yuan2016ionmig}.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/5_fapbbr_spectrum_1800v_full}
+  \caption{$^{137}$Cs pulse-height spectrum from the pixelated FAPbBr$_3$ device at 1800~V (full view).}
+  \label{fig:fapbbr_1800v_full}
+\end{figure}
+
+%% ------------------------------------------------------------
+\subsection{Discussion}
+\label{sec:fapbbr_discussion}
+%% ------------------------------------------------------------
+
+The FAPbBr$_3$ results constitute a proof-of-concept demonstration
+of gamma spectroscopy in a solution-grown halide perovskite crystal.
+However, energy resolution remains far below that required for
+isotope identification in practical nuclear security applications.
+Resolution is limited by: residual leakage-current noise even at
+5~nA; incomplete charge collection from carrier trapping analogous
+to that described in Section~\ref{sec:mapbi_trapping}; and ion
+migration-induced fluctuations in the internal electric field
+during acquisition, causing effective detector gain to drift and
+broaden spectral features.
+
+The superior performance of FAPbBr$_3$ relative to CsPbBr$_3$
+under high-voltage operation is consistent with literature reports
+that FA-based perovskites exhibit reduced ion migration rates
+compared to Cs-based compositions~\cite{Yuan2016ionmig}: the
+larger FA$^+$ cation creates a more tightly packed lattice with
+fewer pathways for halide vacancy migration.
 
 
-%% --- MAPbBr3 ---
-\subsection{MAPbBr$_3$ Fabrication Challenges}
+%% ============================================================
+\section{MAPbBr$_3$ Gamma-Ray Detector}
 \label{sec:mapbbr_issues}
+%% ============================================================
 
-The MAPbBr$_3$ crystal was processed through the same
-pixelated Schottky contact fabrication protocol as the
-other bromide systems, but failed to produce a
-functional gamma spectrometer in the configuration
-tested.  The primary cause was the poor quality of
-the Ti Schottky contact achieved on this crystal.
-The Ti deposition showed weak adhesion to the
-polished MAPbBr$_3$ surface; upon venting the deposition
-chamber to atmosphere, the Ti layer was observed to
-partially delaminate, and subsequent IV characterisation
-showed near-ohmic rather than Schottky behaviour.  This
-outcome is attributed to two compounding factors.
-First, the high sputter power used for Ti deposition
-($\sim$450~W) produces fast-moving Ti adatoms with
-high kinetic energies that may damage the soft perovskite
-surface upon impact, creating a disordered interfacial
-layer rather than a well-defined Schottky junction.
-Literature on Ti Schottky contacts to halide perovskites
-suggests that lower sputter power and higher chamber
-vacuum produce higher barrier heights and improved
-interface quality, a condition not satisfied with the
-sputtering parameters used in this work~\cite{Saidaminov2015}.
-Second, residual polishing compound at the crystal surface
-— despite the hexane wash protocol — may have introduced
-an insulating contamination layer that prevented intimate
-metal-semiconductor contact.  As a consequence of the
-failed Schottky barrier, the dark current in the
-MAPbBr$_3$ device was too large to permit spectroscopic
-measurements; the maximum usable bias before the
-measurement was overwhelmed by noise was 20~V, at which
-point the device had not yet entered a field regime
-where charge collection efficiency was appreciable.
+MAPbBr$_3$ (methylammonium lead tribromide) single crystals were
+processed through the same Au-pixel / Ti/Ni back-face contact
+fabrication protocol as CsPbBr$_3$ and FAPbBr$_3$ and were
+electrically functional.  However, no resolved gamma photopeak
+was obtained from any MAPbBr$_3$ crystal tested, and no
+spectroscopic data are presented for this material.  This section
+explains why, as the limiting factors are instructive for
+understanding the broader requirements for photopeak development
+in perovskite gamma detectors.
+
+%% ------------------------------------------------------------
+\subsection{Crystal Preparation}
+\label{sec:mapbbr_fabrication}
+%% ------------------------------------------------------------
+
+MAPbBr$_3$ single crystals were grown externally and received by
+the research group.  Each crystal was inspected under optical
+magnification, mechanically planarised using silicon carbide
+abrasive paper, and polished with diamond polishing paste to a
+10-nm surface finish with hexane-bath rinses between stages.
+Contacts were deposited using the Au-pixel / Ti/Ni back-face
+protocol described in Section~\ref{sec:cspbbr_fabrication},
+which produced adhered, non-delaminated contacts on all
+MAPbBr$_3$ crystals processed.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/5_mapbbr_polishing}
+  \caption{MAPbBr$_3$ crystal during mechanical polishing preparation.}
+  \label{fig:mapbbr_polishing}
+\end{figure}
+
+%% ------------------------------------------------------------
+\subsection{Ion Migration Pulses and the Low-$\mu\tau$ Spectral
+            Background}
+\label{sec:mapbbr_ionmig_spectrum}
+%% ------------------------------------------------------------
+
+Even with functional contacts, it is unlikely that the
+MAPbBr$_3$ crystals available in this work would have yielded
+resolved gamma photopeaks.  The limiting factor is crystal
+quality, which directly determines the $\mu\tau$ product and
+therefore the detector's ability to convert a gamma interaction
+into a resolvable pulse.
+
+In a crystal with a low $\mu\tau$ product, carriers generated by
+a gamma interaction are captured by deep trap states before they
+can traverse the full thickness of the device.  The resulting
+pulse height is reduced and varies with interaction depth, since
+carriers generated far from the collecting contact must drift
+further and are more likely to be trapped before arrival.  The
+pulse-height spectrum from such a device is not a sharp photopeak
+at the full interaction energy but instead a broad Compton
+continuum extending from zero up to some fraction of the full
+energy, with no distinguishable photopeak structure,
+qualitatively identical to the spectrum observed for CsPbBr$_3$
+at moderate bias voltages (Section~\ref{sec:cspbbr_results}).
+
+At higher applied bias a second and more pernicious effect
+emerges: ion migration events generate their own large transient
+current pulses that are registered by the charge-sensitive
+preamplifier and MCA chain as apparent radiation events.  When
+mobile halide vacancies redistribute under the applied field,
+they produce sudden changes in the space-charge distribution
+near the contacts, inducing charge transients on the preamplifier
+input that can be orders of magnitude larger than the
+$\sim$0.1--0.4~pC signal from a genuine 662-keV gamma
+interaction.  These ion migration pulses are not correlated with
+any radiation interaction event; they arise purely from ionic
+motion within the crystal.  In the pulse-height spectrum they
+appear as a large, structureless background at high channel
+numbers, effectively burying any genuine gamma signal beneath an
+elevated and irreproducible baseline.  This effect was directly
+observed in the CsPbBr$_3$ device, where the anomalous artefact
+near channel 16,382 of the ADC
+(Section~\ref{sec:cspbbr_results}) is a manifestation of exactly
+this mechanism: large ion migration-driven current transients
+saturating the ADC input.
+
+The practical consequence is that photopeak development in
+perovskite gamma detectors requires the simultaneous satisfaction
+of two conditions: a $\mu\tau$ product large enough that
+radiation-generated carriers can traverse the full crystal
+thickness before being trapped
+($\mu\tau E / d \gtrsim 1$ in the notation of
+Equation~\ref{eq:hecht}), and an ion migration rate low enough
+that ionic transient pulses do not dominate the acquired
+spectrum.  For the bromide perovskites examined in this work,
+FAPbBr$_3$ came closest to meeting both conditions, owing to its
+relatively stable leakage current and the reduced ion migration
+rate associated with the FA$^+$ sublattice.  The MAPbBr$_3$
+crystals, by contrast, did not exhibit sufficient crystal purity
+to clear either threshold.  Improving crystal quality,
+specifically reducing halide vacancy concentrations through
+controlled stoichiometry and inert-atmosphere growth, is
+therefore a prerequisite for photopeak development in future
+MAPbBr$_3$ devices.
 
 
 %% ============================================================
-%%  MHyPbCl3 FAST NEUTRON DETECTION
-%% ============================================================
-\section{MHyPbCl$_3$ Fast Neutron Detection}
+\section{MHyPbCl$_3$ Fast Neutron Detector}
 \label{sec:neutron_detector}
+%% ============================================================
 
+MHyPbCl$_3$ (methylhydrazinium lead trichloride) represents the
+first organic-metal halide perovskite semiconductor evaluated as
+a direct-conversion fast neutron detector.  The device uniquely
+combines a high hydrogen density comparable to conventional
+organic scintillators with the electrical properties of a
+high-resistivity semiconductor, enabling direct charge-collection
+detection of recoil proton pulses without a separate converter
+layer.
+
+%% ------------------------------------------------------------
 \subsection{Motivation and Material Selection}
 \label{sec:neutron_motivation}
+%% ------------------------------------------------------------
 
-Fast neutron detection poses a unique challenge because
-neutrons carry no charge and therefore do not interact
-directly with the electron clouds that govern the
-response of conventional radiation detectors.  Instead,
-fast neutrons must be detected indirectly by observing
-the secondary charged particles — predominantly recoil
-protons — produced in elastic scattering collisions with
-hydrogen nuclei ($^1$H($n$,$n$)$^1$H).  The efficiency
-of this conversion process is proportional to the
-hydrogen number density $n_H$ of the detector material,
-which for conventional hydrogenous semiconductors is
-typically far too small to be competitive with
-hydrogen-rich organic scintillators such as stilbene
-or EJ-276 plastic.
+Fast neutron detection is challenging because neutrons carry no
+charge and cannot interact directly with the electron clouds that
+govern detector response.  Instead, fast neutrons are detected via
+secondary charged particles, predominantly recoil protons,
+produced in elastic scattering collisions with hydrogen nuclei
+($^1$H($n$,$n$)$^1$H).  Detection efficiency is proportional to
+the material's hydrogen number density $n_H$, which for
+conventional hydrogenous semiconductors is typically far too low
+to compete with hydrogen-rich organic scintillators such as
+stilbene or EJ-276 plastic.
 
-MHyPbCl$_3$ was identified as a candidate fast neutron
-semiconductor detector because its methylhydrazinium
-cation (CH$_3$NH$_2$NH$_2^+$) contributes a substantial
-number of hydrogen atoms per formula unit, giving a
-calculated hydrogen density of approximately
-$4.0 \times 10^{22}$~cm$^{-3}$ (Table~\ref{tab:h_density}),
-comparable to stilbene ($5.67 \times 10^{22}$~cm$^{-3}$)
-and rubrene ($3.62 \times 10^{22}$~cm$^{-3}$)~\cite{Panaccione_NIM_2024}.
-Crucially, MHyPbCl$_3$ also exhibits the high resistivity
-and large $\mu\tau$ product demonstrated in
-Section~\ref{sec:electrical_char}, making it suitable
-for direct charge-collection detection of the
-recoil proton pulses generated by neutron scattering
-events.  In this mode of operation, an individual
-fast neutron interaction produces a recoil proton
-of kinetic energy $E_p \leq E_n$ (the equality
-holding for a head-on collision) that subsequently
-deposits its energy entirely within the crystal,
-generating an electron-hole pair population proportional
-to $E_p / W$.  The resulting charge pulse is collected
-by the applied field and read out by a charge-sensitive
-preamplifier, enabling pulse-by-pulse energy analysis
-and — in principle — reconstruction of the fast
-neutron energy spectrum from the measured recoil
-proton spectrum~\cite{Verbinski1968}.
+MHyPbCl$_3$ was identified as a candidate because its
+methylhydrazinium cation (CH$_3$NH$_2$NH$_2^+$) contributes a
+substantial number of hydrogen atoms per formula unit, giving a
+calculated $n_H \approx 4.0 \times 10^{22}$~cm$^{-3}$
+(Table~\ref{tab:h_density}), comparable to stilbene.  Crucially,
+the material also exhibits high resistivity and a large $\mu\tau$
+product, making it suitable for direct charge-collection detection
+of recoil proton pulses.  An important complication is the
+presence of lead ($Z = 82$), a highly efficient photon absorber,
+which creates a significant neutron-gamma discrimination challenge
+in mixed radiation fields such as those produced by a research
+reactor~\cite{Panaccione_NIM_2024}.
 
-An important complication for MHyPbCl$_3$ as a neutron
-detector is the presence of lead in the crystal lattice.
-With an atomic number of $Z = 82$, lead is a highly
-efficient photon absorber via the photoelectric effect
-at photon energies below its K-edge (88~keV) and
-by Compton scattering at higher energies.  In a
-mixed neutron-gamma radiation field such as that
-produced by a research reactor, the detector therefore
-responds to both neutrons and gammas simultaneously,
-making clean separation of the two contributions
-a significant analytical challenge.
+%% ------------------------------------------------------------
+\subsection{Crystal Synthesis and Device Fabrication}
+\label{sec:mhy_fabrication}
+%% ------------------------------------------------------------
 
-\subsection{Beam Facility and Experimental Characterisation}
+Methylhydrazinium chloride (MHyCl) was synthesised as the organic
+precursor salt: 2.63~mL (50~mmol) of methylhydrazine was diluted
+with 5~mL anhydrous IPA, and 100~mL of 0.5~M HCl solution was
+added without stirring.  White plate crystals of MHyCl
+precipitated spontaneously after overnight storage in inert
+atmosphere at room temperature.  The crystals were filtered,
+washed with cold IPA, and dried under vacuum, yielding 3.10~g
+($\sim$38\%).
+
+MHyPbCl$_3$ single crystals were grown by anti-solvent assisted
+crystallisation: 2~mmol each of MHyCl and PbCl$_2$ dissolved in
+5~mL DMF / 1~mL DMSO, stirred for 3~h, then filtered through a
+0.22-$\mu$m syringe filter.  The solution was transferred to a
+20-mL vial placed inside a 100-mL bottle containing 15~mL toluene
+as anti-solvent and sealed in a glovebox.  After one week at room
+temperature, clear hexagonal MHyPbCl$_3$ crystals formed and
+were harvested, dried under vacuum, and surface-polished
+immediately prior to electrode deposition.
+
+An ohmic-ohmic contact configuration was adopted.  The lower
+crystal face received a 30-nm C$_{60}$ / 6-nm BCP
+electron-transport bilayer, followed by an 80-nm Cu contact.
+The upper face received a 50-nm Au contact deposited by thermal
+evaporation.  The C$_{60}$/BCP bilayer serves simultaneously as
+an electron-selective interlayer and interface-state buffer at
+the Cu-perovskite junction.  IV characterisation confirmed ohmic,
+symmetric behaviour under both polarities.
+
+%% ------------------------------------------------------------
+\subsection{Electrical Characterisation}
+\label{sec:mhy_electrical}
+%% ------------------------------------------------------------
+
+The MHyPbCl$_3$ crystal yielded a resistivity of
+$4.43 \times 10^{11}$~$\Omega$\,cm, roughly two orders of
+magnitude higher than commercial polycrystalline CZT, placing
+it squarely in the range required for high-sensitivity radiation
+detectors.  The $\mu\tau$ product extracted by Hecht equation
+fitting yielded $\mu\tau = 9.1 \times 10^{-3}$~cm$^2$\,V$^{-1}$,
+comparable to high-quality CsPbBr$_3$ single crystals reported
+in the literature~\cite{He2019CsPbBr} and approximately an order
+of magnitude larger than typical polycrystalline CZT.  This high
+$\mu\tau$ reflects extended carrier diffusion lengths achievable
+in defect-lean single crystals grown by the slow anti-solvent
+method.  IV hysteresis measurements showed a measurable
+sweep-versus-hold difference in the low-voltage regime,
+indicative of slow ionic relaxation consistent with ion migration.
+
+%% ------------------------------------------------------------
+\subsection{Beam Facility and Experimental Setup}
 \label{sec:fbf_setup}
+%% ------------------------------------------------------------
 
-Neutron beam testing was performed at the Fast Beam
-Facility (FBF) of the Ohio State University Research
-Reactor (OSURR), a 500-kW$_{\rm th}$ pool-type research
-reactor.  The FBF beamport incorporates a 4-inch
-(10.16-cm) single-crystal bismuth gamma filter embedded
-in the beam collimator assembly, which preferentially
-attenuates the prompt reactor gamma flux while transmitting
-fast neutrons.  A downstream 8-inch (20.32-cm) lead
-gamma shutter — consisting of a cylindrical drum filled
-with 1/16-inch Pb shot — can be inserted into the beam
-path to provide an additional factor of
-$\sim$300 in gamma reduction at the cost of a factor
-of 58 in fast neutron attenuation.  An external 2-mm
-cadmium (Cd) foil positioned at the beam exit port
-can further reduce the thermal neutron content of the
-beam; the Cd foil was characterised via gold foil
-activation measurements per ASTM E262-17 to yield a
-Cadmium Ratio of 1.1 and a thermal neutron reduction
-factor of 110.
-
-The neutron beam energy spectrum at the FBF, determined
-by the SAND-II and STAYSL spectrum unfolding techniques
-using activation of copper, gold, and nickel wire
-dosimeters, is shown in Figure~\ref{fig:fbf_spectrum}.
-The spectrum peaks in the fast neutron regime, with
-a dominant fast neutron flux of approximately
-$4.3 \times 10^5$~cm$^{-2}$\,s$^{-1}$ when the
-gamma shutter is closed and no Cd filter is in place.
-With the gamma shutter open and no Cd filter, the
-fast neutron flux rises to
-$1.5 \times 10^7$~cm$^{-2}$\,s$^{-1}$, accompanied
-by a gamma dose rate of 15.787~R\,hr$^{-1}$ from
-the prompt fission gamma field.  Insertion of the
-lead gamma shutter reduces the gamma dose rate to
-50.525~mR\,hr$^{-1}$ — a 300-fold reduction — while
-attenuating the fast neutron flux by only a factor of
-35 to $4.3 \times 10^5$~cm$^{-2}$\,s$^{-1}$.
-Table~\ref{tab:fbf_conditions} summarises the beam
-conditions used in this work.
+Neutron beam testing was performed at the OSURR Fast Neutron Beam
+Facility (FBF), the same beamport used for the
+Cs$_{0.1}$FA$_{0.9}$PbI$_3$ solar-cell neutron measurements in
+Chapter~\ref{ch:CsFAPbI}.  The facility hardware, the permanent
+bismuth in-line gamma filter, the 8-inch lead gamma shutter, the
+external 2-mm cadmium foil, the beam flux and gamma dose-rate values
+under each filter configuration, and the neutron energy spectrum
+determined by SAND-II/STAYSL activation unfolding, are described in
+full in Section~\ref{sec:osurr_fbf}.  The beam conditions for the
+MHyPbCl$_3$ experiments are summarised in
+Table~\ref{tab:fbf_conditions}.
 
 \begin{table}[htbp]
 \centering
-\caption{FBF beam conditions used for MHyPbCl$_3$ neutron
-         detection experiments.  All measurements at OSURR
-         operating power.}
+\caption{FBF beam conditions used for MHyPbCl$_3$ neutron detection
+         experiments.  See Section~\ref{sec:osurr_fbf} for a full
+         description of each filtering element.}
 \label{tab:fbf_conditions}
+\startsinglespace
 \begin{tabular}{lcc}
 \hline
-Configuration & Fast Neutron Flux (cm$^{-2}$\,s$^{-1}$) & Gamma Dose Rate \\
+Configuration & Fast neutron flux (cm$^{-2}$\,s$^{-1}$)
+              & Gamma dose rate \\
 \hline
-Shutter open, no Cd   & $1.5\times10^7$ & 15.787~R\,hr$^{-1}$   \\
-Shutter closed, no Cd & $4.3\times10^5$ & 50.525~mR\,hr$^{-1}$  \\
+Shutter open, no Cd   & $1.5\times10^7$ & 15.787~R\,hr$^{-1}$  \\
+Shutter closed, no Cd & $4.3\times10^5$ & 50.525~mR\,hr$^{-1}$ \\
+Shutter closed, Cd in & $4.3\times10^5$ & 50.525~mR\,hr$^{-1}$ \\
 \hline
 \end{tabular}
 \end{table}
 
+The experimental setup specific to the MHyPbCl$_3$ measurement is
+shown in Figure~\ref{fig:fbf_setup}.  Data were acquired using a
+CAEN A1422 charge-sensitive preamplifier connected directly to the
+MHyPbCl$_3$ detector, with the preamplifier output recorded on a
+Tektronix MSO54 oscilloscope in waveform-capture mode.  A Keithley
+2612A SourceMeter provided the detector bias voltage and
+simultaneously monitored the device leakage current.  A cadmium
+foil chopper driven by a motor was positioned in the beam path
+during selected measurements to modulate the thermal neutron flux
+periodically, enabling comparison of chopper-on and chopper-off
+waveform populations.
+
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.70\textwidth]{figures/5_5_fbf_spectrum}
-  \caption{Neutron energy spectrum at the OSURR Fast Beam
-           Facility determined by SAND-II unfolding of
-           Cu, Au, and Ni activation wire measurements.
-           The spectrum is dominated by fast neutrons
-           with energies from 0.1 to 10~MeV.}
-  \label{fig:fbf_spectrum}
+  \includegraphics[width=0.90\textwidth]{figures/5_mhy_fbf_setup}
+  \caption{MHyPbCl$_3$ experimental setup at the OSURR FBF showing
+           (a)~the detector on its PCB, (b)~the data acquisition
+           station, and (c)~the detector positioned at the beamport.}
+  \label{fig:fbf_setup}
 \end{figure}
 
-Data were acquired using a CAEN A1422 charge-sensitive
-preamplifier connected directly to the MHyPbCl$_3$
-detector, with the preamplifier output recorded on a
-Tektronix MSO54 oscilloscope in waveform-capture mode.
-A Keithley 2612A SourceMeter provided the detector
-bias voltage and simultaneously monitored the device
-leakage current.  A cadmium foil chopper driven by a
-motor was positioned in the beam path during selected
-measurements to modulate the thermal neutron flux
-periodically, enabling comparison of chopper-on
-and chopper-off waveform populations.  The raw waveform
-data were processed offline using a Python script that
-applied a Locally Weighted Scatterplot Smoothing (LOWESS)
-filter to suppress high-frequency electronic noise while
-preserving the temporal profile of genuine
-radiation-induced pulses.  Filtered waveforms were
-then passed through a pulse-height analysis (PHA)
-algorithm to reconstruct the energy deposition spectrum.
+%% ------------------------------------------------------------
+\subsection{Digital Pulse Processing Pipeline}
+\label{sec:dpp}
+%% ------------------------------------------------------------
 
+Because the radiation-induced charge pulses from the
+MHyPbCl$_3$ detector did not exceed approximately 15~mV at the
+preamplifier output, they were below the threshold at which
+hardware multichannel analyser (MCA) electronics could reliably
+discriminate genuine pulses from baseline noise.  A custom
+offline digital pulse processing pipeline was therefore developed
+in Python to extract pulse-height information from the raw
+oscilloscope waveforms.
+
+The processing chain proceeded in four steps.  First, individual
+waveforms were loaded from the \texttt{.mat} files written by the
+Tektronix MSO54 oscilloscope.  Voltage data were converted to
+millivolts and time axes to microseconds to give physically
+meaningful units.  Second, each waveform was smoothed using a
+Locally Weighted Scatterplot Smoothing (LOWESS) algorithm with a
+smoothing fraction of 10\% and a single robustness iteration.
+LOWESS fits a low-degree polynomial to a sliding local window of
+the data, effectively suppressing the high-frequency electronic
+noise that dominated the raw preamplifier output while preserving
+the slower temporal profile of genuine charge-collection pulses,
+whose rise and decay times are governed by carrier transit times
+across the crystal and the preamplifier time constant.  Third, a
+baseline correction was applied by subtracting the mean of the
+first 50 data points of each smoothed waveform, a region prior
+to the expected pulse onset, to remove any DC offset that
+varied waveform-to-waveform due to amplifier drift or slow ionic
+polarisation of the detector.  Fourth, the pulse height was
+defined as the maximum absolute value of the baseline-corrected
+waveform.  For each waveform the script additionally extracted
+the 10\%--90\% rise time and 90\%--10\% decay time of the pulse,
+quantities that in principle allow pulse-shape discrimination
+between event types, though insufficient statistics prevented
+this analysis in the present work.
+
+After pulse-height extraction, pulses with amplitudes below a
+threshold of 2~mV were discarded to suppress noise triggers, and
+the remaining pulse heights were accumulated into a 50-bin
+histogram over the range 0--20~mV to produce the pulse-height
+spectrum used for the analysis in
+Section~\ref{sec:neutron_results}.  The entire pipeline was
+applied independently to each beam configuration subfolder
+(shutter open, shutter closed, and beam background), allowing
+direct comparison of the pulse-height distributions across
+conditions.
+
+%% ------------------------------------------------------------
 \subsection{Results}
 \label{sec:neutron_results}
+%% ------------------------------------------------------------
 
-The MHyPbCl$_3$ detector was operated at reverse bias
-voltages of 80~V and 120~V for the FBF measurements.
-Figure~\ref{fig:mhy_waveforms} shows representative
-waveforms acquired from the preamplifier at 120~V
-reverse bias with the gamma shutter open (mixed
-neutron-gamma field) and with the gamma shutter closed
-(fast neutron and residual gamma only).
+The MHyPbCl$_3$ detector was operated at reverse bias voltages
+of 80~V and 120~V for the FBF measurements.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.85\textwidth]{figures/5_6_mhy_waveforms}
-  \caption{Representative preamplifier waveforms from the
-           MHyPbCl$_3$ detector at 120~V reverse bias at the
-           OSURR FBF.  (a) Gamma shutter open (mixed field).
-           (b) Gamma shutter closed (reduced gamma, fast
-           neutron dominant).  (c) Beam background acquired
-           in the shutter-closed configuration with the
-           reactor at power.  Radiation-induced pulses are
-           visible above the noise floor in all three
-           configurations.}
+  \includegraphics[width=0.85\textwidth]{figures/5_mhy_waveforms}
+  \caption{LOWESS-filtered preamplifier waveforms from the MHyPbCl$_3$ detector at 120~V with (a)~gamma shutter open, (b)~gamma shutter closed, and (c)~beam background.}
   \label{fig:mhy_waveforms}
 \end{figure}
 
-At 120~V reverse bias with the gamma shutter open,
-1090 waveforms containing radiation-induced pulses were
-collected over the acquisition interval.  After closing
-the gamma shutter, 1001 pulses were recorded over a
-comparable interval; the beam background (reactor at
-power, beam blocked entirely) yielded 394 pulses.
-The count rate with the shutter closed
-($\sim$0.5~counts\,s$^{-1}$) was not meaningfully
-different from the shutter-open count rate at 120~V
-in the forward bias configuration (Figure~\ref{fig:mhy_forward}),
-a result that is discussed further below.
+At 120~V reverse bias with the gamma shutter open, 1090 waveforms
+containing radiation-induced pulses were collected over the
+acquisition interval.  After closing the gamma shutter, 1001
+pulses were recorded over a comparable interval; the beam
+background (reactor at power, beam blocked entirely) yielded
+394~pulses.  The count rate with the shutter closed
+($\sim$0.5~counts\,s$^{-1}$) was not meaningfully different from
+the shutter-open count rate at 120~V in the forward bias
+configuration, a result discussed further below.
 
-At 80~V reverse bias, the total waveform counts with the
-gamma shutter open were 1040 (shutter open) and 507
-(shutter closed) versus 252 for background.  The
-ratio of source-to-background counts at 80~V is higher
-than at 120~V, suggesting that the lower field at 80~V
-produces a different carrier collection regime in which
-the relative contribution of high-charge-deposition
-events (which would include both neutron proton-recoil
-events and direct gamma interactions) is more clearly
-separated from the background noise floor.
+At 80~V reverse bias, waveform counts were: 1040 (shutter open),
+507 (shutter closed), and 252 (background).  The higher
+source-to-background ratio at 80~V compared to 120~V suggests
+that the lower field at 80~V produces a different carrier
+collection regime in which high-charge-deposition events are more
+clearly separated from the background noise floor.
 
-Pulse height analysis of the filtered waveforms at
-120~V reverse bias is shown in Figure~\ref{fig:mhy_pha}.
-The resulting spectrum does not display a sharp Gaussian
-peak indicative of full-energy deposition from a
-mono-energetic source; rather, it exhibits a broad
-continuum of pulse heights extending from the noise
-threshold to the maximum digitised amplitude.  This
-spectral shape is physically expected for fast neutron
-detection: recoil protons from elastic scattering of
-poly-energetic fast neutrons produce a broad energy
-deposition distribution, and the convolution of this
-distribution with the incomplete charge collection at
-the bias voltages used here further broadens the
-response.  Nevertheless, the waveform population
-is clearly distinct from the background (reactor off)
-waveform population, confirming that the MHyPbCl$_3$
-crystal is responding to radiation from the reactor
-beam.
+Pulse-height analysis at 120~V reverse bias yielded a broad
+continuum of pulse heights, shown in
+Figure~\ref{fig:mhy_pha_spectrum}.  The spectrum does not display
+a sharp Gaussian peak; rather, it exhibits a broad continuum
+extending from the noise threshold to the maximum digitised
+amplitude.  This spectral shape is physically expected for fast
+neutron detection: recoil protons from elastic scattering of
+poly-energetic fast neutrons produce a broad energy deposition
+distribution, further broadened by incomplete charge collection at
+the bias voltages used here.  Nevertheless, the waveform
+population is clearly distinct from the background (reactor off)
+population, confirming that MHyPbCl$_3$ is responding to
+radiation from the reactor beam.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.75\textwidth]{figures/5_7_mhy_pha}
-  \caption{Pulse-height spectrum reconstructed from LOWESS-filtered
-           waveforms from the MHyPbCl$_3$ detector at 120~V
-           reverse bias.  (a) No gamma filter applied (mixed field).
-           (b) Gamma shutter closed.  The broad continuum is
-           consistent with the expected proton-recoil energy
-           deposition spectrum from a poly-energetic fast
-           neutron beam.}
-  \label{fig:mhy_pha}
+  \includegraphics[width=0.85\textwidth]{figures/5_mhy_pha_spectrum}
+  \caption{Pulse-height spectrum from the MHyPbCl$_3$ detector at 120~V with (a)~no gamma filter and (b)~gamma shutter closed.}
+  \label{fig:mhy_pha_spectrum}
 \end{figure}
 
-\subsection{Discussion: Neutron-Gamma Discrimination and Detection Efficiency}
+%% ------------------------------------------------------------
+\subsection{Discussion: Neutron-Gamma Discrimination and
+            Detection Efficiency}
 \label{sec:neutron_discussion}
+%% ------------------------------------------------------------
 
-The neutron-gamma discrimination challenge is illustrated
-by the comparison between shutter-open and shutter-closed
-waveform populations.  When the lead gamma shutter is
-closed, the gamma dose rate is reduced by a factor of
-approximately 300 (from 15.787~R\,hr$^{-1}$ to
-50.525~mR\,hr$^{-1}$), while the fast neutron flux
-decreases by only a factor of 35.  If the detector
-were responding purely to neutrons, one would expect
-the pulse count rate with the shutter closed to be
-approximately $35/300 \approx 0.12$ times the
-shutter-open count rate.  The observed shutter-open
-to shutter-closed count rate ratio at 120~V reverse
-bias (1090:1001, after background subtraction) does
-not show this level of suppression.  The most likely
-interpretation is that the detector response at
-120~V bias is dominated by direct gamma interactions
-(via Compton scattering and photoelectric absorption
-in the Pb sublattice) rather than neutron-induced
-proton recoil events.  This result highlights the
-fundamental difficulty of neutron-gamma discrimination
-in a Pb-containing semiconductor: the heavy Pb sublattice
-that makes the material mechanically robust and
-electrically well-behaved also makes it an efficient
-gamma absorber that overwhelms the neutron-induced signal
-in mixed radiation fields.
+The neutron-gamma discrimination challenge is illustrated by
+comparing shutter-open and shutter-closed waveform populations.
+Closing the lead gamma shutter reduces the gamma dose rate by
+$\sim$300$\times$ (from 15.787~R\,hr$^{-1}$ to
+50.525~mR\,hr$^{-1}$) while reducing the fast neutron flux by
+only a factor of 35.  If the detector responded purely to
+neutrons, the shutter-closed count rate should be $\approx$0.12
+times the shutter-open rate.  The observed ratio at 120~V
+(1090:1001 after background subtraction) does not show this level
+of suppression, indicating the response is dominated by direct
+gamma interactions in the Pb sublattice rather than
+neutron-induced proton recoil events.  This highlights the
+fundamental neutron-gamma discrimination difficulty in a
+Pb-containing semiconductor.
 
-An upper bound estimate of the intrinsic detection
-efficiency for fast neutrons in the MHyPbCl$_3$ crystal
-can be computed from the hydrogen density, the crystal
-dimensions, and the elastic scattering cross section.
-At a neutron energy of 1~MeV, the $^1$H($n$,$n$)$^1$H
-elastic cross section is approximately 3~b~\cite{ENDF8}.
-For a crystal with an effective thickness of 5~mm
-normal to the beam and a hydrogen density of
-$4.0 \times 10^{22}$~cm$^{-3}$, the interaction
-probability per incident neutron is
-
+An upper bound estimate of fast neutron detection efficiency at
+1~MeV neutron energy ($\sigma_{\mathrm{el}} \approx 3$~b) for a
+5-mm crystal thickness is
 \begin{equation}
-  P = 1 - \exp(-n_H \sigma_{\rm el} t)
+  P = 1 - \exp(-n_H \sigma_{\mathrm{el}} t)
     \approx 1 - \exp(-4.0\times10^{22} \times 3\times10^{-24}
              \times 0.5)
     \approx 5.8\%,
   \label{eq:neutron_eff}
 \end{equation}
-
-\noindent where $t = 0.5$~cm is the path length.  At the
-fast neutron flux of $4.3 \times 10^5$~cm$^{-2}$\,s$^{-1}$
-(shutter closed) and the $\sim$0.3-cm$^2$ detector area,
-this implies an expected proton-recoil interaction rate
-of $\sim$750~events per second — far larger than the
-0.5~counts\,s$^{-1}$ actually observed.  The discrepancy
-is explained primarily by the oscilloscope waveform-write-rate
-bottleneck: the Tektronix MSO54 oscilloscope in
-single-shot waveform acquisition mode is capable of
-writing at a maximum rate that was the dominant constraint
-on the measurable count rate in this configuration.
-Increasing the data acquisition throughput — for example
-by switching to a hardware MCA or a fast digitiser in
-continuous acquisition mode — is the highest-priority
-hardware improvement identified for future neutron
-detection experiments.
+where $t = 0.5$~cm is the path length.  At the shutter-closed
+fast neutron flux of $4.3 \times 10^5$~cm$^{-2}$\,s$^{-1}$ and
+the $\sim$0.3-cm$^2$ detector area, this implies an expected
+proton-recoil interaction rate of $\sim$750~events\,s$^{-1}$,
+far larger than the 0.5~counts\,s$^{-1}$ actually observed.  The
+discrepancy is primarily due to the Tektronix MSO54 oscilloscope
+waveform-write-rate bottleneck: in single-shot waveform
+acquisition mode, the maximum write rate was the dominant
+constraint on the measurable count rate.  Switching to a hardware
+MCA or a fast digitiser in continuous acquisition mode is the
+highest-priority hardware improvement identified for future
+neutron detection experiments.
 
 
-%% ============================================================
-%%  ION MIGRATION AND DEVICE STABILITY
 %% ============================================================
 \section{Ion Migration and Device Stability}
 \label{sec:ion_migration_detector}
+%% ============================================================
 
-The experimental results presented in the preceding sections
-are pervaded by a single overarching materials-physics challenge:
-the migration of halide ions under the large applied electric
-fields required for efficient charge collection.  Ion migration
-is not unique to the detector geometry; as noted in
-Chapter~\ref{ch:CsFAPbI}, it also affects the photovoltaic
-devices studied in that chapter under their built-in fields.
-However, the detector geometry exacerbates the problem in two
-important ways.  First, the fields required for efficient charge
-collection ($\sim$1~V~$\mu$m$^{-1}$ across millimetre-scale
-crystals) are several orders of magnitude larger than the
-built-in fields in a photovoltaic device.  Second, the crystal
-must sustain these fields continuously for hours at a time
-during a spectroscopy acquisition, rather than the millisecond
-timescales over which a radiation monitoring current measurement
-is averaged.  The combination of large field and long exposure
-duration creates an environment in which ion migration is not
-merely a nuisance but a device-lifetime-limiting degradation
-mechanism.
+A single overarching materials-physics challenge pervades the
+results of Sections~\ref{sec:mapbi_hbn_xray}--\ref{sec:neutron_detector}:
+the migration of halide ions under large applied electric fields.
+The detector geometry exacerbates this relative to the
+photovoltaic geometry in two ways: (1)~the fields required for
+efficient charge collection ($\sim$1~V\,$\mu$m$^{-1}$ across
+millimetre-scale crystals) are several orders of magnitude larger
+than photovoltaic built-in fields; and (2)~these fields must be
+sustained continuously for hours during a spectroscopy
+acquisition.
 
-The humidity-dependent instability mechanism was characterised
-in detail through the 2D perovskite work described in
-Section~\ref{sec:2d_humidity}, where the correlation between
-relative humidity and breakdown voltage was directly measured,
-and the 5F-PEAI surface treatment
-(Section~\ref{sec:5fpeai_results}) demonstrated an effective
-mitigation strategy for thin-film devices.  The vacuum testing
-of the MAPbI$_3$-hBN device (Section~\ref{sec:vacuum_testing})
-independently confirmed the same mechanistic link between
-moisture and voltage-induced instability in the 3D crystal
-geometry.
-
+%% ------------------------------------------------------------
 \subsection{Contact Degradation at Elevated Bias}
 \label{sec:contact_degradation}
+%% ------------------------------------------------------------
 
-A second and distinct degradation mechanism was identified
-during testing of the FAPbBr$_3$ device: the chemical
-reaction of the titanium Schottky contact with mobile
-bromide ions generated and driven toward the contact
-interface under the large applied reverse bias.  After
-a full day of electrical testing at the Ti1 contact
-of the FAPbBr$_3$ crystal, the contact surface was
-visually observed to have changed colour and the
-metallic titanium layer appeared to have partially
-receded into or reacted with the perovskite crystal
-surface.  Elemental analysis of the relevant ionic
-species identifies the reaction as plausible: mobile
-bromide ions (charge $-1$) accumulating at the Ti
-contact (Ti in the $+3$ oxidation state in many
-common compounds) can form stable titanium bromide
-complexes (e.g.\ TiBr$_4^{2-}$), consuming the metal
-electrode.  The relevant charge states of the species
-present — Br$^-$, Ti$^{3+}$, Pb$^{2+}$, and the
-organic FA$^+$ cation — are all present at the
-interface under the reverse-bias condition that
-drives Br$^-$ toward the titanium contact.
+A distinct degradation mechanism was identified during extended
+testing of the FAPbBr$_3$ device: chemical reaction of the
+Ti/Ni back-face contact with mobile bromide ions driven toward
+that interface under large applied reverse bias.  After a full
+day of electrical testing, the Ti contact surface was visually
+observed to have changed colour and the metallic Ti layer
+appeared to partially recede into or react with the crystal
+surface.  Mobile Br$^-$ ions accumulating at the Ti contact
+(Ti commonly in the $+3$ oxidation state) can form stable
+titanium bromide complexes such as TiBr$_4^{2-}$, consuming
+the metal electrode.
 
-This failure mode has profound implications for contact
-material selection in bromide perovskite radiation
-detectors.  Metals that form stable halide compounds
-under the electrochemical conditions encountered at
-the reversed-biased contact — titanium being one
-such metal — are fundamentally incompatible with
-sustained high-field operation in halide perovskite
-detectors, regardless of their electronic Schottky
-barrier properties.  Gold, by contrast, forms only
-kinetically stable halide compounds under mild
-conditions and showed no evidence of analogous
-chemical degradation at the ohmic contact in any
-device examined in this work.  Alternative
-contact materials identified in the broader
-perovskite detector literature as candidates for
-improved chemical stability include chromium
-(Cr) and tin oxide (SnO$_2$), both of which were
-evaluated on the CsPbBr$_3$ crystal at the
-Cr/SnO$_2$/Cr contact in preliminary experiments;
-however, these contacts were not carried through
-to full spectroscopic evaluation within the scope
-of this work.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{figures/5_contact_degradation}
+  \caption{Ti/Ni back-face contact surface of the FAPbBr$_3$ detector after extended high-bias operation.}
+  \label{fig:contact_degradation}
+\end{figure}
 
+This has profound implications for contact material selection.
+Metals that form stable halide compounds under the electrochemical
+conditions at a biased contact, titanium being one such metal,
+are fundamentally incompatible with sustained high-field
+operation in halide perovskite detectors, regardless of the
+contact geometry.  The Au pixel contacts showed no evidence of
+analogous chemical degradation in any device examined in this
+work, consistent with gold's kinetic stability against halide
+compound formation under mild electrochemical conditions.
+Alternative back-contact candidates identified in the broader
+literature include Cr and SnO$_2$, both evaluated on
+CsPbBr$_3$ in preliminary experiments but not carried through
+to full spectroscopic evaluation within the scope of this work.
+
+%% ------------------------------------------------------------
 \subsection{Ion Migration Consequences for Spectroscopy}
 \label{sec:ion_migration_spectroscopy}
+%% ------------------------------------------------------------
 
-Beyond the acute failure modes described above, ion
-migration impairs spectroscopic performance through
-three mechanisms that together set a practical upper
-bound on the achievable energy resolution in
-as-fabricated perovskite single crystal detectors.
+Ion migration impairs spectroscopic performance through three
+mechanisms that together set a practical upper bound on the
+achievable energy resolution in as-fabricated perovskite single
+crystal detectors.
 
-First, the redistribution of ions under the applied
-field creates a non-uniform internal electric field
-profile.  In an ideal crystal with uniform space charge,
-the electric field is constant across the bulk between
-the contacts.  As mobile anions accumulate at the
-anode and cations at the cathode, a positive space-charge
-layer forms near the cathode and a negative space-charge
-layer near the anode.  This space charge creates an
-opposing electric field that adds to the applied field
-at one interface and subtracts from it at the other,
-producing a spatially non-uniform field profile in the
-bulk.  Carriers generated at different depths in the
-crystal therefore experience different net fields and
-have different collection probabilities, broadening
-the pulse-height distribution for monoenergetic
-radiation events and degrading the achievable energy
-resolution~\cite{He1997CZT}.
+First, ion redistribution under the applied field creates a
+non-uniform internal electric field profile.  As mobile anions
+accumulate at the anode and cations at the cathode, space-charge
+layers form near both contacts.  The resulting space charge adds
+to the applied field at one interface and subtracts from it at
+the other, so carriers generated at different depths experience
+different net fields and have different collection probabilities,
+broadening the pulse-height distribution for monoenergetic
+radiation events and degrading energy resolution~\cite{He1997CZT}.
 
-Second, the current overshoot observed upon initial
-application of bias — where the leakage current
-transiently rises above its quasi-steady-state value
-before decaying over tens of minutes — causes the
-internal field distribution to evolve continuously
-during the acquisition.  Since the peak position in
-a pulse-height spectrum is proportional to the
-instantaneous charge collection efficiency (which in
-turn depends on the internal field profile), the
-slow time evolution of the field distribution during
-ion migration causes the effective detector gain to
-drift, further broadening accumulated spectral peaks.
+Second, the leakage current overshoot upon initial bias
+application causes the internal field distribution to evolve
+continuously during acquisition.  Since pulse-height peak
+position is proportional to instantaneous charge collection
+efficiency, the slow field evolution during ion migration causes
+effective detector gain to drift, further broadening accumulated
+spectral peaks.
 
-Third, on long timescales, the accumulated ionic charge
-at the interfaces depresses the net electric field
-in the bulk, reducing the drift velocity of radiation-generated
-carriers and increasing the probability of trapping
-before collection — the same trapping mechanism
-identified in Section~\ref{sec:xray_trapping}
-for X-ray sensitivity degradation.  The combination
-of these three effects means that the energy resolution
-of a perovskite detector operated at high bias in
-ambient conditions will inevitably worsen over time,
-even if the initial resolution at the moment of bias
-application is acceptable.
+Third, on long timescales the accumulated ionic charge at the
+interfaces depresses the net bulk electric field, reducing
+carrier drift velocity and increasing the probability of trapping
+before collection.  The combination of all three effects means
+that energy resolution of a perovskite detector operated at high
+bias in ambient conditions will inevitably worsen over time, even
+if the initial resolution at the moment of bias application is
+acceptable.
 
+%% ------------------------------------------------------------
 \subsection{Mitigation Strategies}
 \label{sec:mitigation}
+%% ------------------------------------------------------------
 
-Several mitigation strategies were evaluated or
-identified in the course of this work.  Vacuum operation
-was demonstrated to extend the operational lifetime
-of the MAPbI$_3$-hBN device and to improve X-ray
-sensitivity at matched bias voltages
-(Section~\ref{sec:vacuum_testing}).  However, vacuum
-operation is impractical for most field applications
-of radiation detectors, and it addresses only the
-humidity-acceleration pathway rather than the
-intrinsic ion-migration driving force provided by
-the applied electric field.
+Several mitigation strategies were evaluated or identified in the
+course of this work.
 
-Surface passivation with 5F-PEAI, characterised in
-detail in Section~\ref{sec:5fpeai_results}, represents
-the most promising approach demonstrated in this work
-for thin-film device geometries.  At a concentration of
-4~mg\,mL$^{-1}$, 5F-PEAI penetrates the grain
-boundaries and raises the water-penetration activation
-energy from $\sim$5~meV to $\sim$120~meV, stabilising
-the device to $-16$~V in 40\% RH air.  Extending this
-passivation strategy to the 3D single crystal systems
-examined in this work is identified as a high-priority
+\textbf{5F-PEAI surface passivation.}  The most promising
+approach demonstrated in this work for thin-film geometries
+(Section~\ref{sec:5fpeai_results}).  At 4~mg\,mL$^{-1}$, 5F-PEAI
+penetrates grain boundaries and raises the water-penetration
+activation energy from $\sim$5~meV to $\sim$120~meV, stabilising
+the device to $-16$~V in 40\% RH air.  Extending this passivation
+strategy to 3D single crystal systems is a high-priority
 direction for future research.
 
-Contact material engineering is a second avenue
-for mitigating contact-specific degradation.  The
-chemical reaction of Ti contacts with mobile Br$^-$
-ions — documented here for the first time in the
-context of perovskite radiation detectors — motivates
-the replacement of Ti with contact metals that do
-not form stable halide compounds, such as Au
-(already used on the ohmic side), Pt, or Cr-based
-multilayers.  Independently, the use of
-carrier-selective interlayers (such as the C$_{60}$:BCP
-bilayer used in the MHyPbCl$_3$ device) both at
-the Schottky and ohmic contacts can reduce the
-effective recombination velocity at the interfaces
-and thereby extend the field range over which stable
-detector operation is achievable.
+\textbf{Contact material engineering.}  The Ti-Br$^-$ reaction
+documented in Section~\ref{sec:contact_degradation} motivates
+replacing Ti with metals that do not form stable halide compounds
+under detector operating conditions, such as Au, Pt, or
+Cr-based multilayers.  Carrier-selective interlayers such as the
+C$_{60}$:BCP bilayer used in the MHyPbCl$_3$ device can also
+reduce interface recombination velocity and extend the stable
+field range.
 
-A third mitigation approach is improved crystal quality
-— specifically, the reduction of halide vacancy
-concentrations that provide the mobile ionic carriers.
-Growth conditions that minimise the stoichiometric
-excess of either the organic cation or the lead halide
-precursor, such as the slow anti-solvent crystallisation
-used for MHyPbCl$_3$, or the use of single-crystal
-growth methods under inert atmosphere, have been shown
-to produce lower intrinsic defect densities and
-improved electrical stability in the photovoltaic
-literature~\cite{Saidaminov2015}.  Applying these
-best-practice growth conditions systematically to
-the detector crystal geometries required here is
-an important near-term research goal.
+\textbf{Improved crystal quality.}  Reducing halide vacancy
+concentrations through growth conditions that minimise
+stoichiometric excess, such as the slow anti-solvent
+crystallisation used for MHyPbCl$_3$, or single-crystal
+growth under inert atmosphere, is an important near-term research
+goal~\cite{Saidaminov2015}.
 
 
-%% ------------------------------------------------------------
+%% ============================================================
 \section{Summary}
 \label{sec:ch5_summary}
-%% ------------------------------------------------------------
+%% ============================================================
 
-This chapter has described the development and characterisation
-of halide perovskite direct-conversion radiation detectors
-for three distinct radiation types: X-rays, gamma rays, and
-fast neutrons.
+This chapter described the development and characterisation of
+six halide perovskite direct-conversion radiation detectors across
+three radiation types: X-rays, gamma rays, and fast neutrons.
 
-For X-ray detection, two polycrystalline systems were
-presented.  The MAPbI$_3$-hBN device demonstrated
-a monotonically increasing sensitivity with applied bias:
-$0.107$, $0.245$, and $0.411~\mu$C\,(Gy\,cm$^2$)$^{-1}$
-at 5, 10, and 20~V, respectively, consistent with the
-Hecht equation prediction for improving charge collection
-at higher fields.  Vacuum testing confirmed that the removal
-of ambient moisture enhanced both sensitivity and stability,
-directly attributing the performance degradation observed
-in ambient air to moisture-accelerated ion migration.
-The device failed irreversibly after approximately five
-hours at 400~V, setting an empirical upper bound on the
-sustainable bias for this material-contact combination
-in the absence of surface passivation.  The 2D perovskite
-(PEA$_2$MA$_2$Pb$_3$I$_{10}$) detector with 5F-PEAI surface
-treatment demonstrated that this moisture-accelerated
-instability can be effectively mitigated: the fluorinated
-barrier layer raised the breakdown voltage from $-10$~V to
-$-16$~V at 40\% RH and enabled X-ray sensitivities
-approaching $\sim$1000~$\mu$C\,(Gy$_{\rm air}$\,cm$^2$)$^{-1}$
+The MAPbI$_3$-hBN device (Section~\ref{sec:mapbi_hbn_xray})
+demonstrated a monotonically increasing X-ray sensitivity with
+applied bias, $0.107$, $0.245$, and
+$0.411~\mu$C\,(Gy\,cm$^2$)$^{-1}$ at 5, 10, and 20~V,
+respectively, consistent with the Hecht equation.  Vacuum
+testing confirmed moisture-accelerated ion migration as the
+principal degradation mechanism, and the device failed
+irreversibly after $\sim$5~hours at 400~V.
+
+The 2D PEA$_2$MA$_2$Pb$_3$I$_{10}$ detector with 5F-PEAI
+(Section~\ref{sec:2d_perovskite_xray}) demonstrated that
+moisture-accelerated instability can be effectively mitigated:
+breakdown voltage was raised from $-10$~V to $-16$~V at 40\% RH,
+and X-ray sensitivities approaching
+$\sim$1000~$\mu$C\,(Gy$_{\mathrm{air}}$\,cm$^2$)$^{-1}$ were achieved
 at 4~V bias, among the highest reported for polycrystalline
 perovskite detectors of comparable thickness.
 
-For gamma-ray detection, three bromide perovskite single-crystal
-systems were evaluated.  The CsPbBr$_3$ device produced a
-statistically significant count-rate response to a
-$^{137}$Cs source (17.45~cps vs.\ 9.11~cps background)
-at 1000~V bias, but the high and unstable leakage current
-(315--710~nA) generated electronic noise that prevented
-resolution of the 662-keV photopeak.  The FAPbBr$_3$
-device, which achieved substantially lower operating
-leakage ($5 \pm 2.5$~nA maximum at high bias) and sustained
-stable high-voltage operation for over five hours, produced
-spectral features attributable to both $^{137}$Cs and
-$^{57}$Co in a joint acquisition at 1600~V bias, representing
-a proof-of-concept demonstration of gamma spectroscopy in
-a solution-grown halide perovskite crystal.  The MAPbBr$_3$
-device failed to produce functional Schottky contacts under
-the deposition conditions used, due to high sputter power
-and surface contamination from polishing, motivating a
-revised contact deposition protocol at reduced sputter power.
+The CsPbBr$_3$ device (Section~\ref{sec:cspbbr_gamma}) produced
+a statistically significant count-rate response to $^{137}$Cs
+(17.45~cps vs.\ 9.11~cps background) at 1000~V, but large
+unstable leakage (315--710~nA) generated electronic noise that
+prevented resolution of the 662-keV photopeak.
 
-For fast neutron detection, MHyPbCl$_3$ crystals were
-characterised as the first organic-metal halide
-perovskite semiconductor evaluated in a reactor fast
-neutron beam.  The material combines a high hydrogen
-density ($\sim 4.0 \times 10^{22}$~cm$^{-3}$, comparable
-to stilbene) with an exceptional resistivity of
-$4.43 \times 10^{11}$~$\Omega$\,cm and a $\mu\tau$ product
-of $9.1 \times 10^{-3}$~cm$^2$\,V$^{-1}$.  Waveform
-data acquired at the OSURR FBF confirmed radiation-induced
-pulse activity distinct from the beam background, and
-pulse-height analysis produced spectra consistent with
-the expected broad proton-recoil energy deposition
-distribution from a poly-energetic fast neutron beam.
-Neutron-gamma discrimination remains a challenge due to
-the large Pb content of MHyPbCl$_3$, and the data
-acquisition bottleneck imposed by the oscilloscope
-waveform write rate prevented collection of sufficient
+The FAPbBr$_3$ device (Section~\ref{sec:fapbbr_gamma}) achieved
+substantially lower operating leakage ($5 \pm 2.5$~nA maximum)
+and sustained stable high-voltage operation for over five hours.
+A joint $^{137}$Cs/$^{57}$Co acquisition at 1600~V produced
+spectral features attributable to both sources, a
+proof-of-concept demonstration of gamma spectroscopy in a
+solution-grown halide perovskite crystal.
+
+The MAPbBr$_3$ device (Section~\ref{sec:mapbbr_issues}) failed
+to produce functional Schottky contacts due to high sputter power
+and residual surface contamination, motivating a revised
+deposition protocol at reduced sputter power ($\sim$150--200~W)
+with in-situ surface cleaning.
+
+MHyPbCl$_3$ (Section~\ref{sec:neutron_detector}) was
+characterised as the first organic-metal halide perovskite
+semiconductor evaluated in a reactor fast neutron beam.  The
+material combines $n_H \approx 4.0 \times 10^{22}$~cm$^{-3}$
+(comparable to stilbene) with resistivity
+$4.43 \times 10^{11}$~$\Omega$\,cm and
+$\mu\tau = 9.1 \times 10^{-3}$~cm$^2$\,V$^{-1}$.  Waveform
+data acquired at the OSURR FBF confirmed radiation-induced pulse
+activity distinct from beam background; pulse-height spectra were
+consistent with the expected proton-recoil energy deposition
+distribution from a poly-energetic fast neutron beam.  The
+LOWESS-based digital pulse processing pipeline was essential for
+extracting these low-amplitude signals ($< 15$~mV) from the raw
+oscilloscope waveforms.  Neutron-gamma discrimination remains a
+challenge due to the large Pb content, and the oscilloscope
+waveform-write-rate bottleneck prevented collection of sufficient
 statistics for quantitative efficiency analysis.
 
-Across all three detection modes, ion migration under
-applied electric fields emerged as the central
-performance-limiting mechanism.  The correlation of
-device instability with ambient humidity — confirmed
-both by the vacuum tests on MAPbI$_3$-hBN and by
-the systematic humidity-dependence study on 2D perovskite
-detectors — points to surface passivation, such as the
-5F-PEAI treatment, as the most promising near-term
-strategy for extending the operational stability of
-perovskite radiation detectors toward the performance
-levels required for practical deployment.
+Across all six devices, ion migration under applied electric
+fields emerged as the central performance-limiting mechanism.
+Surface passivation, demonstrated here via 5F-PEAI for
+thin-film devices, is identified as the most promising
+near-term strategy for extending the operational stability of
+perovskite radiation detectors toward the performance levels
+required for practical deployment.
